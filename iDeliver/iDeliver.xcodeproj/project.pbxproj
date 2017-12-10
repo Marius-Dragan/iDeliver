@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		290470C71FDD82D500CC8C06 /* AddressCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290470C61FDD82D500CC8C06 /* AddressCell.swift */; };
 		297081DA1FCB271900CCCBA1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297081D91FCB271900CCCBA1 /* AppDelegate.swift */; };
 		297081DC1FCB271900CCCBA1 /* MainVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297081DB1FCB271900CCCBA1 /* MainVC.swift */; };
 		297081DF1FCB271900CCCBA1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 297081DD1FCB271900CCCBA1 /* Main.storyboard */; };
@@ -15,6 +16,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		290470C61FDD82D500CC8C06 /* AddressCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressCell.swift; sourceTree = "<group>"; };
 		297081D61FCB271900CCCBA1 /* iDeliver.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iDeliver.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		297081D91FCB271900CCCBA1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		297081DB1FCB271900CCCBA1 /* MainVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainVC.swift; sourceTree = "<group>"; };
@@ -35,6 +37,21 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		290470C41FDD7EAA00CC8C06 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				290470C61FDD82D500CC8C06 /* AddressCell.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		290470C51FDD7EB200CC8C06 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
 		297081CD1FCB271900CCCBA1 = {
 			isa = PBXGroup;
 			children = (
@@ -54,8 +71,8 @@
 		297081D81FCB271900CCCBA1 /* iDeliver */ = {
 			isa = PBXGroup;
 			children = (
-				297081ED1FCB4B6300CCCBA1 /* Model */,
-				297081EC1FCB4B5B00CCCBA1 /* View */,
+				290470C51FDD7EB200CC8C06 /* Model */,
+				290470C41FDD7EAA00CC8C06 /* View */,
 				297081EB1FCB4B4F00CCCBA1 /* Controller */,
 				297081D91FCB271900CCCBA1 /* AppDelegate.swift */,
 				297081DD1FCB271900CCCBA1 /* Main.storyboard */,
@@ -72,20 +89,6 @@
 				297081DB1FCB271900CCCBA1 /* MainVC.swift */,
 			);
 			path = Controller;
-			sourceTree = "<group>";
-		};
-		297081EC1FCB4B5B00CCCBA1 /* View */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = View;
-			sourceTree = "<group>";
-		};
-		297081ED1FCB4B6300CCCBA1 /* Model */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Model;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -161,6 +164,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				297081DC1FCB271900CCCBA1 /* MainVC.swift in Sources */,
+				290470C71FDD82D500CC8C06 /* AddressCell.swift in Sources */,
 				297081DA1FCB271900CCCBA1 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
