@@ -33,7 +33,9 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 165
     }
-
-
+    @IBAction func addBtnWasPressed(_ sender: Any) {
+        performSegue(withIdentifier: "addDeliveryAddress", sender: self)
+    }
+    
 }
 
