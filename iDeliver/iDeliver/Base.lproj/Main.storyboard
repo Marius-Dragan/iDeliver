@@ -135,7 +135,7 @@
                                         <connections>
                                             <outlet property="cityLineAddressLbl" destination="4qI-w5-itJ" id="mpC-x7-sq6"/>
                                             <outlet property="distanceLbl" destination="p4p-Mm-jfi" id="1jG-Tc-iqR"/>
-                                            <outlet property="firstLineAddresLbl" destination="l5O-a7-Gaa" id="vQ8-eg-FRU"/>
+                                            <outlet property="firstLineAddressLbl" destination="l5O-a7-Gaa" id="Hcs-Ta-iyk"/>
                                             <outlet property="metricLbl" destination="Nuk-qc-G8C" id="kW4-3s-NIT"/>
                                             <outlet property="numberLbl" destination="2Kh-iJ-ads" id="wK7-Mi-wXV"/>
                                             <outlet property="postcodeLineAddressLbl" destination="sVq-2L-xcj" id="Wvs-vZ-F4W"/>
@@ -149,8 +149,8 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Kwu-46-qmc">
                                 <rect key="frame" x="0.0" y="583" width="375" height="40"/>
                                 <subviews>
-                                    <stackView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="28p-Lh-jm9">
-                                        <rect key="frame" x="10" y="-4" width="329" height="46.5"/>
+                                    <stackView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" distribution="fillEqually" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="6nB-IP-ZIu">
+                                        <rect key="frame" x="18" y="-4" width="339" height="46.5"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <subviews>
                                             <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" distribution="equalSpacing" spacing="3" translatesAutoresizingMaskIntoConstraints="NO" id="rOd-qG-EmF">
@@ -189,7 +189,7 @@
                                                 </subviews>
                                             </stackView>
                                             <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" distribution="equalSpacing" spacing="3" translatesAutoresizingMaskIntoConstraints="NO" id="hEQ-wb-tb6">
-                                                <rect key="frame" x="164.5" y="0.0" width="164.5" height="46.5"/>
+                                                <rect key="frame" x="174.5" y="0.0" width="164.5" height="46.5"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="100" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="lgm-tg-Kml">
                                                         <rect key="frame" x="0.0" y="0.0" width="30.5" height="46.5"/>
@@ -256,23 +256,22 @@
                         <barButtonItem key="leftBarButtonItem" image="menuslider" style="plain" id="9xK-0s-KIO"/>
                         <barButtonItem key="rightBarButtonItem" style="plain" systemItem="add" id="jJ9-Wm-2Ex">
                             <connections>
-                                <action selector="addBtnWasPressed:" destination="BYZ-38-t0r" id="Bcz-Kh-eqH"/>
+                                <segue destination="E4k-QV-k91" kind="show" identifier="addDeliveryAddress" id="znS-sF-7fA"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="deliveryAddress" destination="NOb-ef-xzd" id="5AZ-e2-Aee"/>
-                        <segue destination="E4k-QV-k91" kind="show" identifier="addDeliveryAddress" id="hbQ-mz-DpO"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="789.60000000000002" y="157.87106446776613"/>
         </scene>
-        <!--View Controller-->
+        <!--Adding Destination-->
         <scene sceneID="cTw-CA-Ocr">
             <objects>
-                <viewController id="E4k-QV-k91" sceneMemberID="viewController">
+                <viewController id="E4k-QV-k91" customClass="AddingDestination" customModule="iDeliver" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="1hm-ct-r6W">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -288,6 +287,9 @@
                                         <rect key="frame" x="62.5" y="0.0" width="32.5" height="53"/>
                                         <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="30"/>
                                         <state key="normal" title="+"/>
+                                        <connections>
+                                            <action selector="addBtnWasPressed:" destination="E4k-QV-k91" eventType="touchUpInside" id="YRq-Vr-ynB"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                             </stackView>
@@ -339,6 +341,12 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="i4V-ie-YmR"/>
                     </view>
+                    <connections>
+                        <outlet property="cityLineAddressTextField" destination="Pve-1k-olm" id="BvM-iS-9CH"/>
+                        <outlet property="firstLineAddressTextField" destination="JqB-VQ-fHF" id="KhX-3I-8MK"/>
+                        <outlet property="postcodeLineAddressTextField" destination="YHv-tM-Xj2" id="4mu-oB-LWe"/>
+                        <outlet property="secondLineAddressTextField" destination="8Pw-GX-I2s" id="5wb-LN-S1W"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jll-cq-TbY" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

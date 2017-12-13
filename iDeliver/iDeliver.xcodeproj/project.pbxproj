@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		290301D91FE086B400471408 /* AddingDestination.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290301D81FE086B400471408 /* AddingDestination.swift */; };
 		290470C71FDD82D500CC8C06 /* AddressCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290470C61FDD82D500CC8C06 /* AddressCell.swift */; };
 		297081DA1FCB271900CCCBA1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297081D91FCB271900CCCBA1 /* AppDelegate.swift */; };
 		297081DC1FCB271900CCCBA1 /* MainVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297081DB1FCB271900CCCBA1 /* MainVC.swift */; };
@@ -16,6 +17,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		290301D81FE086B400471408 /* AddingDestination.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddingDestination.swift; sourceTree = "<group>"; };
 		290470C61FDD82D500CC8C06 /* AddressCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressCell.swift; sourceTree = "<group>"; };
 		297081D61FCB271900CCCBA1 /* iDeliver.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iDeliver.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		297081D91FCB271900CCCBA1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -87,6 +89,7 @@
 			isa = PBXGroup;
 			children = (
 				297081DB1FCB271900CCCBA1 /* MainVC.swift */,
+				290301D81FE086B400471408 /* AddingDestination.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -166,6 +169,7 @@
 				297081DC1FCB271900CCCBA1 /* MainVC.swift in Sources */,
 				290470C71FDD82D500CC8C06 /* AddressCell.swift in Sources */,
 				297081DA1FCB271900CCCBA1 /* AppDelegate.swift in Sources */,
+				290301D91FE086B400471408 /* AddingDestination.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
