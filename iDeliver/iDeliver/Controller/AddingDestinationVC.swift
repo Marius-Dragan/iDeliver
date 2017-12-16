@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import MapKit
+import CoreLocation
 
 protocol DataSentDelegate {
     //Replace parameter with DeliveryDestinations
@@ -21,8 +23,12 @@ class AddingDestinationVC: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var secondLineAddressTextField: UITextField!
     @IBOutlet weak var cityLineAddressTextField: UITextField!
     @IBOutlet weak var postcodeLineAddressTextField: UITextField!
+    @IBOutlet weak var mapView: MKMapView!
     
     var delegate: DataSentDelegate?
+    var locationManager = CLLocationManager()
+    let authorizationStatus = CLLocationManager.authorizationStatus()
+    let regionRadius: Double = 1000
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,6 +36,9 @@ class AddingDestinationVC: UIViewController, UITextFieldDelegate {
         secondLineAddressTextField.delegate = self
         cityLineAddressTextField.delegate = self
         postcodeLineAddressTextField.delegate = self
+        mapView.delegate = self
+        locationManager.delegate = self
+        configureLocationServices()
 
         // Do any additional setup after loading the view.
         
@@ -41,6 +50,13 @@ class AddingDestinationVC: UIViewController, UITextFieldDelegate {
             postcodeLineAddressTextField.text = " "
             return true
         }
+       
+    }
+    func clearTextFields() {
+        firstLineAddressTextField.text = ""
+        secondLineAddressTextField.text = ""
+        cityLineAddressTextField.text = ""
+        postcodeLineAddressTextField.text = ""
     }
     @IBAction func addBtnWasPressed(_ sender: Any) {
          if delegate != nil {
@@ -52,13 +68,40 @@ class AddingDestinationVC: UIViewController, UITextFieldDelegate {
                 delegate?.userDidEnterData(addressObj: addressObj)
                 //Dismising VC
                 //navigationController?.popViewController(animated: true)
-            firstLineAddressTextField.text = " "
-            secondLineAddressTextField.text = " "
-            cityLineAddressTextField.text = " "
-            postcodeLineAddressTextField.text = " "
+          clearTextFields()
             }
+        }
+        
+    }
     
+    @IBAction func centreMapBtnWasPressed(_ sender: Any) {
+        if authorizationStatus == .authorizedAlways || authorizationStatus == .authorizedWhenInUse {
+            centerMapOnUserLocation()
         }
     }
 }
+
+extension AddingDestinationVC: MKMapViewDelegate {
+    func centerMapOnUserLocation() {
+        guard let coordinate = locationManager.location?.coordinate else { return }
+        let coordinateRegion = MKCoordinateRegionMakeWithDistance(coordinate, regionRadius * 2.0, regionRadius * 2.0)
+        mapView.setRegion(coordinateRegion, animated: true)
+    }
+}
+
+extension AddingDestinationVC: CLLocationManagerDelegate {
+    func configureLocationServices() {
+        if authorizationStatus == .notDetermined {
+            locationManager.requestAlwaysAuthorization()
+        } else {
+            return
+        }
+    }
+    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
+        centerMapOnUserLocation()
+    }
+}
+
+
+
 

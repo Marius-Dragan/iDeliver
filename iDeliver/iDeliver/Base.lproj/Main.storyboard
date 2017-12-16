@@ -226,25 +226,25 @@
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="FxU-94-T4e">
                                 <rect key="frame" x="16" y="142" width="343" height="150"/>
                                 <subviews>
-                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="100 St. Ann's Road" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="JqB-VQ-fHF">
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Flat A" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="8Pw-GX-I2s">
                                         <rect key="frame" x="0.0" y="0.0" width="343" height="30"/>
                                         <nil key="textColor"/>
                                         <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="17"/>
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
-                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Flat A" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="8Pw-GX-I2s">
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="London" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="Pve-1k-olm">
                                         <rect key="frame" x="0.0" y="40" width="343" height="30"/>
                                         <nil key="textColor"/>
                                         <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="17"/>
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
-                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="London" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="Pve-1k-olm">
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="N15 5RP" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="YHv-tM-Xj2">
                                         <rect key="frame" x="0.0" y="80" width="343" height="30"/>
                                         <nil key="textColor"/>
                                         <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="17"/>
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
-                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="N15 5RP" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="YHv-tM-Xj2">
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="100 St. Ann's Road" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="JqB-VQ-fHF">
                                         <rect key="frame" x="0.0" y="120" width="343" height="30"/>
                                         <nil key="textColor"/>
                                         <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="17"/>
@@ -252,9 +252,20 @@
                                     </textField>
                                 </subviews>
                             </stackView>
-                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="453-Yw-abe">
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" rotateEnabled="NO" pitchEnabled="NO" showsUserLocation="YES" showsTraffic="YES" translatesAutoresizingMaskIntoConstraints="NO" id="453-Yw-abe">
                                 <rect key="frame" x="0.0" y="302" width="375" height="365"/>
                             </mapView>
+                            <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RFT-s9-c8H">
+                                <rect key="frame" x="285" y="577" width="70" height="70"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="70" id="TOj-BR-fp3"/>
+                                    <constraint firstAttribute="width" constant="70" id="bY9-pN-Jg7"/>
+                                </constraints>
+                                <state key="normal" image="centerMapBtn"/>
+                                <connections>
+                                    <action selector="centreMapBtnWasPressed:" destination="E4k-QV-k91" eventType="touchUpInside" id="yQw-F3-mfN"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
@@ -262,9 +273,11 @@
                             <constraint firstItem="FxU-94-T4e" firstAttribute="top" secondItem="sYC-3z-xd5" secondAttribute="bottom" constant="15" id="A0m-5G-GZM"/>
                             <constraint firstItem="453-Yw-abe" firstAttribute="bottom" secondItem="i4V-ie-YmR" secondAttribute="bottom" id="Cg4-Mh-Lwr"/>
                             <constraint firstItem="i4V-ie-YmR" firstAttribute="trailing" secondItem="sYC-3z-xd5" secondAttribute="trailing" constant="140" id="MMk-oJ-6tr"/>
+                            <constraint firstItem="i4V-ie-YmR" firstAttribute="bottom" secondItem="RFT-s9-c8H" secondAttribute="bottom" constant="20" id="W0o-A0-M1i"/>
                             <constraint firstItem="453-Yw-abe" firstAttribute="top" secondItem="FxU-94-T4e" secondAttribute="bottom" constant="10" id="X3W-VA-goO"/>
                             <constraint firstItem="453-Yw-abe" firstAttribute="leading" secondItem="i4V-ie-YmR" secondAttribute="leading" id="XoG-nh-nwI"/>
                             <constraint firstItem="i4V-ie-YmR" firstAttribute="trailing" secondItem="FxU-94-T4e" secondAttribute="trailing" constant="16" id="cAN-yq-cwi"/>
+                            <constraint firstItem="i4V-ie-YmR" firstAttribute="trailing" secondItem="RFT-s9-c8H" secondAttribute="trailing" constant="20" id="cRr-xF-Lu0"/>
                             <constraint firstItem="sYC-3z-xd5" firstAttribute="top" secondItem="i4V-ie-YmR" secondAttribute="top" constant="10" id="cyB-aT-Xh8"/>
                             <constraint firstItem="FxU-94-T4e" firstAttribute="leading" secondItem="i4V-ie-YmR" secondAttribute="leading" constant="16" id="oYd-yM-rZA"/>
                             <constraint firstItem="453-Yw-abe" firstAttribute="trailing" secondItem="i4V-ie-YmR" secondAttribute="trailing" id="tBa-3c-b0T"/>
@@ -274,6 +287,7 @@
                     <connections>
                         <outlet property="cityLineAddressTextField" destination="Pve-1k-olm" id="BvM-iS-9CH"/>
                         <outlet property="firstLineAddressTextField" destination="JqB-VQ-fHF" id="KhX-3I-8MK"/>
+                        <outlet property="mapView" destination="453-Yw-abe" id="ndP-fF-dkF"/>
                         <outlet property="postcodeLineAddressTextField" destination="YHv-tM-Xj2" id="4mu-oB-LWe"/>
                         <outlet property="secondLineAddressTextField" destination="8Pw-GX-I2s" id="5wb-LN-S1W"/>
                     </connections>
@@ -306,6 +320,7 @@
     </scenes>
     <resources>
         <image name="add_photo_btn" width="20" height="19"/>
+        <image name="centerMapBtn" width="62" height="62"/>
         <image name="home_icon" width="15" height="13"/>
         <image name="menuslider" width="20" height="12"/>
         <image name="star_icon" width="34" height="32"/>
