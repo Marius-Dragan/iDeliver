@@ -15,6 +15,7 @@
 		297081DF1FCB271900CCCBA1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 297081DD1FCB271900CCCBA1 /* Main.storyboard */; };
 		297081E11FCB271900CCCBA1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 297081E01FCB271900CCCBA1 /* Assets.xcassets */; };
 		297081E41FCB271900CCCBA1 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 297081E21FCB271900CCCBA1 /* LaunchScreen.storyboard */; };
+		298E791F1FE57E9F00D9BC9B /* GradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 298E791E1FE57E9F00D9BC9B /* GradientView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +29,7 @@
 		297081E01FCB271900CCCBA1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		297081E31FCB271900CCCBA1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		297081E51FCB271900CCCBA1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		298E791E1FE57E9F00D9BC9B /* GradientView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -45,6 +47,7 @@
 			isa = PBXGroup;
 			children = (
 				290470C61FDD82D500CC8C06 /* AddressCell.swift */,
+				298E791E1FE57E9F00D9BC9B /* GradientView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -171,6 +174,7 @@
 			files = (
 				2911C1AB1FE4DC2B0089B5A6 /* DeliveryAddress.swift in Sources */,
 				297081DC1FCB271900CCCBA1 /* MainVC.swift in Sources */,
+				298E791F1FE57E9F00D9BC9B /* GradientView.swift in Sources */,
 				290470C71FDD82D500CC8C06 /* AddressCell.swift in Sources */,
 				297081DA1FCB271900CCCBA1 /* AppDelegate.swift in Sources */,
 				290301D91FE086B400471408 /* AddingDestinationVC.swift in Sources */,

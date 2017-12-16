@@ -54,11 +54,14 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource, Data
     
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 150
+        return 155
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "addDeliveryAddressVC" {
+            let barBtm = UIBarButtonItem()
+            barBtm.title = ""
+            navigationItem.backBarButtonItem = barBtm
             let addDestination:AddingDestinationVC = segue.destination as! AddingDestinationVC
             addDestination.delegate = self
     }

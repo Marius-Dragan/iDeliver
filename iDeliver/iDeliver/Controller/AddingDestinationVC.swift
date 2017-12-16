@@ -13,8 +13,10 @@ protocol DataSentDelegate {
     func userDidEnterData(addressObj: DeliveryDestinations)
 }
 
-class AddingDestinationVC: UIViewController {
+class AddingDestinationVC: UIViewController, UITextFieldDelegate {
 
+    //IBOutles
+    
     @IBOutlet weak var firstLineAddressTextField: UITextField!
     @IBOutlet weak var secondLineAddressTextField: UITextField!
     @IBOutlet weak var cityLineAddressTextField: UITextField!
@@ -24,20 +26,39 @@ class AddingDestinationVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        firstLineAddressTextField.delegate = self
+        secondLineAddressTextField.delegate = self
+        cityLineAddressTextField.delegate = self
+        postcodeLineAddressTextField.delegate = self
 
         // Do any additional setup after loading the view.
+        
+        navigationItem.title = "Add Destination"
+        func textFieldShouldClear(textField: UITextField) -> Bool {
+            firstLineAddressTextField.text = " "
+            secondLineAddressTextField.text = " "
+            cityLineAddressTextField.text = " "
+            postcodeLineAddressTextField.text = " "
+            return true
+        }
     }
     @IBAction func addBtnWasPressed(_ sender: Any) {
-        if delegate != nil {
-            if firstLineAddressTextField.text != nil {
+         if delegate != nil {
+        if firstLineAddressTextField.text != "" && cityLineAddressTextField.text != "" && postcodeLineAddressTextField.text != "" {
+            
                 //Create Model object DeliveryDestinations
                 let addressObj = DeliveryDestinations(FirstLineAddress: firstLineAddressTextField.text, SecondLineAddress: secondLineAddressTextField.text, CityLineAddress: cityLineAddressTextField.text, PostCodeLineAddress: postcodeLineAddressTextField.text)
                 //add that object to previous view with delegate
                 delegate?.userDidEnterData(addressObj: addressObj)
-                navigationController?.popViewController(animated: true)
+                //Dismising VC
+                //navigationController?.popViewController(animated: true)
+            firstLineAddressTextField.text = " "
+            secondLineAddressTextField.text = " "
+            cityLineAddressTextField.text = " "
+            postcodeLineAddressTextField.text = " "
             }
-        }
     
+        }
     }
 }
 
