@@ -28,26 +28,29 @@ class AddingDestinationVC: UIViewController, UITextFieldDelegate {
     var delegate: DataSentDelegate?
     var locationManager = CLLocationManager()
     let authorizationStatus = CLLocationManager.authorizationStatus()
-    let regionRadius: Double = 1000
+    let regionRadius: CLLocationDistance = 1000
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        checkLocationAuthStatus()
         firstLineAddressTextField.delegate = self
         secondLineAddressTextField.delegate = self
         cityLineAddressTextField.delegate = self
         postcodeLineAddressTextField.delegate = self
+        
         mapView.delegate = self
         locationManager.delegate = self
         configureLocationServices()
+        centerMapOnUserLocation()
 
         // Do any additional setup after loading the view.
         
         navigationItem.title = "Add Destination"
         func textFieldShouldClear(textField: UITextField) -> Bool {
-            firstLineAddressTextField.text = " "
-            secondLineAddressTextField.text = " "
-            cityLineAddressTextField.text = " "
-            postcodeLineAddressTextField.text = " "
+            firstLineAddressTextField.text = ""
+            secondLineAddressTextField.text = ""
+            cityLineAddressTextField.text = ""
+            postcodeLineAddressTextField.text = ""
             return true
         }
        
@@ -57,6 +60,15 @@ class AddingDestinationVC: UIViewController, UITextFieldDelegate {
         secondLineAddressTextField.text = ""
         cityLineAddressTextField.text = ""
         postcodeLineAddressTextField.text = ""
+    }
+    func checkLocationAuthStatus() {
+        if authorizationStatus == .authorizedAlways || authorizationStatus == .authorizedWhenInUse {
+            locationManager.delegate = self
+            locationManager.desiredAccuracy = kCLLocationAccuracyBest
+            locationManager.startUpdatingLocation()
+        } else {
+            locationManager.requestAlwaysAuthorization()
+        }
     }
     @IBAction func addBtnWasPressed(_ sender: Any) {
          if delegate != nil {
@@ -75,16 +87,15 @@ class AddingDestinationVC: UIViewController, UITextFieldDelegate {
     }
     
     @IBAction func centreMapBtnWasPressed(_ sender: Any) {
-        if authorizationStatus == .authorizedAlways || authorizationStatus == .authorizedWhenInUse {
-            centerMapOnUserLocation()
+        checkLocationAuthStatus()
+        centerMapOnUserLocation()
         }
     }
-}
 
 extension AddingDestinationVC: MKMapViewDelegate {
     func centerMapOnUserLocation() {
-        guard let coordinate = locationManager.location?.coordinate else { return }
-        let coordinateRegion = MKCoordinateRegionMakeWithDistance(coordinate, regionRadius * 2.0, regionRadius * 2.0)
+        guard (locationManager.location?.coordinate) != nil else { return }
+        let coordinateRegion = MKCoordinateRegionMakeWithDistance(mapView.userLocation.coordinate, regionRadius * 2.0, regionRadius * 2.0)
         mapView.setRegion(coordinateRegion, animated: true)
     }
 }
@@ -98,7 +109,10 @@ extension AddingDestinationVC: CLLocationManagerDelegate {
         }
     }
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
+        checkLocationAuthStatus()
         centerMapOnUserLocation()
+        mapView.showsUserLocation = true
+        mapView.userTrackingMode = .follow
     }
 }
 
