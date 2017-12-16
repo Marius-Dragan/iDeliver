@@ -9,13 +9,10 @@
 import UIKit
 
 class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource, DataSentDelegate {
-    var customTableViewCell = AddressCell()
     
-
-    
-
     @IBOutlet weak var deliveryAddress: UITableView!
     
+    var customCell: AddressCell = AddressCell()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -24,8 +21,12 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource, Data
         deliveryAddress.reloadData()
     }
     
-
-    
+    func userDidEnterData(firstAddress: String, secondAddress: String, cityAddress: String, postcodeAddress: String) {
+        customCell.firstLineAddressLbl?.text = firstAddress
+        customCell.secondLineAddressLbl?.text = secondAddress
+        customCell.cityLineAddressLbl?.text = cityAddress
+        customCell.postcodeLineAddressLbl?.text = postcodeAddress
+    }
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
@@ -34,8 +35,11 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource, Data
         return 2
     }
     
+
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-       let cell = tableView.dequeueReusableCell(withIdentifier: "deliveryAddressCell", for: indexPath) as! AddressCell
+         let cell = tableView.dequeueReusableCell(withIdentifier: "deliveryAddressCell", for: indexPath) as! AddressCell
+        cell.updateUI()
         
         return cell
     }
@@ -44,17 +48,13 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource, Data
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "addDeliveryAddress" {
-            let addDestination:AddingDestination = segue.destination as! AddingDestination
+        if segue.identifier == "addDeliveryAddressVC" {
+            let addDestination:AddingDestinationVC = segue.destination as! AddingDestinationVC
             addDestination.delegate = self
     }
     
   
 }
-    func userDidEnterData(data: String) {
-        customTableViewCell.firstLineAddressLbl?.text = data
-        customTableViewCell.secondLineAddressLbl?.text = data
-        customTableViewCell.cityLineAddressLbl?.text = data
-        customTableViewCell.postcodeLineAddressLbl?.text = data
-    }
+    
 }
+

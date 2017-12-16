@@ -256,7 +256,7 @@
                         <barButtonItem key="leftBarButtonItem" image="menuslider" style="plain" id="9xK-0s-KIO"/>
                         <barButtonItem key="rightBarButtonItem" style="plain" systemItem="add" id="jJ9-Wm-2Ex">
                             <connections>
-                                <segue destination="E4k-QV-k91" kind="show" identifier="addDeliveryAddress" id="znS-sF-7fA"/>
+                                <segue destination="E4k-QV-k91" kind="show" identifier="addDeliveryAddressVC" id="znS-sF-7fA"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -268,10 +268,10 @@
             </objects>
             <point key="canvasLocation" x="789.60000000000002" y="157.87106446776613"/>
         </scene>
-        <!--Adding Destination-->
+        <!--Adding DestinationVC-->
         <scene sceneID="cTw-CA-Ocr">
             <objects>
-                <viewController id="E4k-QV-k91" customClass="AddingDestination" customModule="iDeliver" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="E4k-QV-k91" customClass="AddingDestinationVC" customModule="iDeliver" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="1hm-ct-r6W">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

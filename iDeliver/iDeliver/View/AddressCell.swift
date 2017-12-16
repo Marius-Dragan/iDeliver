@@ -10,13 +10,19 @@ import UIKit
 
 class AddressCell: UITableViewCell {
     
-    @IBOutlet weak var firstLineAddressLbl: UILabel! = UILabel()
-    @IBOutlet weak var secondLineAddressLbl: UILabel! = UILabel()
-    @IBOutlet weak var cityLineAddressLbl: UILabel! = UILabel()
-    @IBOutlet weak var postcodeLineAddressLbl: UILabel! = UILabel()
-    @IBOutlet weak var numberLbl: UILabel! = UILabel()
+    @IBOutlet weak var firstLineAddressLbl: UILabel!
+    @IBOutlet weak var secondLineAddressLbl: UILabel!
+    @IBOutlet weak var cityLineAddressLbl: UILabel!
+    @IBOutlet weak var postcodeLineAddressLbl: UILabel!
+    @IBOutlet weak var numberLbl: UILabel!
     @IBOutlet weak var startBtn: UIButton!
     @IBOutlet weak var distanceLbl: UILabel!
     @IBOutlet weak var metricLbl: UILabel!
+   
+    func updateUI() {
+        DeliveryDestinations.init(FirstLineAddress: firstLineAddressLbl.text, SecondLineAddress: secondLineAddressLbl.text, CityLineAddress: cityLineAddressLbl.text, PostCodeLineAddress: postcodeLineAddressLbl.text)
+
+    }
     
 }
+

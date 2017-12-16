@@ -9,17 +9,17 @@
 import UIKit
 
 protocol DataSentDelegate {
-    func userDidEnterData(data: String)
+    func userDidEnterData(firstAddress: String, secondAddress: String, cityAddress: String, postcodeAddress: String)
 }
 
-class AddingDestination: UIViewController {
+class AddingDestinationVC: UIViewController {
 
     @IBOutlet weak var firstLineAddressTextField: UITextField!
     @IBOutlet weak var secondLineAddressTextField: UITextField!
     @IBOutlet weak var cityLineAddressTextField: UITextField!
     @IBOutlet weak var postcodeLineAddressTextField: UITextField!
     
-    var delegate:DataSentDelegate! = nil
+    var delegate: DataSentDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,11 +34,8 @@ class AddingDestination: UIViewController {
                 let secondLineAddress = secondLineAddressTextField.text
                 let cityLineAddress = secondLineAddressTextField.text
                 let postcodeLineAddress = postcodeLineAddressTextField.text
-                delegate?.userDidEnterData(data: firstLineAddress!)
-                delegate?.userDidEnterData(data: secondLineAddress!)
-                delegate?.userDidEnterData(data: cityLineAddress!)
-                delegate?.userDidEnterData(data: postcodeLineAddress!)
-                dismiss(animated: true, completion: nil)
+                delegate?.userDidEnterData(firstAddress: firstLineAddress!, secondAddress: secondLineAddress!, cityAddress: cityLineAddress!, postcodeAddress: postcodeLineAddress!)
+                navigationController?.popViewController(animated: true)
         }
     }
     
