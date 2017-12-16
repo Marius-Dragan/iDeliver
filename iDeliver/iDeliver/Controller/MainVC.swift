@@ -12,7 +12,8 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource, Data
     
     @IBOutlet weak var deliveryAddress: UITableView!
     
-    var customCell: AddressCell = AddressCell()
+    //Create array which will return your address data
+    var addressArr = [DeliveryDestinations]()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -21,30 +22,39 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource, Data
         deliveryAddress.reloadData()
     }
     
-    func userDidEnterData(firstAddress: String, secondAddress: String, cityAddress: String, postcodeAddress: String) {
-        customCell.firstLineAddressLbl?.text = firstAddress
-        customCell.secondLineAddressLbl?.text = secondAddress
-        customCell.cityLineAddressLbl?.text = cityAddress
-        customCell.postcodeLineAddressLbl?.text = postcodeAddress
+    //add parameter for created address object
+    func userDidEnterData(addressObj: DeliveryDestinations) {
+        
+        //append added object into your table array
+        self.addressArr.append(addressObj)
+        //Reload your tableview once your new object added.
+        self.deliveryAddress.reloadData()
     }
+    
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 2
+        //change this with array count
+        return addressArr.count
+        
     }
     
 
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
          let cell = tableView.dequeueReusableCell(withIdentifier: "deliveryAddressCell", for: indexPath) as! AddressCell
-        cell.updateUI()
-        
+        //get address object from array which you can assign to cell
+        let addressObj = addressArr[indexPath.row]
+        //assign data from array
+        cell.updateUI(addressObj: addressObj)
+        cell.numberLbl.text = String(indexPath.row + 1)
         return cell
+    
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 165
+        return 150
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

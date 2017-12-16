@@ -19,10 +19,14 @@ class AddressCell: UITableViewCell {
     @IBOutlet weak var distanceLbl: UILabel!
     @IBOutlet weak var metricLbl: UILabel!
    
-    func updateUI() {
-        DeliveryDestinations.init(FirstLineAddress: firstLineAddressLbl.text, SecondLineAddress: secondLineAddressLbl.text, CityLineAddress: cityLineAddressLbl.text, PostCodeLineAddress: postcodeLineAddressLbl.text)
-
+    func updateUI(addressObj: DeliveryDestinations) {
+        
+        //Drow your cell with values from addressObj
+        firstLineAddressLbl.text = addressObj.FirstLineAddress
+        secondLineAddressLbl.text = addressObj.SecondLineAddress
+        cityLineAddressLbl.text = addressObj.CityLineAddress
+        postcodeLineAddressLbl.text = addressObj.PostcodeLineAddress
+        
     }
-    
 }
 

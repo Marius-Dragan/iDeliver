@@ -13,12 +13,14 @@ struct DeliveryDestinations {
     var SecondLineAddress: String?
     var CityLineAddress: String?
     var PostcodeLineAddress: String?
+
     
     init(FirstLineAddress: String? , SecondLineAddress: String?, CityLineAddress: String?, PostCodeLineAddress: String?) {
         self.FirstLineAddress = FirstLineAddress
         self.SecondLineAddress = SecondLineAddress
         self.CityLineAddress = CityLineAddress
         self.PostcodeLineAddress = PostCodeLineAddress
+       
     }
     
 }

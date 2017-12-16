@@ -9,7 +9,8 @@
 import UIKit
 
 protocol DataSentDelegate {
-    func userDidEnterData(firstAddress: String, secondAddress: String, cityAddress: String, postcodeAddress: String)
+    //Replace parameter with DeliveryDestinations
+    func userDidEnterData(addressObj: DeliveryDestinations)
 }
 
 class AddingDestinationVC: UIViewController {
@@ -29,16 +30,14 @@ class AddingDestinationVC: UIViewController {
     @IBAction func addBtnWasPressed(_ sender: Any) {
         if delegate != nil {
             if firstLineAddressTextField.text != nil {
-                 let firstLineAddress = firstLineAddressTextField.text
-                print(firstLineAddress as Any)
-                let secondLineAddress = secondLineAddressTextField.text
-                let cityLineAddress = secondLineAddressTextField.text
-                let postcodeLineAddress = postcodeLineAddressTextField.text
-                delegate?.userDidEnterData(firstAddress: firstLineAddress!, secondAddress: secondLineAddress!, cityAddress: cityLineAddress!, postcodeAddress: postcodeLineAddress!)
+                //Create Model object DeliveryDestinations
+                let addressObj = DeliveryDestinations(FirstLineAddress: firstLineAddressTextField.text, SecondLineAddress: secondLineAddressTextField.text, CityLineAddress: cityLineAddressTextField.text, PostCodeLineAddress: postcodeLineAddressTextField.text)
+                //add that object to previous view with delegate
+                delegate?.userDidEnterData(addressObj: addressObj)
                 navigationController?.popViewController(animated: true)
+            }
         }
-    }
     
-}
+    }
 }
 
