@@ -64,10 +64,16 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource, Data
             navigationItem.backBarButtonItem = barBtm
             let addDestination:AddingDestinationVC = segue.destination as! AddingDestinationVC
             addDestination.delegate = self
+        } else if segue.identifier == "deliveryLocationVC" {
+                let barBtm2 = UIBarButtonItem()
+                barBtm2.title = ""
+                navigationItem.backBarButtonItem = barBtm2
+            if let deliveryLocationVC = segue.destination as? DeliveryLocationsVC {
+                deliveryLocationVC.addressArr = addressArr
+                }
+            }
+        }
     }
-    
-  
-}
-    
-}
+
+
 

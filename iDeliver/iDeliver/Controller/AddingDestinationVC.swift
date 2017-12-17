@@ -24,7 +24,7 @@ class AddingDestinationVC: UIViewController {
     @IBOutlet weak var firstLineAddressTextField: UITextField!
     @IBOutlet weak var cityLineAddressTextField: UITextField!
     @IBOutlet weak var postcodeLineAddressTextField: UITextField!
-       @IBOutlet weak var countryLineAddressTextField: UITextField!
+    @IBOutlet weak var countryLineAddressTextField: UITextField!
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var centerMapBtn: UIButton!
     
@@ -35,6 +35,7 @@ class AddingDestinationVC: UIViewController {
     var tableView = UITableView()
     var matchingItems: [MKMapItem] = [MKMapItem]()
     var selectedItemPlacemark: MKPlacemark? = nil
+    //var addressCoordinate: [CLLocationCoordinate2D] = [] for coredata use
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -199,7 +200,7 @@ extension AddingDestinationVC: CLLocationManagerDelegate {
             annotationView?.annotation = annotation
         }
         //mapViewCounter = mapViewCounter + 1
-        annotationView?.image = UIImage(named: "pickup_pin")
+        annotationView?.image = UIImage(named: "destinationpin")
         annotationView?.tag = 55
         
         //        print(mapView.annotations.count)
@@ -323,20 +324,27 @@ extension AddingDestinationVC: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let addressCoordinate = locationManager.location?.coordinate
         
+        print("This is the coordinates of the pins \(String(describing: addressCoordinate))")
+        
         let currentAnnotation = AddressAnnotation(coordinate: addressCoordinate!)
-        mapView.addAnnotation(currentAnnotation)
+        
+        //mapView.addAnnotation(currentAnnotation) // add pin to current location
+        
         let fullAddress = tableView.cellForRow(at: indexPath)?.detailTextLabel?.text
-        print(fullAddress)
+        
+        //print(fullAddress)
+        
         let fullAddressArr = fullAddress?.components(separatedBy: ",")
         if nameOrBusinessTextField.text != "" {
         } else {
             nameOrBusinessTextField.text = tableView.cellForRow(at: indexPath)?.textLabel?.text
         }
-        firstLineAddressTextField.text = fullAddressArr?[0]
-        cityLineAddressTextField.text = fullAddressArr?[1]
-        postcodeLineAddressTextField.text = fullAddressArr?[2]
-        countryLineAddressTextField.text = fullAddressArr?[3]
-        
+            // check to see if there is a  way to check if the string is empty
+                firstLineAddressTextField.text = fullAddressArr?[0]
+                cityLineAddressTextField.text = fullAddressArr?[1]
+                postcodeLineAddressTextField.text = fullAddressArr?[2]
+                countryLineAddressTextField.text = fullAddressArr?[3]
+    
         
         let selectedMapItem = matchingItems[indexPath.row]
      
