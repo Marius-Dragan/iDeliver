@@ -16,6 +16,8 @@
 		297081E11FCB271900CCCBA1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 297081E01FCB271900CCCBA1 /* Assets.xcassets */; };
 		297081E41FCB271900CCCBA1 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 297081E21FCB271900CCCBA1 /* LaunchScreen.storyboard */; };
 		298E791F1FE57E9F00D9BC9B /* GradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 298E791E1FE57E9F00D9BC9B /* GradientView.swift */; };
+		298E79291FE5EB0700D9BC9B /* UIViewExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 298E79281FE5EB0700D9BC9B /* UIViewExt.swift */; };
+		298E792B1FE600E600D9BC9B /* AddressAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 298E792A1FE600E600D9BC9B /* AddressAnnotation.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +32,8 @@
 		297081E31FCB271900CCCBA1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		297081E51FCB271900CCCBA1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		298E791E1FE57E9F00D9BC9B /* GradientView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientView.swift; sourceTree = "<group>"; };
+		298E79281FE5EB0700D9BC9B /* UIViewExt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewExt.swift; sourceTree = "<group>"; };
+		298E792A1FE600E600D9BC9B /* AddressAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressAnnotation.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -48,6 +52,7 @@
 			children = (
 				290470C61FDD82D500CC8C06 /* AddressCell.swift */,
 				298E791E1FE57E9F00D9BC9B /* GradientView.swift */,
+				298E792A1FE600E600D9BC9B /* AddressAnnotation.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -79,6 +84,7 @@
 		297081D81FCB271900CCCBA1 /* iDeliver */ = {
 			isa = PBXGroup;
 			children = (
+				298E79271FE5EAC800D9BC9B /* Extensions */,
 				290470C51FDD7EB200CC8C06 /* Model */,
 				290470C41FDD7EAA00CC8C06 /* View */,
 				297081EB1FCB4B4F00CCCBA1 /* Controller */,
@@ -98,6 +104,14 @@
 				290301D81FE086B400471408 /* AddingDestinationVC.swift */,
 			);
 			path = Controller;
+			sourceTree = "<group>";
+		};
+		298E79271FE5EAC800D9BC9B /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				298E79281FE5EB0700D9BC9B /* UIViewExt.swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -172,8 +186,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				298E79291FE5EB0700D9BC9B /* UIViewExt.swift in Sources */,
 				2911C1AB1FE4DC2B0089B5A6 /* DeliveryAddress.swift in Sources */,
 				297081DC1FCB271900CCCBA1 /* MainVC.swift in Sources */,
+				298E792B1FE600E600D9BC9B /* AddressAnnotation.swift in Sources */,
 				298E791F1FE57E9F00D9BC9B /* GradientView.swift in Sources */,
 				290470C71FDD82D500CC8C06 /* AddressCell.swift in Sources */,
 				297081DA1FCB271900CCCBA1 /* AppDelegate.swift in Sources */,
