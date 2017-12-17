@@ -9,13 +9,15 @@
 import Foundation
 
 struct DeliveryDestinations {
+    var NameOrBusiness: String?
     var FirstLineAddress: String?
     var SecondLineAddress: String?
     var CityLineAddress: String?
     var PostcodeLineAddress: String?
 
     
-    init(FirstLineAddress: String? , SecondLineAddress: String?, CityLineAddress: String?, PostCodeLineAddress: String?) {
+    init(NameOrBusiness: String?, FirstLineAddress: String?, SecondLineAddress: String?, CityLineAddress: String?, PostCodeLineAddress: String?) {
+        self.NameOrBusiness = NameOrBusiness
         self.FirstLineAddress = FirstLineAddress
         self.SecondLineAddress = SecondLineAddress
         self.CityLineAddress = CityLineAddress

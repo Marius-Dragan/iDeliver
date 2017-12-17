@@ -54,7 +54,7 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource, Data
     
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 155
+        return 185
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

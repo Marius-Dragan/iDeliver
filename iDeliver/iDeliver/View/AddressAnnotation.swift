@@ -11,6 +11,8 @@ import MapKit
 
 class AddressAnnotation: NSObject, MKAnnotation {
     dynamic var coordinate: CLLocationCoordinate2D
+    var address: String!
+    var image: UIImage!
     //var key: String
     
     init(coordinate: CLLocationCoordinate2D) {

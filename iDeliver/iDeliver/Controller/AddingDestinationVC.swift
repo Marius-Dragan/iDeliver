@@ -19,17 +19,19 @@ class AddingDestinationVC: UIViewController {
 
     //IBOutles
     
+    
+    @IBOutlet weak var nameOrBusinessTextField: UITextField!
     @IBOutlet weak var firstLineAddressTextField: UITextField!
-    @IBOutlet weak var secondLineAddressTextField: UITextField!
     @IBOutlet weak var cityLineAddressTextField: UITextField!
     @IBOutlet weak var postcodeLineAddressTextField: UITextField!
+       @IBOutlet weak var countryLineAddressTextField: UITextField!
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var centerMapBtn: UIButton!
     
     var delegate: DataSentDelegate?
     var locationManager = CLLocationManager()
     let authorizationStatus = CLLocationManager.authorizationStatus()
-    let regionRadius: CLLocationDistance = 1000
+    let regionRadius: CLLocationDistance = 10000
     var tableView = UITableView()
     var matchingItems: [MKMapItem] = [MKMapItem]()
     var selectedItemPlacemark: MKPlacemark? = nil
@@ -37,8 +39,9 @@ class AddingDestinationVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         checkLocationAuthStatus()
+        nameOrBusinessTextField.delegate = self
         firstLineAddressTextField.delegate = self
-        secondLineAddressTextField.delegate = self
+        countryLineAddressTextField.delegate = self
         cityLineAddressTextField.delegate = self
         postcodeLineAddressTextField.delegate = self
         
@@ -51,8 +54,9 @@ class AddingDestinationVC: UIViewController {
         
         navigationItem.title = "Add Destination"
         func textFieldShouldClear(textField: UITextField) -> Bool {
+            nameOrBusinessTextField.text = ""
             firstLineAddressTextField.text = ""
-            secondLineAddressTextField.text = ""
+            countryLineAddressTextField.text = ""
             cityLineAddressTextField.text = ""
             postcodeLineAddressTextField.text = ""
             return true
@@ -60,8 +64,9 @@ class AddingDestinationVC: UIViewController {
        
     }
     func clearTextFields() {
+        nameOrBusinessTextField.text = ""
         firstLineAddressTextField.text = ""
-        secondLineAddressTextField.text = ""
+        countryLineAddressTextField.text = ""
         cityLineAddressTextField.text = ""
         postcodeLineAddressTextField.text = ""
     }
@@ -79,7 +84,7 @@ class AddingDestinationVC: UIViewController {
         if firstLineAddressTextField.text != "" && cityLineAddressTextField.text != "" && postcodeLineAddressTextField.text != "" {
             
                 //Create Model object DeliveryDestinations
-                let addressObj = DeliveryDestinations(FirstLineAddress: firstLineAddressTextField.text, SecondLineAddress: secondLineAddressTextField.text, CityLineAddress: cityLineAddressTextField.text, PostCodeLineAddress: postcodeLineAddressTextField.text)
+            let addressObj = DeliveryDestinations(NameOrBusiness: nameOrBusinessTextField.text, FirstLineAddress: firstLineAddressTextField.text, SecondLineAddress: countryLineAddressTextField.text, CityLineAddress: cityLineAddressTextField.text, PostCodeLineAddress: postcodeLineAddressTextField.text)
                 //add that object to previous view with delegate
                 delegate?.userDidEnterData(addressObj: addressObj)
                 //Dismising VC
@@ -119,7 +124,7 @@ extension AddingDestinationVC: CLLocationManagerDelegate {
         mapView.showsUserLocation = true
         mapView.userTrackingMode = .follow
     }
-    
+    /*
     // Working annotation.
     
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
@@ -142,35 +147,59 @@ extension AddingDestinationVC: CLLocationManagerDelegate {
         
         return nil
     }
-    /*
+ */
+    
+    
+    func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
+        // 1
+        if (view.annotation is MKUserLocation) {
+            // Don't proceed with custom callout
+            return
+        }
+        // 2
+        let addressAnnotation = view.annotation as? AddressAnnotation
+        let views = Bundle.main.loadNibNamed("CustomCalloutView", owner: nil, options: nil)
+        let calloutView = views?[0] as! CustomCalloutView
+        calloutView.firstAddressPinLbl.text = firstLineAddressTextField.text
+        let tableData = MainVC()
+        calloutView.numberOfDeliveriesPinLbl.text = String(tableData.addressArr.count)
+        
+        print(calloutView)
+       // 3
+        calloutView.center = CGPoint(x: view.bounds.size.width / 2, y: -calloutView.bounds.size.height * 0.5)
+        view.addSubview(calloutView)
+        mapView.setCenter((view.annotation?.coordinate)!, animated: true)
+    }
+    
+    
     // to check from here the custom map anntation
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
-        //print(mapView.annotations)
+        print(mapView.annotations)
         print(annotation.coordinate)
         
-        
-        if annotation is MKUserLocation
-        {
+        if (annotation is MKUserLocation) {
             return nil
         }
+        
         var annotationView = self.mapView.dequeueReusableAnnotationView(withIdentifier: "Pin")
         
-        
-        if annotationView == nil{
-            annotationView = MKAnnotationView(annotation: annotation, reuseIdentifier: "destinationpin")
+        if annotationView == nil {
+            annotationView = MKAnnotationView(annotation: annotation, reuseIdentifier: "Pin")
             annotationView?.canShowCallout = false
             //custom label
-            let label = UILabel(frame: CGRect(x: 42, y: 9, width: 35, height: 30))
+            let label = UILabel(frame: CGRect(x: 22, y: 14, width: 30, height: 30))
             label.textColor = .white
-            label.font = UIFont.boldSystemFont(ofSize: 22)
-            label.text =  "18"// set text here
+            label.font = UIFont.boldSystemFont(ofSize: 15)
+            label.text =  "100" // set text here
+            label.minimumScaleFactor = 10
+            
             annotationView?.addSubview(label)
             
         }else{
             annotationView?.annotation = annotation
         }
         //mapViewCounter = mapViewCounter + 1
-        annotationView?.image = UIImage(named: "marker2")
+        annotationView?.image = UIImage(named: "pickup_pin")
         annotationView?.tag = 55
         
         //        print(mapView.annotations.count)
@@ -182,7 +211,7 @@ extension AddingDestinationVC: CLLocationManagerDelegate {
         return annotationView
     }
     // ending here custom map annotation
-    */
+    
     func mapView(_ mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
         centerMapBtn.fadeTo(alphaValue: 1.0, withDuration: 0.2)
     }
@@ -212,14 +241,14 @@ extension AddingDestinationVC: CLLocationManagerDelegate {
         
         for annotation in mapView.annotations {
             if annotation.isKind(of: MKPointAnnotation.self) {
-                mapView.removeAnnotation(annotation)
+               // mapView.removeAnnotation(annotation) // removing the pins from the map
             }
         }
-        
+
         let annotation = MKPointAnnotation()
         annotation.coordinate = placemark.coordinate
         mapView.addAnnotation(annotation)
-    }
+   }
 }
 
 
@@ -260,11 +289,11 @@ extension AddingDestinationVC: UITextFieldDelegate {
     func animateTableView(shouldShow: Bool) {
         if shouldShow {
             UIView.animate(withDuration: 0.2, animations: {
-                self.tableView.frame = CGRect(x: 20, y: 175, width: self.view.frame.width - 40, height: self.view.frame.height - 175)
+                self.tableView.frame = CGRect(x: 20, y: 215, width: self.view.frame.width - 40, height: self.view.frame.height - 215)
             })
         } else {
             UIView.animate(withDuration: 0.2, animations: {
-                self.tableView.frame = CGRect(x: 20, y: self.view.frame.width, width: self.view.frame.width - 40, height: self.view.frame.height - 175)
+                self.tableView.frame = CGRect(x: 20, y: self.view.frame.width, width: self.view.frame.width - 40, height: self.view.frame.height - 215)
             }, completion: { (finished) in
                 for subview in self.view.subviews {
                     if subview.tag == 18 {
@@ -282,6 +311,7 @@ extension AddingDestinationVC: UITableViewDelegate, UITableViewDataSource {
         let mapItem = matchingItems[indexPath.row]
         cell.textLabel?.text = mapItem.name
         cell.detailTextLabel?.text = mapItem.placemark.title
+        
         return cell
     }
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -295,7 +325,18 @@ extension AddingDestinationVC: UITableViewDelegate, UITableViewDataSource {
         
         let currentAnnotation = AddressAnnotation(coordinate: addressCoordinate!)
         mapView.addAnnotation(currentAnnotation)
-        firstLineAddressTextField.text = tableView.cellForRow(at: indexPath)?.textLabel?.text
+        let fullAddress = tableView.cellForRow(at: indexPath)?.detailTextLabel?.text
+        print(fullAddress)
+        let fullAddressArr = fullAddress?.components(separatedBy: ",")
+        if nameOrBusinessTextField.text != "" {
+        } else {
+            nameOrBusinessTextField.text = tableView.cellForRow(at: indexPath)?.textLabel?.text
+        }
+        firstLineAddressTextField.text = fullAddressArr?[0]
+        cityLineAddressTextField.text = fullAddressArr?[1]
+        postcodeLineAddressTextField.text = fullAddressArr?[2]
+        countryLineAddressTextField.text = fullAddressArr?[3]
+        
         
         let selectedMapItem = matchingItems[indexPath.row]
      

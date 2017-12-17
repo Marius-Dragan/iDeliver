@@ -10,10 +10,11 @@ import UIKit
 
 class AddressCell: UITableViewCell {
     
+    @IBOutlet weak var nameOrBusinessLbl: UILabel!
     @IBOutlet weak var firstLineAddressLbl: UILabel!
-    @IBOutlet weak var secondLineAddressLbl: UILabel!
     @IBOutlet weak var cityLineAddressLbl: UILabel!
     @IBOutlet weak var postcodeLineAddressLbl: UILabel!
+    @IBOutlet weak var countryLineAddressLbl: UILabel!
     @IBOutlet weak var numberLbl: UILabel!
     @IBOutlet weak var startBtn: UIButton!
     @IBOutlet weak var distanceLbl: UILabel!
@@ -22,8 +23,9 @@ class AddressCell: UITableViewCell {
     func updateUI(addressObj: DeliveryDestinations) {
         
         //Drow your cell with values from addressObj
+        nameOrBusinessLbl.text = addressObj.NameOrBusiness
         firstLineAddressLbl.text = addressObj.FirstLineAddress
-        secondLineAddressLbl.text = addressObj.SecondLineAddress
+        countryLineAddressLbl.text = addressObj.SecondLineAddress
         cityLineAddressLbl.text = addressObj.CityLineAddress
         postcodeLineAddressLbl.text = addressObj.PostcodeLineAddress
         
