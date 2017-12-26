@@ -22,12 +22,13 @@ class AddressCell: UITableViewCell {
    
     func updateUI(addressObj: DeliveryDestinations) {
         
-        //Drow your cell with values from addressObj
+        //Drow the cell with values from addressObj
         nameOrBusinessLbl.text = addressObj.NameOrBusiness
         firstLineAddressLbl.text = addressObj.FirstLineAddress
         countryLineAddressLbl.text = addressObj.SecondLineAddress
         cityLineAddressLbl.text = addressObj.CityLineAddress
         postcodeLineAddressLbl.text = addressObj.PostcodeLineAddress
+        distanceLbl.text = String(format: "%.2f ", addressObj.DistanceToDestination!)
         
     }
 }

@@ -34,6 +34,8 @@ class AddingDestinationVC: UIViewController {
     let regionRadius: CLLocationDistance = 10000
     var tableView = UITableView()
     var matchingItems: [MKMapItem] = [MKMapItem]()
+    var route: MKRoute!
+    var distance: CLLocationDistance = CLLocationDistance()
     var selectedItemPlacemark: MKPlacemark? = nil
     //var addressCoordinate: [CLLocationCoordinate2D] = [] for coredata use
     
@@ -85,12 +87,16 @@ class AddingDestinationVC: UIViewController {
         if firstLineAddressTextField.text != "" && cityLineAddressTextField.text != "" && postcodeLineAddressTextField.text != "" {
             
                 //Create Model object DeliveryDestinations
-            let addressObj = DeliveryDestinations(NameOrBusiness: nameOrBusinessTextField.text, FirstLineAddress: firstLineAddressTextField.text, SecondLineAddress: countryLineAddressTextField.text, CityLineAddress: cityLineAddressTextField.text, PostCodeLineAddress: postcodeLineAddressTextField.text)
+            let addressObj = DeliveryDestinations(NameOrBusiness: nameOrBusinessTextField.text, FirstLineAddress: firstLineAddressTextField.text, SecondLineAddress: countryLineAddressTextField.text, CityLineAddress: cityLineAddressTextField.text, PostCodeLineAddress: postcodeLineAddressTextField.text, DistanceToDestination: distance)
+            
+                //print(distance)
+            
                 //add that object to previous view with delegate
                 delegate?.userDidEnterData(addressObj: addressObj)
                 //Dismising VC
                 //navigationController?.popViewController(animated: true)
-          clearTextFields()
+            
+                clearTextFields()
             }
         }
         
@@ -125,6 +131,8 @@ extension AddingDestinationVC: CLLocationManagerDelegate {
         mapView.showsUserLocation = true
         mapView.userTrackingMode = .follow
     }
+    
+ 
     /*
     // Working annotation.
     
@@ -216,6 +224,15 @@ extension AddingDestinationVC: CLLocationManagerDelegate {
     func mapView(_ mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
         centerMapBtn.fadeTo(alphaValue: 1.0, withDuration: 0.2)
     }
+    //creating the line between 2 points working need to move this to different VC
+//    func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
+//        let lineRenderer = MKPolylineRenderer(overlay: self.route.polyline)
+//        lineRenderer.strokeColor = #colorLiteral(red: 0.2588235438, green: 0.7568627596, blue: 0.9686274529, alpha: 1)
+//        lineRenderer.lineWidth = 3
+//
+//        return lineRenderer
+//    }
+    
     func performSearch() {
         matchingItems.removeAll()
         let request = MKLocalSearchRequest()
@@ -250,6 +267,25 @@ extension AddingDestinationVC: CLLocationManagerDelegate {
         annotation.coordinate = placemark.coordinate
         mapView.addAnnotation(annotation)
    }
+    func searchMapKitForResultsWithPolyline(forMapItem mapItem: MKMapItem) {
+        let request = MKDirectionsRequest()
+        request.source = MKMapItem.forCurrentLocation()
+        request.destination = mapItem
+        request.transportType = MKDirectionsTransportType.automobile
+        
+        let directions = MKDirections(request: request)
+        
+        directions.calculate { (response, error) in
+            guard let response = response else {
+                print(error.debugDescription)
+                return
+            }
+            self.route = response.routes[0]
+            self.mapView.add(self.route.polyline)
+            self.distance = self.route.distance * 0.00062137
+            //print(self.distance)
+        }
+    }
 }
 
 
@@ -327,9 +363,7 @@ extension AddingDestinationVC: UITableViewDelegate, UITableViewDataSource {
         print("This is the coordinates of the pins \(String(describing: addressCoordinate))")
         
         let currentAnnotation = AddressAnnotation(coordinate: addressCoordinate!)
-        
         //mapView.addAnnotation(currentAnnotation) // add pin to current location
-
         
         let fullAddress = tableView.cellForRow(at: indexPath)?.detailTextLabel?.text
         
@@ -362,6 +396,8 @@ extension AddingDestinationVC: UITableViewDelegate, UITableViewDataSource {
         let selectedMapItem = matchingItems[indexPath.row]
      
         dropPinFor(placemark: selectedMapItem.placemark)
+        
+        searchMapKitForResultsWithPolyline(forMapItem: selectedMapItem)
         
         animateTableView(shouldShow: false)
         print("selected!")

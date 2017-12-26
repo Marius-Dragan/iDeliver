@@ -11,6 +11,7 @@ import UIKit
 class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource, DataSentDelegate {
     
     @IBOutlet weak var deliveryAddress: UITableView!
+    @IBOutlet weak var distanceToDestinationLbl: UILabel!
     
     //Create array which will return your address data
     var addressArr = [DeliveryDestinations]()
