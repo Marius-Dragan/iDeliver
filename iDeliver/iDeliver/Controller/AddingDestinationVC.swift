@@ -329,6 +329,7 @@ extension AddingDestinationVC: UITableViewDelegate, UITableViewDataSource {
         let currentAnnotation = AddressAnnotation(coordinate: addressCoordinate!)
         
         //mapView.addAnnotation(currentAnnotation) // add pin to current location
+
         
         let fullAddress = tableView.cellForRow(at: indexPath)?.detailTextLabel?.text
         
@@ -339,7 +340,7 @@ extension AddingDestinationVC: UITableViewDelegate, UITableViewDataSource {
             nameOrBusinessTextField.text = tableView.cellForRow(at: indexPath)?.textLabel?.text
         }
         //print(fullAddressArr?.count)
-            // check to see if there is a better way to check if the string is empty
+             //check to see if there is a better way to check if the string is empty
         if fullAddressArr?.count == 1 {
             //print(fullAddressArr)
                 firstLineAddressTextField.text = fullAddressArr?[0]
@@ -349,12 +350,12 @@ extension AddingDestinationVC: UITableViewDelegate, UITableViewDataSource {
         } else if fullAddressArr?.count == 3 {
                 firstLineAddressTextField.text = fullAddressArr?[0]
                 cityLineAddressTextField.text = fullAddressArr?[1]
-                    postcodeLineAddressTextField.text = fullAddressArr?[2]
+                postcodeLineAddressTextField.text = fullAddressArr?[2]
         } else if fullAddressArr?.count == 4 {
-                    firstLineAddressTextField.text = fullAddressArr?[0]
-                    cityLineAddressTextField.text = fullAddressArr?[1]
-                    postcodeLineAddressTextField.text = fullAddressArr?[2]
-                    countryLineAddressTextField.text = fullAddressArr?[3]
+                firstLineAddressTextField.text = fullAddressArr?[0]
+                cityLineAddressTextField.text = fullAddressArr?[1]
+                postcodeLineAddressTextField.text = fullAddressArr?[2]
+                countryLineAddressTextField.text = fullAddressArr?[3]
         }
     
         
