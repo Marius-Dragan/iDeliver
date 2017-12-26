@@ -332,18 +332,30 @@ extension AddingDestinationVC: UITableViewDelegate, UITableViewDataSource {
         
         let fullAddress = tableView.cellForRow(at: indexPath)?.detailTextLabel?.text
         
-        //print(fullAddress)
+        print(fullAddress)
         
         let fullAddressArr = fullAddress?.components(separatedBy: ",")
-        if nameOrBusinessTextField.text != "" {
-        } else {
+        if nameOrBusinessTextField.text == "" {
             nameOrBusinessTextField.text = tableView.cellForRow(at: indexPath)?.textLabel?.text
         }
-            // check to see if there is a  way to check if the string is empty
+        //print(fullAddressArr?.count)
+            // check to see if there is a better way to check if the string is empty
+        if fullAddressArr?.count == 1 {
+            //print(fullAddressArr)
+                firstLineAddressTextField.text = fullAddressArr?[0]
+        } else if fullAddressArr?.count == 2 {
                 firstLineAddressTextField.text = fullAddressArr?[0]
                 cityLineAddressTextField.text = fullAddressArr?[1]
-                postcodeLineAddressTextField.text = fullAddressArr?[2]
-                countryLineAddressTextField.text = fullAddressArr?[3]
+        } else if fullAddressArr?.count == 3 {
+                firstLineAddressTextField.text = fullAddressArr?[0]
+                cityLineAddressTextField.text = fullAddressArr?[1]
+                    postcodeLineAddressTextField.text = fullAddressArr?[2]
+        } else if fullAddressArr?.count == 4 {
+                    firstLineAddressTextField.text = fullAddressArr?[0]
+                    cityLineAddressTextField.text = fullAddressArr?[1]
+                    postcodeLineAddressTextField.text = fullAddressArr?[2]
+                    countryLineAddressTextField.text = fullAddressArr?[3]
+        }
     
         
         let selectedMapItem = matchingItems[indexPath.row]
