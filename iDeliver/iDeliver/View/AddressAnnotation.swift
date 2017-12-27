@@ -15,6 +15,7 @@ class AddressAnnotation: NSObject, MKAnnotation {
     var image: UIImage!
     //var key: String
     
+    
     init(coordinate: CLLocationCoordinate2D) {
         self.coordinate = coordinate
         super.init()

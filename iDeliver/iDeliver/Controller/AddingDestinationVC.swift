@@ -37,6 +37,11 @@ class AddingDestinationVC: UIViewController {
     var route: MKRoute!
     var distance: CLLocationDistance = CLLocationDistance()
     var selectedItemPlacemark: MKPlacemark? = nil
+    
+
+    var destlat: Double = Double()
+    var destlong: Double = Double()
+    
     //var addressCoordinate: [CLLocationCoordinate2D] = [] for coredata use
     
     override func viewDidLoad() {
@@ -87,9 +92,11 @@ class AddingDestinationVC: UIViewController {
         if firstLineAddressTextField.text != "" && cityLineAddressTextField.text != "" && postcodeLineAddressTextField.text != "" {
             
                 //Create Model object DeliveryDestinations
-            let addressObj = DeliveryDestinations(NameOrBusiness: nameOrBusinessTextField.text, FirstLineAddress: firstLineAddressTextField.text, SecondLineAddress: countryLineAddressTextField.text, CityLineAddress: cityLineAddressTextField.text, PostCodeLineAddress: postcodeLineAddressTextField.text, DistanceToDestination: distance)
+            let addressObj = DeliveryDestinations(NameOrBusiness: nameOrBusinessTextField.text, FirstLineAddress: firstLineAddressTextField.text, SecondLineAddress: countryLineAddressTextField.text, CityLineAddress: cityLineAddressTextField.text, PostCodeLineAddress: postcodeLineAddressTextField.text, DistanceToDestination: distance, Lat: destlat, Long: destlong)
             
                 //print(distance)
+                //print("This is the latitude to use with protocol \(destlat)")
+                //print("This is the latitude to use with protocol \(destlong)")
             
                 //add that object to previous view with delegate
                 delegate?.userDidEnterData(addressObj: addressObj)
@@ -132,7 +139,6 @@ extension AddingDestinationVC: CLLocationManagerDelegate {
         mapView.userTrackingMode = .follow
     }
     
- 
     /*
     // Working annotation.
     
@@ -266,7 +272,11 @@ extension AddingDestinationVC: CLLocationManagerDelegate {
         let annotation = MKPointAnnotation()
         annotation.coordinate = placemark.coordinate
         mapView.addAnnotation(annotation)
+        destlat = placemark.coordinate.latitude
+        destlong = placemark.coordinate.longitude
+        //print("This is the pins destinations coord \(destlat, destlong)")
    }
+ 
     func searchMapKitForResultsWithPolyline(forMapItem mapItem: MKMapItem) {
         let request = MKDirectionsRequest()
         request.source = MKMapItem.forCurrentLocation()
@@ -360,14 +370,15 @@ extension AddingDestinationVC: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let addressCoordinate = locationManager.location?.coordinate
         
-        print("This is the coordinates of the pins \(String(describing: addressCoordinate))")
+        print("This is the coordinates of the current user location: \(String(describing: addressCoordinate))")
+
         
         let currentAnnotation = AddressAnnotation(coordinate: addressCoordinate!)
         //mapView.addAnnotation(currentAnnotation) // add pin to current location
         
         let fullAddress = tableView.cellForRow(at: indexPath)?.detailTextLabel?.text
         
-        print(fullAddress)
+        print(fullAddress as Any)
         
         let fullAddressArr = fullAddress?.components(separatedBy: ",")
         if nameOrBusinessTextField.text == "" {
@@ -397,11 +408,13 @@ extension AddingDestinationVC: UITableViewDelegate, UITableViewDataSource {
      
         dropPinFor(placemark: selectedMapItem.placemark)
         
+        print("This is the pin destination coordinates \(selectedMapItem.placemark.coordinate)")
         searchMapKitForResultsWithPolyline(forMapItem: selectedMapItem)
         
         animateTableView(shouldShow: false)
         print("selected!")
     }
+    
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         view.endEditing(true)
     }
