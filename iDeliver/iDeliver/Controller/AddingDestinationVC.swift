@@ -230,14 +230,7 @@ extension AddingDestinationVC: CLLocationManagerDelegate {
     func mapView(_ mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
         centerMapBtn.fadeTo(alphaValue: 1.0, withDuration: 0.2)
     }
-    //creating the line between 2 points working need to move this to different VC
-//    func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
-//        let lineRenderer = MKPolylineRenderer(overlay: self.route.polyline)
-//        lineRenderer.strokeColor = #colorLiteral(red: 0.2588235438, green: 0.7568627596, blue: 0.9686274529, alpha: 1)
-//        lineRenderer.lineWidth = 3
-//
-//        return lineRenderer
-//    }
+
     
     func performSearch() {
         matchingItems.removeAll()

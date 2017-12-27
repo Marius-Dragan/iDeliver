@@ -20,6 +20,8 @@ class DeliveryLocationsVC: UIViewController {
     let locationManager = CLLocationManager()
     let regionRadius: CLLocationDistance = 10000
     let authorizationStatus = CLLocationManager.authorizationStatus()
+    var route: MKRoute!
+    var distance: CLLocationDistance = CLLocationDistance()
     
 
     override func viewDidLoad() {
@@ -70,6 +72,7 @@ class DeliveryLocationsVC: UIViewController {
             return annotation
         }
         mapView.addAnnotations(annotations)
+
     }
     @IBAction func centerMapBtnWasPressed(_ sender: Any) {
         checkLocationAuthStatus()
@@ -85,6 +88,9 @@ class DeliveryLocationsVC: UIViewController {
             locationManager.requestAlwaysAuthorization()
         }
     }
+    
+
+
 }
 extension DeliveryLocationsVC: MKMapViewDelegate {
     func centerMapOnUserLocation() {
@@ -92,7 +98,35 @@ extension DeliveryLocationsVC: MKMapViewDelegate {
         let coordinateRegion = MKCoordinateRegionMakeWithDistance(mapView.userLocation.coordinate, regionRadius * 2.0, regionRadius * 2.0)
         mapView.setRegion(coordinateRegion, animated: true)
     }
+    //creating the line between 2 points working need to move this to different VC
+    func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
+        let lineRenderer = MKPolylineRenderer(overlay: self.route.polyline)
+        lineRenderer.strokeColor = #colorLiteral(red: 0.2588235438, green: 0.7568627596, blue: 0.9686274529, alpha: 1)
+        lineRenderer.lineWidth = 3
+
+        return lineRenderer
+    }
+    func searchMapKitForResultsWithPolyline(forMapItem mapItem: MKMapItem) {
+        let request = MKDirectionsRequest()
+        request.source = MKMapItem.forCurrentLocation()
+        request.destination = mapItem
+        request.transportType = MKDirectionsTransportType.automobile
+        
+        let directions = MKDirections(request: request)
+        
+        directions.calculate { (response, error) in
+            guard let response = response else {
+                print(error.debugDescription)
+                return
+            }
+            self.route = response.routes[0]
+            self.mapView.add(self.route.polyline)
+            self.distance = self.route.distance * 0.00062137
+            //print(self.distance)
+        }
+    }
 }
+
 extension DeliveryLocationsVC: CLLocationManagerDelegate {
     func configureLocationServices() {
         if authorizationStatus == .notDetermined {
