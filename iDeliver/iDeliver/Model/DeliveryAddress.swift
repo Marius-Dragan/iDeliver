@@ -38,4 +38,10 @@ struct Location {
     let title: String
     let latitude: Double
     let longitude: Double
+    
+    init(title: String, latitude: Double, longitude: Double) {
+        self.title = title
+        self.latitude = latitude
+        self.longitude = longitude
+    }
 }

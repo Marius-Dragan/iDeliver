@@ -32,15 +32,16 @@ class DeliveryLocationsVC: UIViewController {
         centerMapOnUserLocation()
         
         //print(addressArr)
-        
+       
         
         navigationItem.title = "Delivery Location"
         // Do any additional setup after loading the view.
         
          //get coordinates from object
         for object in addressArr {
-            locations = [Location(title: object.FirstLineAddress!, latitude: object.Lat!, longitude: object.Long!)]
-            print(locations)
+            let location = Location.init(title: object.FirstLineAddress!, latitude: object.Lat!, longitude: object.Long!)
+            locations.append(location)
+//            print(locations.count)
 //            let title = object.FirstLineAddress
 //            let lat = object.Lat
 //            let long = object.Long
@@ -55,13 +56,20 @@ class DeliveryLocationsVC: UIViewController {
 //            print ("Destination at index \(i) has coordinate: (\(String(describing: lat)), \(String(describing: long)))")
 //        }
         }
+//         print(locations)
         for location in locations {
             let annotation = MKPointAnnotation()
             annotation.title = location.title
             annotation.coordinate = CLLocationCoordinate2D(latitude: location.latitude, longitude: location.longitude)
             mapView.addAnnotation(annotation)
         }
-
+        let annotations = locations.map { location -> MKAnnotation in
+            let annotation = MKPointAnnotation()
+            annotation.title = location.title
+            annotation.coordinate = CLLocationCoordinate2D(latitude: location.latitude, longitude: location.longitude)
+            return annotation
+        }
+        mapView.addAnnotations(annotations)
     }
     @IBAction func centerMapBtnWasPressed(_ sender: Any) {
         checkLocationAuthStatus()
