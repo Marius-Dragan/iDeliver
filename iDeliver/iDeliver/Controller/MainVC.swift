@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import RevealingSplashView
 
 class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource, DataSentDelegate {
     
@@ -17,10 +18,18 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource, Data
     //Create array which will return your address data
     var addressArr = [DeliveryDestinations]()
     var restoreArray = [DeliveryDestinations]()
+    
+    let revealingSplashView = RevealingSplashView (iconImage: UIImage(named: "centerMapBtn")!, iconInitialSize: CGSize(width: 100, height: 100), backgroundColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1))
+    
     var isTapped = true
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.view.addSubview(revealingSplashView)
+        revealingSplashView.animationType = SplashAnimationType.heartBeat
+        revealingSplashView.startAnimation()
+        revealingSplashView.heartAttack = true
+        
         tableView.delegate = self
         tableView.dataSource = self
         tableView.reloadData()
