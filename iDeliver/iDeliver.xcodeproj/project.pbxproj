@@ -22,9 +22,11 @@
 		29A3EEEF1FE6A0BB0075CC35 /* CustomCalloutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29A3EEEE1FE6A0BB0075CC35 /* CustomCalloutView.swift */; };
 		29A3EEF01FE6AAF30075CC35 /* CustomCalloutView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 29A3EEED1FE6A0330075CC35 /* CustomCalloutView.xib */; };
 		29A3EEF21FE7118D0075CC35 /* DeliveryLocationsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29A3EEF11FE7118D0075CC35 /* DeliveryLocationsVC.swift */; };
+		3E7D042F50B630D0666A2566 /* Pods_iDeliver.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0C598FEB4E8C7D4892C45015 /* Pods_iDeliver.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0C598FEB4E8C7D4892C45015 /* Pods_iDeliver.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_iDeliver.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		290301D81FE086B400471408 /* AddingDestinationVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddingDestinationVC.swift; sourceTree = "<group>"; };
 		290470C61FDD82D500CC8C06 /* AddressCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressCell.swift; sourceTree = "<group>"; };
 		2911C1AA1FE4DC2B0089B5A6 /* DeliveryAddress.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeliveryAddress.swift; sourceTree = "<group>"; };
@@ -42,6 +44,8 @@
 		29A3EEED1FE6A0330075CC35 /* CustomCalloutView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CustomCalloutView.xib; sourceTree = "<group>"; };
 		29A3EEEE1FE6A0BB0075CC35 /* CustomCalloutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomCalloutView.swift; sourceTree = "<group>"; };
 		29A3EEF11FE7118D0075CC35 /* DeliveryLocationsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeliveryLocationsVC.swift; sourceTree = "<group>"; };
+		B8D825DDD40E5883F2705F97 /* Pods-iDeliver.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iDeliver.release.xcconfig"; path = "Pods/Target Support Files/Pods-iDeliver/Pods-iDeliver.release.xcconfig"; sourceTree = "<group>"; };
+		C552DEEF3132B93CF2CFE162 /* Pods-iDeliver.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iDeliver.debug.xcconfig"; path = "Pods/Target Support Files/Pods-iDeliver/Pods-iDeliver.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -49,12 +53,21 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3E7D042F50B630D0666A2566 /* Pods_iDeliver.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2006D7E380F30AD247F018DE /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				0C598FEB4E8C7D4892C45015 /* Pods_iDeliver.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		290470C41FDD7EAA00CC8C06 /* View */ = {
 			isa = PBXGroup;
 			children = (
@@ -79,6 +92,8 @@
 			children = (
 				297081D81FCB271900CCCBA1 /* iDeliver */,
 				297081D71FCB271900CCCBA1 /* Products */,
+				FAF3FB5DAA01C691171CA403 /* Pods */,
+				2006D7E380F30AD247F018DE /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -134,6 +149,15 @@
 			path = "Custom Callout";
 			sourceTree = "<group>";
 		};
+		FAF3FB5DAA01C691171CA403 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				C552DEEF3132B93CF2CFE162 /* Pods-iDeliver.debug.xcconfig */,
+				B8D825DDD40E5883F2705F97 /* Pods-iDeliver.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -141,9 +165,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 297081E81FCB271900CCCBA1 /* Build configuration list for PBXNativeTarget "iDeliver" */;
 			buildPhases = (
+				7912278CC26841FC8346AD99 /* [CP] Check Pods Manifest.lock */,
 				297081D21FCB271900CCCBA1 /* Sources */,
 				297081D31FCB271900CCCBA1 /* Frameworks */,
 				297081D41FCB271900CCCBA1 /* Resources */,
+				EE1AD1FCC89A655899B64934 /* [CP] Embed Pods Frameworks */,
+				76D1F2FC2EA48452099F4DC1 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -201,6 +228,60 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		76D1F2FC2EA48452099F4DC1 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-iDeliver/Pods-iDeliver-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		7912278CC26841FC8346AD99 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-iDeliver-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		EE1AD1FCC89A655899B64934 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-iDeliver/Pods-iDeliver-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/RevealingSplashView/RevealingSplashView.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RevealingSplashView.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-iDeliver/Pods-iDeliver-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		297081D21FCB271900CCCBA1 /* Sources */ = {
@@ -352,6 +433,7 @@
 		};
 		297081E91FCB271900CCCBA1 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = C552DEEF3132B93CF2CFE162 /* Pods-iDeliver.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -367,6 +449,7 @@
 		};
 		297081EA1FCB271900CCCBA1 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = B8D825DDD40E5883F2705F97 /* Pods-iDeliver.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;

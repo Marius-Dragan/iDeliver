@@ -1,0 +1,12 @@
+PODS:
+  - RevealingSplashView (0.4.0)
+
+DEPENDENCIES:
+  - RevealingSplashView
+
+SPEC CHECKSUMS:
+  RevealingSplashView: 72be158ad5e1bc72713e8f78383dc3e1803ce4d1
+
+PODFILE CHECKSUM: b0cb96045e43f4ed9865fa25af11d4b5a5dabc2c
+
+COCOAPODS: 1.3.1
