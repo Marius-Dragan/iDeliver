@@ -31,6 +31,9 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource, Data
         tableView.delegate = self
         tableView.dataSource = self
         tableView.reloadData()
+        
+        isTapped = false
+        
     }
     
     //add parameter for created address object
@@ -41,9 +44,6 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource, Data
         //Reload your tableview once your new object added.
         self.tableView.reloadData()
        
-    }
-    override func viewWillAppear(_ animated: Bool) {
-        isTapped = false
     }
   
     func sortArr()  {
@@ -61,10 +61,10 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource, Data
     @IBAction func sortBtnWasPressed(_  sender: Any) {
         isTapped = !isTapped
         if isTapped {
-            sortLbl.title = "SORTED"
+           sortLbl.title = "RESTORED"
             sortArr()
         } else  {
-            self.sortLbl.title = "RESTORED"
+            self.sortLbl.title = "SORT"
             restoreArray()
         }
     }
