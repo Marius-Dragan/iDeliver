@@ -10,17 +10,20 @@ import UIKit
 
 class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource, DataSentDelegate {
     
-    @IBOutlet weak var deliveryAddress: UITableView!
+    @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var distanceToDestinationLbl: UILabel!
+    @IBOutlet weak var sortLbl: UIBarButtonItem!
     
     //Create array which will return your address data
     var addressArr = [DeliveryDestinations]()
+    var restoreArray = [DeliveryDestinations]()
+    var isTapped = true
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        deliveryAddress.delegate = self
-        deliveryAddress.dataSource = self
-        deliveryAddress.reloadData()
+        tableView.delegate = self
+        tableView.dataSource = self
+        tableView.reloadData()
     }
     
     //add parameter for created address object
@@ -29,9 +32,29 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource, Data
         //append added object into your table array
         self.addressArr.append(addressObj)
         //Reload your tableview once your new object added.
-        self.deliveryAddress.reloadData()
+        self.tableView.reloadData()
+       
     }
-    
+
+    @IBAction func sortBtnWasPressed(_ sender: Any) {
+        isTapped = !isTapped
+        if isTapped {
+            sortArr()
+            sortLbl.title = "SORTED A-Z"
+        } else if isTapped {
+         sortArr()
+            sortLbl.title = "SORTED Z-A"
+        } else {
+            sortLbl.title = "RESTORED"
+        }
+        
+       self.tableView.reloadData()
+    }
+    func sortArr()  {
+        restoreArray = addressArr
+        addressArr.sort { $0.DistanceToDestination! < $1.DistanceToDestination!} // sort the distance
+        print(addressArr)
+    }
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
