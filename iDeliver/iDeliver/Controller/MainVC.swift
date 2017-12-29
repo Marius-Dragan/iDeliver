@@ -31,9 +31,6 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource, Data
         tableView.delegate = self
         tableView.dataSource = self
         tableView.reloadData()
-        func viewWillAppear(_ animated: Bool) {
-            var isTapped = false
-        }
     }
     
     //add parameter for created address object
@@ -45,7 +42,9 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource, Data
         self.tableView.reloadData()
        
     }
-
+    override func viewWillAppear(_ animated: Bool) {
+        isTapped = false
+    }
   
     func sortArr()  {
         restoreArr = addressArr
