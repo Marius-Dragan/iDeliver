@@ -28,7 +28,7 @@ class AddressCell: UITableViewCell {
         countryLineAddressLbl.text = addressObj.SecondLineAddress
         cityLineAddressLbl.text = addressObj.CityLineAddress
         postcodeLineAddressLbl.text = addressObj.PostcodeLineAddress
-        distanceLbl.text = String(format: "%.2f ", addressObj.DistanceToDestination!)
+        distanceLbl.text = String(format: "%.2f ", addressObj.DistanceToDestination)
         
     }
 }

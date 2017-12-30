@@ -92,7 +92,7 @@ class AddingDestinationVC: UIViewController {
         if firstLineAddressTextField.text != "" && cityLineAddressTextField.text != "" && postcodeLineAddressTextField.text != "" {
             
                 //Create Model object DeliveryDestinations
-            let addressObj = DeliveryDestinations(NameOrBusiness: nameOrBusinessTextField.text, FirstLineAddress: firstLineAddressTextField.text, SecondLineAddress: countryLineAddressTextField.text, CityLineAddress: cityLineAddressTextField.text, PostCodeLineAddress: postcodeLineAddressTextField.text, DistanceToDestination: distance, Lat: destlat, Long: destlong)
+            let addressObj = DeliveryDestinations(NameOrBusiness: nameOrBusinessTextField.text!, FirstLineAddress: firstLineAddressTextField.text!, SecondLineAddress: countryLineAddressTextField.text!, CityLineAddress: cityLineAddressTextField.text!, PostCodeLineAddress: postcodeLineAddressTextField.text!, DistanceToDestination: distance, Lat: destlat, Long: destlong)
             
                 //print(distance)
                 //print("This is the latitude to use with protocol \(destlat)")

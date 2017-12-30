@@ -18,7 +18,9 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource, Data
     //Create array which will return your address data
     var addressArr = [DeliveryDestinations]()
     var restoreArr = [DeliveryDestinations]()
- var isTapped: Bool = false
+    
+    var isTapped: Bool = false
+    
     let revealingSplashView = RevealingSplashView (iconImage: UIImage(named: "LaunchScreenIcon")!, iconInitialSize: CGSize(width: 100, height: 100), backgroundColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1))
     
     override func viewDidLoad() {
@@ -45,14 +47,15 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource, Data
         self.tableView.reloadData()
        
     }
-  
+
     func sortArr()  {
         restoreArr = addressArr
-        addressArr.sort { $0.DistanceToDestination! < $1.DistanceToDestination!}  // sort the distance
+        addressArr.sort { $0.DistanceToDestination < $1.DistanceToDestination}  // sort the distance
         self.tableView.reloadData()
         print(restoreArr)
     }
     func restoreArray() {
+       // restoreArr = addressArr
         addressArr = restoreArr
         self.tableView.reloadData()
         print(addressArr)

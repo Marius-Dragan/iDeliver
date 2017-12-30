@@ -10,17 +10,17 @@ import Foundation
 import MapKit
 
 struct DeliveryDestinations {
-    var NameOrBusiness: String?
-    var FirstLineAddress: String?
-    var SecondLineAddress: String?
-    var CityLineAddress: String?
-    var PostcodeLineAddress: String?
-    var DistanceToDestination: CLLocationDistance?
-    var Lat: Double?
-    var Long: Double?
+    var NameOrBusiness: String
+    var FirstLineAddress: String
+    var SecondLineAddress: String
+    var CityLineAddress: String
+    var PostcodeLineAddress: String
+    var DistanceToDestination: CLLocationDistance
+    var Lat: Double
+    var Long: Double
 
     
-    init(NameOrBusiness: String?, FirstLineAddress: String?, SecondLineAddress: String?, CityLineAddress: String?, PostCodeLineAddress: String?, DistanceToDestination: CLLocationDistance?, Lat: Double?, Long: Double? ) {
+    init(NameOrBusiness: String, FirstLineAddress: String, SecondLineAddress: String, CityLineAddress: String, PostCodeLineAddress: String, DistanceToDestination: CLLocationDistance, Lat: Double, Long: Double ) {
         self.NameOrBusiness = NameOrBusiness
         self.FirstLineAddress = FirstLineAddress
         self.SecondLineAddress = SecondLineAddress

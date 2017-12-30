@@ -41,7 +41,7 @@ class DeliveryLocationsVC: UIViewController {
         
          //get coordinates from object
         for object in addressArr {
-            let location = Location.init(title: object.FirstLineAddress!, latitude: object.Lat!, longitude: object.Long!)
+            let location = Location.init(title: object.FirstLineAddress, latitude: object.Lat, longitude: object.Long)
             locations.append(location)
 //            print(locations.count)
 //            let title = object.FirstLineAddress
