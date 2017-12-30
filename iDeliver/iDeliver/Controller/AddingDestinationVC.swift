@@ -15,7 +15,7 @@ protocol DataSentDelegate {
     func userDidEnterData(addressObj: DeliveryDestinations)
 }
 
-class AddingDestinationVC: UIViewController {
+class AddingDestinationVC: UIViewController, Alertable {
 
     //IBOutles
     
@@ -144,6 +144,10 @@ extension AddingDestinationVC: CLLocationManagerDelegate {
         lineRenderer.strokeColor = #colorLiteral(red: 0.2588235438, green: 0.7568627596, blue: 0.9686274529, alpha: 1)
         lineRenderer.lineWidth = 3
         
+        shouldPresentLoadingView(false)
+        
+        zoom(toFitAnnotationsFromMapView: self.mapView)
+        
         return lineRenderer
     }
 
@@ -251,13 +255,15 @@ extension AddingDestinationVC: CLLocationManagerDelegate {
         
         search.start { (response, error) in
             if error != nil {
-                print(error.debugDescription)
+                self.showAlert("An error occured, please try again")
+               self.shouldPresentLoadingView(false)
             }  else if response!.mapItems.count == 0 {
-                    print("No results!")
+                self.showAlert("No results! Please search again for a different location.")
                 } else {
                     for mapItem in response!.mapItems {
                         self.matchingItems.append(mapItem as MKMapItem)
                         self.tableView.reloadData()
+                        self.shouldPresentLoadingView(false)
                     }
                 }
             }
@@ -289,17 +295,40 @@ extension AddingDestinationVC: CLLocationManagerDelegate {
         
         directions.calculate { (response, error) in
             guard let response = response else {
-                print(error.debugDescription)
+                self.showAlert("An error occurred, please try again.")
+               // print(error.debugDescription)
                 return
             }
             self.route = response.routes[0]
+            
             self.mapView.add(self.route.polyline)
+            
+            let delegate = AppDelegate.getAppDelegate()
+            delegate.window?.rootViewController?.shouldPresentLoadingView(false)
+            
             self.distance = self.route.distance * 0.00062137
             //print(self.distance)
         }
     }
+    func zoom(toFitAnnotationsFromMapView mapView: MKMapView) {
+        if mapView.annotations.count == 0 {
+            return
+        }
+        var topLeftCoordinate = CLLocationCoordinate2D(latitude: -90, longitude: 180)
+        var bottomRightCoordinate = CLLocationCoordinate2D(latitude: 90, longitude: -180)
+        
+        for annotation in mapView.annotations {
+            topLeftCoordinate.longitude = fmin(topLeftCoordinate.longitude, annotation.coordinate.longitude)
+            topLeftCoordinate.latitude = fmax(topLeftCoordinate.latitude, annotation.coordinate.latitude )
+            bottomRightCoordinate.longitude = fmax(bottomRightCoordinate.longitude, annotation.coordinate.longitude)
+            bottomRightCoordinate.latitude = fmin(bottomRightCoordinate.latitude, annotation.coordinate.latitude)
+        }
+        var region = MKCoordinateRegion(center: CLLocationCoordinate2DMake(topLeftCoordinate.latitude - (topLeftCoordinate.latitude - bottomRightCoordinate.latitude) * 0.5, topLeftCoordinate.longitude + (bottomRightCoordinate.longitude - topLeftCoordinate.longitude) * 0.5), span: MKCoordinateSpan(latitudeDelta: fabs(topLeftCoordinate.latitude - bottomRightCoordinate.latitude) * 2.0, longitudeDelta: fabs(bottomRightCoordinate.longitude - topLeftCoordinate.longitude) * 2.0))
+        
+        region = mapView.regionThatFits(region)
+        mapView.setRegion(region, animated: true)
+    }
 }
-
 
 extension AddingDestinationVC: UITextFieldDelegate {
     func textFieldDidBeginEditing(_ textField: UITextField) {
@@ -321,6 +350,7 @@ extension AddingDestinationVC: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         if textField == firstLineAddressTextField {
             performSearch()
+            shouldPresentLoadingView(true)
             view.endEditing(true)
         }
         return true
@@ -370,6 +400,9 @@ extension AddingDestinationVC: UITableViewDelegate, UITableViewDataSource {
         return matchingItems.count
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        shouldPresentLoadingView(true)
+        
         let addressCoordinate = locationManager.location?.coordinate
         
         print("This is the coordinates of the current user location: \(String(describing: addressCoordinate))")

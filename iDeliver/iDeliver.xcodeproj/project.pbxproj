@@ -19,6 +19,8 @@
 		298E79291FE5EB0700D9BC9B /* UIViewExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 298E79281FE5EB0700D9BC9B /* UIViewExt.swift */; };
 		298E792B1FE600E600D9BC9B /* AddressAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 298E792A1FE600E600D9BC9B /* AddressAnnotation.swift */; };
 		298E792D1FE67D8500D9BC9B /* AnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 298E792C1FE67D8500D9BC9B /* AnnotationView.swift */; };
+		299663B51FF7D88400CCD15A /* UIViewControllerExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 299663B41FF7D88400CCD15A /* UIViewControllerExt.swift */; };
+		299663B81FF7E23300CCD15A /* Alertable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 299663B71FF7E23300CCD15A /* Alertable.swift */; };
 		29A3EEEF1FE6A0BB0075CC35 /* CustomCalloutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29A3EEEE1FE6A0BB0075CC35 /* CustomCalloutView.swift */; };
 		29A3EEF01FE6AAF30075CC35 /* CustomCalloutView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 29A3EEED1FE6A0330075CC35 /* CustomCalloutView.xib */; };
 		29A3EEF21FE7118D0075CC35 /* DeliveryLocationsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29A3EEF11FE7118D0075CC35 /* DeliveryLocationsVC.swift */; };
@@ -41,6 +43,8 @@
 		298E79281FE5EB0700D9BC9B /* UIViewExt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewExt.swift; sourceTree = "<group>"; };
 		298E792A1FE600E600D9BC9B /* AddressAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressAnnotation.swift; sourceTree = "<group>"; };
 		298E792C1FE67D8500D9BC9B /* AnnotationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnotationView.swift; sourceTree = "<group>"; };
+		299663B41FF7D88400CCD15A /* UIViewControllerExt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewControllerExt.swift; sourceTree = "<group>"; };
+		299663B71FF7E23300CCD15A /* Alertable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Alertable.swift; sourceTree = "<group>"; };
 		29A3EEED1FE6A0330075CC35 /* CustomCalloutView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CustomCalloutView.xib; sourceTree = "<group>"; };
 		29A3EEEE1FE6A0BB0075CC35 /* CustomCalloutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomCalloutView.swift; sourceTree = "<group>"; };
 		29A3EEF11FE7118D0075CC35 /* DeliveryLocationsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeliveryLocationsVC.swift; sourceTree = "<group>"; };
@@ -108,6 +112,7 @@
 		297081D81FCB271900CCCBA1 /* iDeliver */ = {
 			isa = PBXGroup;
 			children = (
+				299663B61FF7E1A800CCD15A /* Protocols */,
 				29A3EEEC1FE69FE40075CC35 /* Custom Callout */,
 				298E79271FE5EAC800D9BC9B /* Extensions */,
 				290470C51FDD7EB200CC8C06 /* Model */,
@@ -136,8 +141,17 @@
 			isa = PBXGroup;
 			children = (
 				298E79281FE5EB0700D9BC9B /* UIViewExt.swift */,
+				299663B41FF7D88400CCD15A /* UIViewControllerExt.swift */,
 			);
 			path = Extensions;
+			sourceTree = "<group>";
+		};
+		299663B61FF7E1A800CCD15A /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				299663B71FF7E23300CCD15A /* Alertable.swift */,
+			);
+			path = Protocols;
 			sourceTree = "<group>";
 		};
 		29A3EEEC1FE69FE40075CC35 /* Custom Callout */ = {
@@ -290,8 +304,10 @@
 			files = (
 				298E79291FE5EB0700D9BC9B /* UIViewExt.swift in Sources */,
 				298E792D1FE67D8500D9BC9B /* AnnotationView.swift in Sources */,
+				299663B51FF7D88400CCD15A /* UIViewControllerExt.swift in Sources */,
 				2911C1AB1FE4DC2B0089B5A6 /* DeliveryAddress.swift in Sources */,
 				297081DC1FCB271900CCCBA1 /* MainVC.swift in Sources */,
+				299663B81FF7E23300CCD15A /* Alertable.swift in Sources */,
 				29A3EEEF1FE6A0BB0075CC35 /* CustomCalloutView.swift in Sources */,
 				298E792B1FE600E600D9BC9B /* AddressAnnotation.swift in Sources */,
 				298E791F1FE57E9F00D9BC9B /* GradientView.swift in Sources */,
