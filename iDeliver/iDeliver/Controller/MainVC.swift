@@ -16,9 +16,9 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource, Data
     @IBOutlet weak var sortLbl: UIBarButtonItem!
     
     //Create array which will return your address data
+    var originalArr = [DeliveryDestinations]()
     var addressArr = [DeliveryDestinations]()
-    var restoreArr = [DeliveryDestinations]()
-    
+
     var isTapped: Bool = false
     
     let revealingSplashView = RevealingSplashView (iconImage: UIImage(named: "LaunchScreenIcon")!, iconInitialSize: CGSize(width: 100, height: 100), backgroundColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1))
@@ -33,30 +33,30 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource, Data
         tableView.delegate = self
         tableView.dataSource = self
         tableView.reloadData()
-        
-        isTapped = false
-        
     }
     
     //add parameter for created address object
     func userDidEnterData(addressObj: DeliveryDestinations) {
         
         //append added object into your table array
-        self.addressArr.append(addressObj)
+        self.originalArr.append(addressObj)
+        //Copy originalArr to addressArr to revert back to how user input the data
+        addressArr = originalArr
         //Reload your tableview once your new object added.
         self.tableView.reloadData()
        
     }
-
-    func sortArr()  {
-        restoreArr = addressArr
-        addressArr.sort { $0.DistanceToDestination < $1.DistanceToDestination}  // sort the distance
+    override func viewWillAppear(_ animated: Bool) {
+        isTapped = false
+        sortLbl.title = "SORT"
+    }
+    func sortArray()  {
+        addressArr.sort { $0.DistanceToDestination < $1.DistanceToDestination}  // sort the distance A-Z
         self.tableView.reloadData()
-        print(restoreArr)
+        print(addressArr)
     }
     func restoreArray() {
-       // restoreArr = addressArr
-        addressArr = restoreArr
+        addressArr = originalArr
         self.tableView.reloadData()
         print(addressArr)
     }
@@ -64,8 +64,8 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource, Data
     @IBAction func sortBtnWasPressed(_  sender: Any) {
         isTapped = !isTapped
         if isTapped {
-           sortLbl.title = "RESTORED"
-            sortArr()
+            sortLbl.title = "RESTORE"
+            sortArray()
         } else  {
             self.sortLbl.title = "SORT"
             restoreArray()
