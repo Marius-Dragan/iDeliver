@@ -9,6 +9,12 @@
 import UIKit
 import RevealingSplashView
 
+enum SortButtonAction {
+    case sortArrayByDistance
+    case sortArrayByPostcode
+    case restoreOriginalArray
+}
+
 class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource, DataSentDelegate {
     
     @IBOutlet weak var tableView: UITableView!
@@ -18,8 +24,12 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource, Data
     //Create array which will return your address data
     var originalArr = [DeliveryDestinations]()
     var addressArr = [DeliveryDestinations]()
+    
+    var actionForButton: SortButtonAction = .sortArrayByDistance
 
-    var isTapped: Bool = false
+   //var isTapped: Bool = false
+    var isTapped = UIButton()
+    var countTaps = 0
     
     let revealingSplashView = RevealingSplashView (iconImage: UIImage(named: "LaunchScreenIcon")!, iconInitialSize: CGSize(width: 100, height: 100), backgroundColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1))
     
@@ -33,6 +43,8 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource, Data
         tableView.delegate = self
         tableView.dataSource = self
         tableView.reloadData()
+        
+        isTapped.addTarget(self, action: #selector(self.sortBtnWasPressed), for: .touchUpInside)
     }
     
     //add parameter for created address object
@@ -46,31 +58,77 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource, Data
         self.tableView.reloadData()
        
     }
-    override func viewWillAppear(_ animated: Bool) {
-        isTapped = false
-        sortLbl.title = "SORT"
-    }
-    func sortArray()  {
-        addressArr.sort { $0.DistanceToDestination < $1.DistanceToDestination}  // sort the distance A-Z
-        self.tableView.reloadData()
-        print(addressArr)
-    }
-    func restoreArray() {
-        addressArr = originalArr
-        self.tableView.reloadData()
-        print(addressArr)
-    }
+//    override func viewWillAppear(_ animated: Bool) {
+//        isTapped = false
+//        sortLbl.title = "SORT"
+//    }
+//    func sortArray()  {
+//        addressArr.sort { $0.DistanceToDestination < $1.DistanceToDestination}  // sort the distance A-Z
+//        self.tableView.reloadData()
+//        print(addressArr)
+//    }
+//    func restoreArray() {
+//        addressArr = originalArr
+//        self.tableView.reloadData()
+//        print(addressArr)
+//    }
 
     @IBAction func sortBtnWasPressed(_  sender: Any) {
-        isTapped = !isTapped
-        if isTapped {
-            sortLbl.title = "RESTORE"
-            sortArray()
-        } else  {
-            self.sortLbl.title = "SORT"
-            restoreArray()
+        checkButtonState(sender: isTapped)
+//        isTapped = !isTapped
+//        if isTapped {
+//            sortLbl.title = "RESTORE"
+//            sortArray()
+//        } else  {
+//            self.sortLbl.title = "SORT"
+//            restoreArray()
+//        }
+    }
+
+    func checkButtonState(sender: UIButton) {
+        countTaps = countTaps + 1
+        print(countTaps)
+        if countTaps <= 3 {
+            switch countTaps  {
+            case 1:
+                buttonSelector(forAction: .sortArrayByDistance)
+            case 2:
+                buttonSelector(forAction: .sortArrayByPostcode)
+            default:
+                buttonSelector(forAction: .restoreOriginalArray)
+                 countTaps = 0
+            }
         }
     }
+    func buttonSelector(forAction action: SortButtonAction) {
+        switch action {
+        case .sortArrayByDistance:
+            // setup code to sort array by distance
+            if addressArr.count > 1 {
+                addressArr.sort { $0.DistanceToDestination < $1.DistanceToDestination}  // sort the distance A-Z
+                sortLbl.title = "BY DISTANCE"
+                tableView.reloadData()
+                print(addressArr)
+            }
+        case .sortArrayByPostcode:
+            // setup code to sort array by postcode
+            if addressArr.count > 1 {
+                addressArr.sort { $0.PostcodeLineAddress < $1.PostcodeLineAddress}  // sort the distance A-Z
+                sortLbl.title = "BY POSTCODE"
+                tableView.reloadData()
+                print(addressArr)
+            }
+        case .restoreOriginalArray:
+            // setup code to restore array to original
+            if addressArr.count > 1 {
+                addressArr = originalArr
+                sortLbl.title = "RESTORE"
+                tableView.reloadData()
+                print(addressArr)
+            }
+        }
+    }
+    
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
