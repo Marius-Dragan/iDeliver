@@ -192,7 +192,7 @@
                     <navigationItem key="navigationItem" title="iDeliver" id="zIQ-7t-wxL">
                         <leftBarButtonItems>
                             <barButtonItem image="menuslider" style="plain" id="9xK-0s-KIO"/>
-                            <barButtonItem title="SORT" id="meW-H9-40a">
+                            <barButtonItem tag="1" title="SORT" id="meW-H9-40a">
                                 <connections>
                                     <action selector="sortBtnWasPressed:" destination="BYZ-38-t0r" id="XWb-Wb-wzu"/>
                                 </connections>

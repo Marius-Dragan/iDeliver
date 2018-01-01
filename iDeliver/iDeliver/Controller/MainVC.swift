@@ -25,16 +25,18 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource, Data
     var originalArr = [DeliveryDestinations]()
     var addressArr = [DeliveryDestinations]()
     
+    var button = DropDownBtn()
     var actionForButton: SortButtonAction = .sortArrayByDistance
 
    //var isTapped: Bool = false
-    var isTapped = UIButton()
+    var sortBtnWasTapped = UIButton()
     var countTaps = 0
     
     let revealingSplashView = RevealingSplashView (iconImage: UIImage(named: "LaunchScreenIcon")!, iconInitialSize: CGSize(width: 100, height: 100), backgroundColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1))
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        configureDropDownMenu()
         self.view.addSubview(revealingSplashView)
         revealingSplashView.animationType = SplashAnimationType.heartBeat
         revealingSplashView.startAnimation()
@@ -44,7 +46,7 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource, Data
         tableView.dataSource = self
         tableView.reloadData()
         
-        isTapped.addTarget(self, action: #selector(self.sortBtnWasPressed), for: .touchUpInside)
+        sortBtnWasTapped.addTarget(self, action: #selector(self.sortBtnWasPressed), for: .touchUpInside)
     }
     
     //add parameter for created address object
@@ -73,8 +75,27 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource, Data
 //        print(addressArr)
 //    }
 
-    @IBAction func sortBtnWasPressed(_  sender: Any) {
-        checkButtonState(sender: isTapped)
+    func configureDropDownMenu() { // <--- Testing drop down menu
+        button = DropDownBtn.init(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
+        button.setTitle("Sort", for: .normal)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        
+        self.view.addSubview(button)
+        
+        //button.centerXAnchor.constraint(equalTo: self.view.centerXAnchor).isActive = true // this will put it on the center of screen
+        //button.centerYAnchor.constraint(equalTo: self.view.centerYAnchor).isActive = true // this will put it on the center of screen
+        
+        button.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 50).isActive = true
+        button.leftAnchor.constraint(equalTo: self.view.leftAnchor, constant: 10).isActive = true
+        
+        button.widthAnchor.constraint(equalToConstant: 150).isActive = true
+        button.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        
+        button.dropDownSortView.dropDownSortOptions = ["By Distance", "By Postcode", "Restore"]
+    }
+    
+    @IBAction func sortBtnWasPressed(_  sender: DropDownBtn) {
+        checkButtonState(sender: sortBtnWasTapped)
 //        isTapped = !isTapped
 //        if isTapped {
 //            sortLbl.title = "RESTORE"
