@@ -5,7 +5,6 @@
     </device>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
-        <capability name="Navigation items with more than one left or right bar item" minToolsVersion="7.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -190,14 +189,11 @@
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <navigationItem key="navigationItem" title="iDeliver" id="zIQ-7t-wxL">
-                        <leftBarButtonItems>
-                            <barButtonItem image="menuslider" style="plain" id="9xK-0s-KIO"/>
-                            <barButtonItem tag="1" title="SORT" id="meW-H9-40a">
-                                <connections>
-                                    <action selector="sortBtnWasPressed:" destination="BYZ-38-t0r" id="XWb-Wb-wzu"/>
-                                </connections>
-                            </barButtonItem>
-                        </leftBarButtonItems>
+                        <barButtonItem key="leftBarButtonItem" title="SORT ROUTE" id="meW-H9-40a">
+                            <connections>
+                                <action selector="sortBtnWasPressed:" destination="BYZ-38-t0r" id="XWb-Wb-wzu"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" style="plain" systemItem="add" id="jJ9-Wm-2Ex">
                             <connections>
                                 <segue destination="E4k-QV-k91" kind="show" identifier="addDeliveryAddressVC" id="znS-sF-7fA"/>
@@ -205,7 +201,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="sortLbl" destination="meW-H9-40a" id="5as-gB-j3s"/>
+                        <outlet property="sortButton" destination="meW-H9-40a" id="5as-gB-j3s"/>
                         <outlet property="tableView" destination="NOb-ef-xzd" id="5AZ-e2-Aee"/>
                     </connections>
                 </viewController>
@@ -394,7 +390,6 @@
         <image name="add_photo_btn" width="20" height="19"/>
         <image name="centerMapBtn" width="62" height="62"/>
         <image name="home_icon" width="15" height="13"/>
-        <image name="menuslider" width="20" height="12"/>
         <image name="star_icon" width="34" height="32"/>
     </resources>
 </document>

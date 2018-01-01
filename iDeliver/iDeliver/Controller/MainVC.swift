@@ -19,7 +19,7 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource, Data
     
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var distanceToDestinationLbl: UILabel!
-    @IBOutlet weak var sortLbl: UIBarButtonItem!
+    @IBOutlet weak var sortButton: UIBarButtonItem!
     
     //Create array which will return your address data
     var originalArr = [DeliveryDestinations]()
@@ -36,7 +36,12 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource, Data
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        configureDropDownMenu()
+        
+        //sortLbl = UIBarButtonItem(title: "Sort", style: .plain, target: self, action: #selector(configureDropDownMenu))
+        //sortLbl.setTitleTextAttributes([NSAttributedStringKey.font: UIFont.systemFont(ofSize: 18.0), NSAttributedStringKey.foregroundColor: UIColor.black], for: UIControlState())
+        //navigationController?.navigationBar.topItem?.leftBarButtonItem = sortLbl
+        
+       // configureDropDownMenu()
         self.view.addSubview(revealingSplashView)
         revealingSplashView.animationType = SplashAnimationType.heartBeat
         revealingSplashView.startAnimation()
@@ -60,6 +65,7 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource, Data
         self.tableView.reloadData()
        
     }
+  // old way to sort the data
 //    override func viewWillAppear(_ animated: Bool) {
 //        isTapped = false
 //        sortLbl.title = "SORT"
@@ -75,7 +81,7 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource, Data
 //        print(addressArr)
 //    }
 
-    func configureDropDownMenu() { // <--- Testing drop down menu
+        func configureDropDownMenu() { // <--- Testing drop down menu
         button = DropDownBtn.init(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
         button.setTitle("Sort", for: .normal)
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -87,14 +93,14 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource, Data
         
         button.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 50).isActive = true
         button.leftAnchor.constraint(equalTo: self.view.leftAnchor, constant: 10).isActive = true
-        
+
         button.widthAnchor.constraint(equalToConstant: 150).isActive = true
         button.heightAnchor.constraint(equalToConstant: 50).isActive = true
         
         button.dropDownSortView.dropDownSortOptions = ["By Distance", "By Postcode", "Restore"]
     }
-    
-    @IBAction func sortBtnWasPressed(_  sender: DropDownBtn) {
+
+    @IBAction func sortBtnWasPressed(_  sender: UIBarButtonItem) {
         checkButtonState(sender: sortBtnWasTapped)
 //        isTapped = !isTapped
 //        if isTapped {
@@ -127,27 +133,23 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource, Data
             // setup code to sort array by distance
             if addressArr.count > 1 {
                 addressArr.sort { $0.DistanceToDestination < $1.DistanceToDestination}  // sort the distance A-Z
-                sortLbl.title = "BY DISTANCE"
-                tableView.reloadData()
-                print(addressArr)
+                sortButton.title = "BY POSTCODE"
             }
         case .sortArrayByPostcode:
             // setup code to sort array by postcode
             if addressArr.count > 1 {
                 addressArr.sort { $0.PostcodeLineAddress < $1.PostcodeLineAddress}  // sort the distance A-Z
-                sortLbl.title = "BY POSTCODE"
-                tableView.reloadData()
-                print(addressArr)
+                sortButton.title = "RESTORE"
             }
         case .restoreOriginalArray:
             // setup code to restore array to original
             if addressArr.count > 1 {
-                addressArr = originalArr
-                sortLbl.title = "RESTORE"
-                tableView.reloadData()
-                print(addressArr)
+                addressArr = originalArr // restore to original array
+                sortButton.title = "BY DISTANCE"
             }
         }
+        tableView.reloadData()
+        print(addressArr)
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
