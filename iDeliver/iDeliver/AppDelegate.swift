@@ -44,6 +44,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         self.saveContext()
     }
     
+    class func getAppDelegate() -> AppDelegate {
+        return UIApplication.shared.delegate as! AppDelegate
+    }
+    
     // MARK: - Core Data stack
     
     lazy var persistentContainer: NSPersistentContainer = {
