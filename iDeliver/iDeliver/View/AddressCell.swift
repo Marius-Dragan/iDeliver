@@ -20,15 +20,16 @@ class AddressCell: UITableViewCell {
     @IBOutlet weak var distanceLbl: UILabel!
     @IBOutlet weak var metricLbl: UILabel!
    
-    func updateUI(addressObj: DeliveryDestinations) {
+    //func configureCell(addressObj: DeliveryDestinations) {
+    func configureCell(dropOffLocation: DropOffLocation) {
         
         //Drow the cell with values from addressObj
-        nameOrBusinessLbl.text = addressObj.NameOrBusiness
-        firstLineAddressLbl.text = addressObj.FirstLineAddress
-        countryLineAddressLbl.text = addressObj.SecondLineAddress
-        cityLineAddressLbl.text = addressObj.CityLineAddress
-        postcodeLineAddressLbl.text = addressObj.PostcodeLineAddress
-        distanceLbl.text = String(format: "%.2f ", addressObj.DistanceToDestination)
+        nameOrBusinessLbl.text = dropOffLocation.nameOrBusiness
+        firstLineAddressLbl.text = dropOffLocation.street
+        countryLineAddressLbl.text = dropOffLocation.country
+        cityLineAddressLbl.text = dropOffLocation.city
+        postcodeLineAddressLbl.text = dropOffLocation.postcode
+        distanceLbl.text = String(format: "%.2f ", dropOffLocation.distance)
         
     }
 }

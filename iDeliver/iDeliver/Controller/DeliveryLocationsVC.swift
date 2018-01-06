@@ -9,13 +9,17 @@
 import UIKit
 import MapKit
 import CoreLocation
+import CoreData
 
 class DeliveryLocationsVC: UIViewController {
     
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var centerMapBtn: UIButton!
     
-    var addressArr = [DeliveryDestinations]()
+    //var addressArr = [DeliveryDestinations]()
+    
+    var dropOffLocations = [DropOffLocation]()
+    
     var locations = [Location]()
     let locationManager = CLLocationManager()
     let regionRadius: CLLocationDistance = 10000
@@ -40,8 +44,10 @@ class DeliveryLocationsVC: UIViewController {
         // Do any additional setup after loading the view.
         
          //get coordinates from object
-        for object in addressArr {
-            let location = Location.init(title: object.FirstLineAddress, latitude: object.Lat, longitude: object.Long)
+//        for object in addressArr { // without coreData
+            for object in dropOffLocations {
+//            let location = Location.init(title: object.FirstLineAddress, latitude: object.Lat, longitude: object.Long)  //  without CoreData
+                let location = Location.init(title: object.street!, latitude: object.latitude, longitude: object.longitude)
             locations.append(location)
 //            print(locations.count)
 //            let title = object.FirstLineAddress

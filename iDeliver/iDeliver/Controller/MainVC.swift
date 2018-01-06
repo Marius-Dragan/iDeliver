@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreData
 import RevealingSplashView
 
 enum SortButtonAction {
@@ -15,7 +16,9 @@ enum SortButtonAction {
     case restoreOriginalArray
 }
 
-class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource, DataSentDelegate {
+let appDelegate = UIApplication.shared.delegate as? AppDelegate
+
+class MainVC: UIViewController, DataSentDelegate {
     
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var distanceToDestinationLbl: UILabel!
@@ -24,6 +27,7 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource, Data
     //Create array which will return your address data
     var originalArr = [DeliveryDestinations]()
     var addressArr = [DeliveryDestinations]()
+    var dropOffLocations = [DropOffLocation]()
     
     var button = DropDownBtn()
     var actionForButton: SortButtonAction = .sortArrayByDistance
@@ -52,6 +56,20 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource, Data
         tableView.reloadData()
         
         sortBtnWasTapped.addTarget(self, action: #selector(self.sortBtnWasPressed), for: .touchUpInside)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        self.fetch { (complete) in
+            if complete {
+                if dropOffLocations.count >= 1 {
+                    tableView.isHidden = false
+                } else {
+                    tableView.isHidden = true
+                }
+            }
+        }
+        tableView.reloadData()
     }
     
     //add parameter for created address object
@@ -152,30 +170,6 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource, Data
         print(addressArr)
     }
     
-    func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
-    }
-
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        //change this with array count
-        return addressArr.count
-        
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-         let cell = tableView.dequeueReusableCell(withIdentifier: "deliveryAddressCell", for: indexPath) as! AddressCell
-        //get address object from array which you can assign to cell
-        let addressObj = addressArr[indexPath.row]
-        //assign data from array
-        cell.updateUI(addressObj: addressObj)
-        cell.numberLbl.text = String(indexPath.row + 1)
-        return cell
-    
-    }
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 185
-    }
-    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "addDeliveryAddressVC" {
             let barBtm = UIBarButtonItem()
@@ -184,13 +178,70 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource, Data
             let addDestination:AddingDestinationVC = segue.destination as! AddingDestinationVC
             addDestination.delegate = self
         } else if segue.identifier == "deliveryLocationVC" {
-                let barBtm2 = UIBarButtonItem()
-                barBtm2.title = ""
-                navigationItem.backBarButtonItem = barBtm2
+            let barBtm2 = UIBarButtonItem()
+            barBtm2.title = ""
+            navigationItem.backBarButtonItem = barBtm2
             if let deliveryLocationVC = segue.destination as? DeliveryLocationsVC {
-                deliveryLocationVC.addressArr = addressArr
+                //deliveryLocationVC.addressArr = addressArr
+                deliveryLocationVC.dropOffLocations = dropOffLocations
                 }
             }
         }
     }
+
+extension MainVC: UITableViewDelegate, UITableViewDataSource {
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 185
+    }
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        //change this with array count
+//        return addressArr.count // without coreData
+        return dropOffLocations.count
+        
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "deliveryAddressCell", for: indexPath) as? AddressCell else { return UITableViewCell() }
+//        //get address object from array which you can assign to cell
+//        let addressObj = addressArr[indexPath.row] // without coreData
+//        //assign data from array
+//        cell.configureCell(addressObj: addressObj) // without coreData
+//        cell.numberLbl.text = String(indexPath.row + 1) // without coreData
+        let dropOffLocation = dropOffLocations[indexPath.row]
+        cell.configureCell(dropOffLocation: dropOffLocation)
+        cell.numberLbl.text = String(indexPath.row + 1)
+        return cell
+        
+    }
+}
+
+extension MainVC {
+    func fetch (completion: (_ complete: Bool) -> ()) {
+        guard let managedContext = appDelegate?.persistentContainer.viewContext else { return }
+        
+        let fetchRequest = NSFetchRequest<DropOffLocation>(entityName: "DropOffLocation")
+        
+        do {
+            dropOffLocations = try managedContext.fetch(fetchRequest) 
+            print("Succesfully fetched data!")
+            completion(true)
+        } catch {
+            debugPrint("Could not fetch \(error.localizedDescription)")
+            completion(false)
+        }
+    }
+}
+
+
+
+
+
+
+
 

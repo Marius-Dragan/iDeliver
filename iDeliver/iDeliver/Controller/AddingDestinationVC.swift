@@ -9,6 +9,7 @@
 import UIKit
 import MapKit
 import CoreLocation
+import CoreData
 
 protocol DataSentDelegate {
     //Replace parameter with DeliveryDestinations
@@ -17,7 +18,7 @@ protocol DataSentDelegate {
 
 class AddingDestinationVC: UIViewController, Alertable {
 
-    //IBOutles
+    //IBOutlets
     
     
     @IBOutlet weak var nameOrBusinessTextField: UITextField!
@@ -87,23 +88,51 @@ class AddingDestinationVC: UIViewController, Alertable {
             locationManager.requestAlwaysAuthorization()
         }
     }
+    
+    func save(completion: (_ finished: Bool) -> ()) {
+        guard let managedContext = appDelegate?.persistentContainer.viewContext else  { return }
+        let dropOffLocations = DropOffLocation(context: managedContext)
+        
+        dropOffLocations.nameOrBusiness = nameOrBusinessTextField.text!
+        dropOffLocations.street = firstLineAddressTextField.text!
+        dropOffLocations.city = cityLineAddressTextField.text!
+        dropOffLocations.postcode = postcodeLineAddressTextField.text!
+        dropOffLocations.country = countryLineAddressTextField.text!
+        dropOffLocations.distance = distance
+        dropOffLocations.latitude = destlat
+        dropOffLocations.longitude = destlong
+        
+        do {
+               try managedContext.save()
+            print("Succesfully saved data!")
+            completion(true)
+        } catch {
+            debugPrint("Could not save: \(error.localizedDescription)")
+            completion(false)
+        }
+    }
+    
     @IBAction func addBtnWasPressed(_ sender: Any) {
          if delegate != nil {
         if firstLineAddressTextField.text != "" && cityLineAddressTextField.text != "" && postcodeLineAddressTextField.text != "" {
-            
+            self.save(completion: { (complete) in
+                if complete {
+                            clearTextFields()
+                }
+            })
                 //Create Model object DeliveryDestinations
-            let addressObj = DeliveryDestinations(NameOrBusiness: nameOrBusinessTextField.text!, FirstLineAddress: firstLineAddressTextField.text!, SecondLineAddress: countryLineAddressTextField.text!, CityLineAddress: cityLineAddressTextField.text!, PostCodeLineAddress: postcodeLineAddressTextField.text!, DistanceToDestination: distance, Lat: destlat, Long: destlong)
-            
+//            let addressObj = DeliveryDestinations(NameOrBusiness: nameOrBusinessTextField.text!, FirstLineAddress: firstLineAddressTextField.text!, SecondLineAddress: countryLineAddressTextField.text!, CityLineAddress: cityLineAddressTextField.text!, PostCodeLineAddress: postcodeLineAddressTextField.text!, DistanceToDestination: distance, Lat: destlat, Long: destlong)
+//
                 //print(distance)
                 //print("This is the latitude to use with protocol \(destlat)")
                 //print("This is the latitude to use with protocol \(destlong)")
             
                 //add that object to previous view with delegate
-                delegate?.userDidEnterData(addressObj: addressObj)
+//                delegate?.userDidEnterData(addressObj: addressObj)
                 //Dismising VC
                 //navigationController?.popViewController(animated: true)
             
-                clearTextFields()
+        
             }
         }
         
