@@ -38,9 +38,8 @@
                                     </barButtonItem>
                                 </items>
                             </toolbar>
-                            <tableView clipsSubviews="YES" contentMode="scaleAspectFit" fixedFrame="YES" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="none" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="NOb-ef-xzd">
-                                <rect key="frame" x="0.0" y="64" width="375" height="519"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <tableView clipsSubviews="YES" contentMode="scaleAspectFit" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="none" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="NOb-ef-xzd">
+                                <rect key="frame" x="0.0" y="112" width="375" height="471"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 <prototypes>
@@ -52,7 +51,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="8Y4-eY-oK4">
-                                                    <rect key="frame" x="0.0" y="0.0" width="375" height="180"/>
+                                                    <rect key="frame" x="0.0" y="9" width="375" height="180"/>
                                                     <subviews>
                                                         <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3Lb-pi-fBC">
                                                             <rect key="frame" x="0.0" y="0.0" width="375" height="180"/>
@@ -149,7 +148,6 @@
                                             <constraints>
                                                 <constraint firstAttribute="bottom" secondItem="8Y4-eY-oK4" secondAttribute="bottom" id="5QX-bh-AK8"/>
                                                 <constraint firstAttribute="trailing" secondItem="8Y4-eY-oK4" secondAttribute="trailing" id="60Q-q1-qbE"/>
-                                                <constraint firstItem="8Y4-eY-oK4" firstAttribute="top" secondItem="6A5-nX-BV3" secondAttribute="top" id="Qf2-4X-Bol"/>
                                                 <constraint firstItem="8Y4-eY-oK4" firstAttribute="leading" secondItem="6A5-nX-BV3" secondAttribute="leading" id="nUZ-eT-yrC"/>
                                             </constraints>
                                         </tableViewCellContentView>
@@ -177,14 +175,31 @@
                                     <constraint firstAttribute="width" constant="375" id="P9y-t5-pgV"/>
                                 </constraints>
                             </view>
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="1" translatesAutoresizingMaskIntoConstraints="NO" id="1Fh-zq-629">
+                                <rect key="frame" x="16" y="74" width="343" height="29"/>
+                                <segments>
+                                    <segment title="SORT BY:" enabled="NO"/>
+                                    <segment title="Data entry"/>
+                                    <segment title="Distance"/>
+                                    <segment title="Postcode"/>
+                                </segments>
+                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </segmentedControl>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
+                            <constraint firstItem="1Fh-zq-629" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="16" id="0tI-sb-ZDS"/>
+                            <constraint firstItem="NOb-ef-xzd" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="8c3-sr-E31"/>
                             <constraint firstItem="pCj-ov-ccM" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="Bpm-ah-Avv"/>
+                            <constraint firstItem="1Fh-zq-629" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="10" id="Eej-Kg-rjz"/>
                             <constraint firstItem="pCj-ov-ccM" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="Uju-aK-r3B"/>
                             <constraint firstItem="Kwu-46-qmc" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="ah5-iG-WEK"/>
                             <constraint firstItem="pCj-ov-ccM" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" id="b53-I6-C9x"/>
+                            <constraint firstItem="NOb-ef-xzd" firstAttribute="top" secondItem="1Fh-zq-629" secondAttribute="bottom" constant="10" id="cHx-fR-8oy"/>
+                            <constraint firstItem="NOb-ef-xzd" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="ePs-WV-a6l"/>
+                            <constraint firstItem="Kwu-46-qmc" firstAttribute="top" secondItem="NOb-ef-xzd" secondAttribute="bottom" id="g47-WV-4Hu"/>
                             <constraint firstItem="pCj-ov-ccM" firstAttribute="top" secondItem="Kwu-46-qmc" secondAttribute="bottom" id="ktL-ok-fZT"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="1Fh-zq-629" secondAttribute="trailing" constant="16" id="qo7-tM-YWz"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
