@@ -72,10 +72,10 @@ class MainVC: UIViewController, DataSentDelegate {
             if complete {
                 if dropOffLocations.count >= 1 {
                     tableView.isHidden = false
-                    welcomeLbl.isHidden = true
+                    //welcomeLbl.isHidden = true
                 } else {
                     tableView.isHidden = true
-                    welcomeLbl.isHidden = false
+                    //welcomeLbl.isHidden = false
                 }
             }
         }
@@ -208,7 +208,7 @@ class MainVC: UIViewController, DataSentDelegate {
 extension MainVC: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 185
+        return 210
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
