@@ -24,6 +24,7 @@ class MainVC: UIViewController, DataSentDelegate {
     @IBOutlet weak var distanceToDestinationLbl: UILabel!
     @IBOutlet weak var sortButton: UIBarButtonItem!
     @IBOutlet weak var welcomeLbl: UIStackView!
+    @IBOutlet weak var segment: UISegmentedControl!
     
     //Create array which will return your address data
     var originalArr = [DeliveryDestinations]()
@@ -126,6 +127,13 @@ class MainVC: UIViewController, DataSentDelegate {
         button.dropDownSortView.dropDownSortOptions = ["By Distance", "By Postcode", "Restore"]
     }
 
+
+    @IBAction func segmentChange(_ sender: Any) {
+        fetch { (true) in
+            tableView.reloadData()
+        }
+    }
+    
     @IBAction func sortBtnWasPressed(_  sender: UIBarButtonItem) {
         checkButtonState(sender: sortBtnWasTapped)
 //        isTapped = !isTapped
@@ -278,6 +286,17 @@ extension MainVC {
         
         let fetchRequest = NSFetchRequest<DropOffLocation>(entityName: "DropOffLocation")
         
+        let sortByAdded = NSSortDescriptor(key: "dateCreated", ascending: true)
+        let sortByDistance = NSSortDescriptor(key: "distance", ascending: true)
+        let sortByPostcode = NSSortDescriptor(key: "postcode", ascending: true)
+        
+        if segment.selectedSegmentIndex == 1 {
+            fetchRequest.sortDescriptors = [sortByAdded]
+        } else if segment.selectedSegmentIndex == 2 {
+            fetchRequest.sortDescriptors = [sortByDistance]
+        } else if segment.selectedSegmentIndex == 3 {
+            fetchRequest.sortDescriptors = [sortByPostcode]
+        }
         
         do {
             dropOffLocations = try managedContext.fetch(fetchRequest) 
