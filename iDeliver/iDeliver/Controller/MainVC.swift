@@ -23,6 +23,7 @@ class MainVC: UIViewController, DataSentDelegate {
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var distanceToDestinationLbl: UILabel!
     @IBOutlet weak var sortButton: UIBarButtonItem!
+    @IBOutlet weak var welcomeLbl: UIStackView!
     
     //Create array which will return your address data
     var originalArr = [DeliveryDestinations]()
@@ -53,23 +54,30 @@ class MainVC: UIViewController, DataSentDelegate {
         
         tableView.delegate = self
         tableView.dataSource = self
-        tableView.reloadData()
+        tableView.isHidden = false
+        //tableView.reloadData()
         
         sortBtnWasTapped.addTarget(self, action: #selector(self.sortBtnWasPressed), for: .touchUpInside)
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
+        fetchCoreDataObjects()
+        tableView.reloadData()
+    }
+    
+    func fetchCoreDataObjects() {
         self.fetch { (complete) in
             if complete {
                 if dropOffLocations.count >= 1 {
                     tableView.isHidden = false
+                    welcomeLbl.isHidden = true
                 } else {
                     tableView.isHidden = true
+                    welcomeLbl.isHidden = false
                 }
             }
         }
-        tableView.reloadData()
     }
     
     //add parameter for created address object
@@ -217,11 +225,54 @@ extension MainVC: UITableViewDelegate, UITableViewDataSource {
         cell.configureCell(dropOffLocation: dropOffLocation)
         cell.numberLbl.text = String(indexPath.row + 1)
         return cell
+    }
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        return true
+    }
+    func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCellEditingStyle {
+        return .none
+    }
+    func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
+        let deleteAction = UITableViewRowAction(style: .destructive, title: "DELETE") { (rowAction, indexPath) in
+            self.removeDropOffLocation(atIndexPath: indexPath)
+            self.fetchCoreDataObjects()
+            tableView.deleteRows(at: [indexPath], with: .automatic)
+        }
         
+        let completeAction = UITableViewRowAction(style: .normal, title: "DELIVERED") { (rowAction, indexPath) in
+            self.setProgress(atIndexPath: indexPath)
+            tableView.reloadRows(at: [indexPath], with: .automatic)
+        }
+        deleteAction.backgroundColor = #colorLiteral(red: 0.8078431487, green: 0.02745098062, blue: 0.3333333433, alpha: 1)
+        completeAction.backgroundColor = #colorLiteral(red: 0.3411764801, green: 0.6235294342, blue: 0.1686274558, alpha: 1)
+        
+        return [deleteAction, completeAction]
     }
 }
 
 extension MainVC {
+    
+    func setProgress(atIndexPath indexPath: IndexPath) {
+              guard let managedContext = appDelegate?.persistentContainer.viewContext else { return }
+        
+        let chosenLocation = dropOffLocations[indexPath.row]
+        //to create conditional code to trigger the complete delivered view on top of cell
+        
+    }
+    
+    func removeDropOffLocation (atIndexPath indexPath: IndexPath) {
+        guard let managedContext = appDelegate?.persistentContainer.viewContext else { return }
+        
+        managedContext.delete(dropOffLocations[indexPath.row])
+        
+        do {
+            try managedContext.save()
+            print("Succesfully removed delivery location!")
+        } catch {
+            debugPrint("Could not remove: \(error.localizedDescription)")
+        }
+    }
+    
     func fetch (completion: (_ complete: Bool) -> ()) {
         guard let managedContext = appDelegate?.persistentContainer.viewContext else { return }
         
