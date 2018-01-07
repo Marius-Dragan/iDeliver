@@ -278,6 +278,7 @@ extension MainVC {
         
         let fetchRequest = NSFetchRequest<DropOffLocation>(entityName: "DropOffLocation")
         
+        
         do {
             dropOffLocations = try managedContext.fetch(fetchRequest) 
             print("Succesfully fetched data!")

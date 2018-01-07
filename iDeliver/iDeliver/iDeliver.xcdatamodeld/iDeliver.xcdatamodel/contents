@@ -3,6 +3,7 @@
     <entity name="DropOffLocation" representedClassName="DropOffLocation" syncable="YES" codeGenerationType="class">
         <attribute name="city" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="country" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="createdDate" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="distance" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="latitude" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="longitude" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
@@ -11,6 +12,6 @@
         <attribute name="street" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <elements>
-        <element name="DropOffLocation" positionX="-63" positionY="-18" width="128" height="163"/>
+        <element name="DropOffLocation" positionX="-63" positionY="-18" width="128" height="180"/>
     </elements>
 </model>
