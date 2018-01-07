@@ -21,7 +21,7 @@ extension UIView {
             materialKey = newValue
             
             if materialKey {
-                self.layer.masksToBounds = false
+                self.layer.masksToBounds = false //carefull when using this, do not use this on the tableView. Use only on custom cell
                 self.layer.cornerRadius = 5.0
                 self.layer.shadowOpacity = 1.0
                 self.layer.shadowRadius = 4.0

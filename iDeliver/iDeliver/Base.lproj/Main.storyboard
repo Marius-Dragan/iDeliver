@@ -43,27 +43,16 @@
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3Zg-aA-0Dw" customClass="GradientView" customModule="iDeliver" customModuleProvider="target">
                                                     <rect key="frame" x="-5" y="17" width="365" height="200"/>
                                                     <subviews>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="200" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="1" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2Kh-iJ-ads">
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="200" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="1" translatesAutoresizingMaskIntoConstraints="NO" id="2Kh-iJ-ads">
                                                             <rect key="frame" x="0.0" y="0.0" width="40" height="200"/>
                                                             <color key="backgroundColor" red="0.84705882349999995" green="0.2784313725" blue="0.1176470588" alpha="0.40000000000000002" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <constraints>
-                                                                <constraint firstAttribute="width" constant="40" id="aVR-ms-Lwr"/>
+                                                                <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="40" id="aVR-ms-Lwr"/>
                                                             </constraints>
-                                                            <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="50"/>
+                                                            <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="18"/>
                                                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
-                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kXn-Uv-Nez">
-                                                            <rect key="frame" x="310" y="0.0" width="55" height="200"/>
-                                                            <color key="backgroundColor" red="0.19607843137254902" green="0.19607843137254902" blue="0.19607843137254902" alpha="0.29999999999999999" colorSpace="custom" customColorSpace="sRGB"/>
-                                                            <constraints>
-                                                                <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="55" id="8qB-47-mP5"/>
-                                                            </constraints>
-                                                            <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="18"/>
-                                                            <state key="normal" title="START">
-                                                                <color key="titleColor" white="0.85063244050952369" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                            </state>
-                                                        </button>
                                                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" alignment="top" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="R1O-sO-2y3">
                                                             <rect key="frame" x="48" y="0.0" width="225" height="200"/>
                                                             <subviews>
@@ -112,6 +101,17 @@
                                                                 <constraint firstItem="uC5-ry-B5Y" firstAttribute="top" secondItem="R1O-sO-2y3" secondAttribute="top" id="O1V-LU-hdL"/>
                                                             </constraints>
                                                         </stackView>
+                                                        <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="fill" buttonType="roundedRect" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="kXn-Uv-Nez">
+                                                            <rect key="frame" x="302" y="0.0" width="55" height="200"/>
+                                                            <color key="backgroundColor" red="0.19607843137254902" green="0.19607843137254902" blue="0.19607843137254902" alpha="0.29999999999999999" colorSpace="custom" customColorSpace="sRGB"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="width" relation="lessThanOrEqual" constant="55" id="8qB-47-mP5"/>
+                                                            </constraints>
+                                                            <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="15"/>
+                                                            <state key="normal" title="START ROUTE">
+                                                                <color key="titleColor" white="0.85063244050952369" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                            </state>
+                                                        </button>
                                                     </subviews>
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <constraints>
@@ -119,12 +119,12 @@
                                                         <constraint firstItem="kXn-Uv-Nez" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="3Zg-aA-0Dw" secondAttribute="leading" id="CrY-y0-GaD"/>
                                                         <constraint firstAttribute="width" constant="365" id="Hhf-dm-nao"/>
                                                         <constraint firstItem="R1O-sO-2y3" firstAttribute="centerY" secondItem="3Zg-aA-0Dw" secondAttribute="centerY" id="Lko-QR-mej"/>
-                                                        <constraint firstAttribute="trailing" secondItem="kXn-Uv-Nez" secondAttribute="trailing" id="Q5G-QP-kCd"/>
+                                                        <constraint firstAttribute="trailing" secondItem="kXn-Uv-Nez" secondAttribute="trailing" constant="8" id="Q5G-QP-kCd"/>
                                                         <constraint firstItem="2Kh-iJ-ads" firstAttribute="top" secondItem="3Zg-aA-0Dw" secondAttribute="top" id="RcB-dN-9RO"/>
                                                         <constraint firstAttribute="height" constant="200" id="UJd-RB-t8F"/>
                                                         <constraint firstAttribute="bottom" secondItem="2Kh-iJ-ads" secondAttribute="bottom" id="bMm-p1-gnN"/>
                                                         <constraint firstItem="2Kh-iJ-ads" firstAttribute="leading" secondItem="3Zg-aA-0Dw" secondAttribute="leading" id="biG-1H-H5G"/>
-                                                        <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="2Kh-iJ-ads" secondAttribute="trailing" constant="300" id="fHx-TW-Gop"/>
+                                                        <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="2Kh-iJ-ads" secondAttribute="trailing" id="fHx-TW-Gop"/>
                                                         <constraint firstItem="kXn-Uv-Nez" firstAttribute="top" secondItem="3Zg-aA-0Dw" secondAttribute="top" id="tnn-Wm-Tp1"/>
                                                         <constraint firstAttribute="bottom" secondItem="kXn-Uv-Nez" secondAttribute="bottom" id="wm7-SI-DZv"/>
                                                     </constraints>
@@ -206,7 +206,6 @@
                         </userDefinedRuntimeAttributes>
                     </view>
                     <navigationItem key="navigationItem" title="iDeliver" id="zIQ-7t-wxL">
-                        <barButtonItem key="leftBarButtonItem" title="SORT ROUTE" id="meW-H9-40a"/>
                         <barButtonItem key="rightBarButtonItem" style="plain" systemItem="add" id="jJ9-Wm-2Ex">
                             <connections>
                                 <segue destination="E4k-QV-k91" kind="show" identifier="addDeliveryAddressVC" id="znS-sF-7fA"/>
@@ -220,7 +219,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="788" y="156.97151424287858"/>
+            <point key="canvasLocation" x="787.5" y="156.5"/>
         </scene>
         <!--Delivery LocationsVC-->
         <scene sceneID="5BQ-Wo-RAD">

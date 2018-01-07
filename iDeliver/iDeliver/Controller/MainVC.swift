@@ -208,7 +208,7 @@ class MainVC: UIViewController, DataSentDelegate {
 extension MainVC: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 220
+        return 220 // modify the size of cell
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
