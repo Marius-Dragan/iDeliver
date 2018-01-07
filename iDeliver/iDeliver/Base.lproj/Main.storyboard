@@ -54,10 +54,10 @@
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kXn-Uv-Nez">
-                                                            <rect key="frame" x="310" y="0.0" width="55" height="200"/>
+                                                            <rect key="frame" x="312" y="0.0" width="53" height="200"/>
                                                             <color key="backgroundColor" red="0.19607843137254902" green="0.19607843137254902" blue="0.19607843137254902" alpha="0.29999999999999999" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <constraints>
-                                                                <constraint firstAttribute="width" constant="55" id="8qB-47-mP5"/>
+                                                                <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="44" id="8qB-47-mP5"/>
                                                             </constraints>
                                                             <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="18"/>
                                                             <state key="normal" title="START">
@@ -116,6 +116,7 @@
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <constraints>
                                                         <constraint firstItem="R1O-sO-2y3" firstAttribute="centerX" secondItem="3Zg-aA-0Dw" secondAttribute="centerX" constant="-22" id="5a3-PD-Dzg"/>
+                                                        <constraint firstItem="kXn-Uv-Nez" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="3Zg-aA-0Dw" secondAttribute="leading" constant="20" symbolic="YES" id="CrY-y0-GaD"/>
                                                         <constraint firstAttribute="width" constant="365" id="Hhf-dm-nao"/>
                                                         <constraint firstItem="R1O-sO-2y3" firstAttribute="centerY" secondItem="3Zg-aA-0Dw" secondAttribute="centerY" id="Lko-QR-mej"/>
                                                         <constraint firstAttribute="trailing" secondItem="kXn-Uv-Nez" secondAttribute="trailing" id="Q5G-QP-kCd"/>
@@ -123,6 +124,7 @@
                                                         <constraint firstAttribute="height" constant="200" id="UJd-RB-t8F"/>
                                                         <constraint firstAttribute="bottom" secondItem="2Kh-iJ-ads" secondAttribute="bottom" id="bMm-p1-gnN"/>
                                                         <constraint firstItem="2Kh-iJ-ads" firstAttribute="leading" secondItem="3Zg-aA-0Dw" secondAttribute="leading" id="biG-1H-H5G"/>
+                                                        <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="2Kh-iJ-ads" secondAttribute="trailing" constant="20" symbolic="YES" id="fHx-TW-Gop"/>
                                                         <constraint firstItem="kXn-Uv-Nez" firstAttribute="top" secondItem="3Zg-aA-0Dw" secondAttribute="top" id="tnn-Wm-Tp1"/>
                                                         <constraint firstAttribute="bottom" secondItem="kXn-Uv-Nez" secondAttribute="bottom" id="wm7-SI-DZv"/>
                                                     </constraints>
