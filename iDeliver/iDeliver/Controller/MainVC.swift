@@ -10,20 +10,11 @@ import UIKit
 import CoreData
 import RevealingSplashView
 
-enum SortButtonAction {
-    case sortArrayByDistance
-    case sortArrayByPostcode
-    case restoreOriginalArray
-}
-
 let appDelegate = UIApplication.shared.delegate as? AppDelegate
 
-class MainVC: UIViewController, DataSentDelegate {
+class MainVC: UIViewController {
     
     @IBOutlet weak var tableView: UITableView!
-    @IBOutlet weak var distanceToDestinationLbl: UILabel!
-    @IBOutlet weak var sortButton: UIBarButtonItem!
-    @IBOutlet weak var welcomeLbl: UIStackView!
     @IBOutlet weak var segment: UISegmentedControl!
     
     //Create array which will return your address data
@@ -31,23 +22,11 @@ class MainVC: UIViewController, DataSentDelegate {
     var addressArr = [DeliveryDestinations]()
     var dropOffLocations = [DropOffLocation]()
     
-    var button = DropDownBtn()
-    var actionForButton: SortButtonAction = .sortArrayByDistance
-
-   //var isTapped: Bool = false
-    var sortBtnWasTapped = UIButton()
-    var countTaps = 0
-    
     let revealingSplashView = RevealingSplashView (iconImage: UIImage(named: "LaunchScreenIcon")!, iconInitialSize: CGSize(width: 100, height: 100), backgroundColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1))
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        //sortLbl = UIBarButtonItem(title: "Sort", style: .plain, target: self, action: #selector(configureDropDownMenu))
-        //sortLbl.setTitleTextAttributes([NSAttributedStringKey.font: UIFont.systemFont(ofSize: 18.0), NSAttributedStringKey.foregroundColor: UIColor.black], for: UIControlState())
-        //navigationController?.navigationBar.topItem?.leftBarButtonItem = sortLbl
-        
-       // configureDropDownMenu()
+    
         self.view.addSubview(revealingSplashView)
         revealingSplashView.animationType = SplashAnimationType.heartBeat
         revealingSplashView.startAnimation()
@@ -57,8 +36,6 @@ class MainVC: UIViewController, DataSentDelegate {
         tableView.dataSource = self
         tableView.isHidden = false
         //tableView.reloadData()
-        
-        sortBtnWasTapped.addTarget(self, action: #selector(self.sortBtnWasPressed), for: .touchUpInside)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -90,100 +67,12 @@ class MainVC: UIViewController, DataSentDelegate {
         addressArr = originalArr
         //Reload your tableview once your new object added.
         self.tableView.reloadData()
-       
     }
-  // old way to sort the data
-//    override func viewWillAppear(_ animated: Bool) {
-//        isTapped = false
-//        sortLbl.title = "SORT"
-//    }
-//    func sortArray()  {
-//        addressArr.sort { $0.DistanceToDestination < $1.DistanceToDestination}  // sort the distance A-Z
-//        self.tableView.reloadData()
-//        print(addressArr)
-//    }
-//    func restoreArray() {
-//        addressArr = originalArr
-//        self.tableView.reloadData()
-//        print(addressArr)
-//    }
-
-        func configureDropDownMenu() { // <--- Testing drop down menu
-        button = DropDownBtn.init(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
-        button.setTitle("Sort", for: .normal)
-        button.translatesAutoresizingMaskIntoConstraints = false
-        
-        self.view.addSubview(button)
-        
-        //button.centerXAnchor.constraint(equalTo: self.view.centerXAnchor).isActive = true // this will put it on the center of screen
-        //button.centerYAnchor.constraint(equalTo: self.view.centerYAnchor).isActive = true // this will put it on the center of screen
-        
-        button.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 50).isActive = true
-        button.leftAnchor.constraint(equalTo: self.view.leftAnchor, constant: 10).isActive = true
-
-        button.widthAnchor.constraint(equalToConstant: 150).isActive = true
-        button.heightAnchor.constraint(equalToConstant: 50).isActive = true
-        
-        button.dropDownSortView.dropDownSortOptions = ["By Distance", "By Postcode", "Restore"]
-    }
-
 
     @IBAction func segmentChange(_ sender: Any) {
         fetch { (true) in
             tableView.reloadData()
         }
-    }
-    
-    @IBAction func sortBtnWasPressed(_  sender: UIBarButtonItem) {
-        checkButtonState(sender: sortBtnWasTapped)
-//        isTapped = !isTapped
-//        if isTapped {
-//            sortLbl.title = "RESTORE"
-//            sortArray()
-//        } else  {
-//            self.sortLbl.title = "SORT"
-//            restoreArray()
-//        }
-    }
-
-    func checkButtonState(sender: UIButton) {
-        countTaps = countTaps + 1
-        print(countTaps)
-        if countTaps <= 3 {
-            switch countTaps  {
-            case 1:
-                buttonSelector(forAction: .sortArrayByDistance)
-            case 2:
-                buttonSelector(forAction: .sortArrayByPostcode)
-            default:
-                buttonSelector(forAction: .restoreOriginalArray)
-                 countTaps = 0
-            }
-        }
-    }
-    func buttonSelector(forAction action: SortButtonAction) {
-        switch action {
-        case .sortArrayByDistance:
-            // setup code to sort array by distance
-            if addressArr.count > 1 {
-                addressArr.sort { $0.DistanceToDestination < $1.DistanceToDestination}  // sort the distance A-Z
-                sortButton.title = "BY POSTCODE"
-            }
-        case .sortArrayByPostcode:
-            // setup code to sort array by postcode
-            if addressArr.count > 1 {
-                addressArr.sort { $0.PostcodeLineAddress < $1.PostcodeLineAddress}  // sort the distance A-Z
-                sortButton.title = "RESTORE"
-            }
-        case .restoreOriginalArray:
-            // setup code to restore array to original
-            if addressArr.count > 1 {
-                addressArr = originalArr // restore to original array
-                sortButton.title = "BY DISTANCE"
-            }
-        }
-        tableView.reloadData()
-        print(addressArr)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -192,7 +81,7 @@ class MainVC: UIViewController, DataSentDelegate {
             barBtm.title = ""
             navigationItem.backBarButtonItem = barBtm
             let addDestination:AddingDestinationVC = segue.destination as! AddingDestinationVC
-            addDestination.delegate = self
+
         } else if segue.identifier == "deliveryLocationVC" {
             let barBtm2 = UIBarButtonItem()
             barBtm2.title = ""
@@ -308,11 +197,4 @@ extension MainVC {
         }
     }
 }
-
-
-
-
-
-
-
 

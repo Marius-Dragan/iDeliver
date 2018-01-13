@@ -11,11 +11,6 @@ import MapKit
 import CoreLocation
 import CoreData
 
-protocol DataSentDelegate {
-    //Replace parameter with DeliveryDestinations
-    func userDidEnterData(addressObj: DeliveryDestinations)
-}
-
 class AddingDestinationVC: UIViewController, Alertable {
 
     //IBOutlets
@@ -29,7 +24,6 @@ class AddingDestinationVC: UIViewController, Alertable {
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var centerMapBtn: UIButton!
     
-    var delegate: DataSentDelegate?
     var locationManager = CLLocationManager()
     let authorizationStatus = CLLocationManager.authorizationStatus()
     let regionRadius: CLLocationDistance = 10000
@@ -42,8 +36,6 @@ class AddingDestinationVC: UIViewController, Alertable {
 
     var destlat: Double = Double()
     var destlong: Double = Double()
-    
-    //var addressCoordinate: [CLLocationCoordinate2D] = [] for coredata use
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -113,29 +105,13 @@ class AddingDestinationVC: UIViewController, Alertable {
     }
     
     @IBAction func addBtnWasPressed(_ sender: Any) {
-         if delegate != nil {
         if firstLineAddressTextField.text != "" && cityLineAddressTextField.text != "" && postcodeLineAddressTextField.text != "" {
             self.save(completion: { (complete) in
                 if complete {
                             clearTextFields()
                 }
             })
-                //Create Model object DeliveryDestinations
-//            let addressObj = DeliveryDestinations(NameOrBusiness: nameOrBusinessTextField.text!, FirstLineAddress: firstLineAddressTextField.text!, SecondLineAddress: countryLineAddressTextField.text!, CityLineAddress: cityLineAddressTextField.text!, PostCodeLineAddress: postcodeLineAddressTextField.text!, DistanceToDestination: distance, Lat: destlat, Long: destlong)
-//
-                //print(distance)
-                //print("This is the latitude to use with protocol \(destlat)")
-                //print("This is the latitude to use with protocol \(destlong)")
-            
-                //add that object to previous view with delegate
-//                delegate?.userDidEnterData(addressObj: addressObj)
-                //Dismising VC
-                //navigationController?.popViewController(animated: true)
-            
-        
-            }
         }
-        
     }
     
     @IBAction func centreMapBtnWasPressed(_ sender: Any) {
