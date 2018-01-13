@@ -9,6 +9,8 @@
 import UIKit
 import CoreData
 import RevealingSplashView
+import MapKit
+import CoreLocation
 
 let appDelegate = UIApplication.shared.delegate as? AppDelegate
 
@@ -21,12 +23,12 @@ class MainVC: UIViewController {
     var originalArr = [DeliveryDestinations]()
     var addressArr = [DeliveryDestinations]()
     var dropOffLocations = [DropOffLocation]()
+        var locations = [Location]()
     
     let revealingSplashView = RevealingSplashView (iconImage: UIImage(named: "LaunchScreenIcon")!, iconInitialSize: CGSize(width: 100, height: 100), backgroundColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1))
     
     override func viewDidLoad() {
         super.viewDidLoad()
-    
         self.view.addSubview(revealingSplashView)
         revealingSplashView.animationType = SplashAnimationType.heartBeat
         revealingSplashView.startAnimation()
@@ -49,30 +51,22 @@ class MainVC: UIViewController {
             if complete {
                 if dropOffLocations.count >= 1 {
                     tableView.isHidden = false
-                    //welcomeLbl.isHidden = true
                 } else {
                     tableView.isHidden = true
-                    //welcomeLbl.isHidden = false
                 }
             }
         }
-    }
-    
-    //add parameter for created address object
-    func userDidEnterData(addressObj: DeliveryDestinations) {
-        
-        //append added object into your table array
-        self.originalArr.append(addressObj)
-        //Copy originalArr to addressArr to revert back to how user input the data
-        addressArr = originalArr
-        //Reload your tableview once your new object added.
-        self.tableView.reloadData()
     }
 
     @IBAction func segmentChange(_ sender: Any) {
         fetch { (true) in
             tableView.reloadData()
         }
+    }
+    
+    @IBAction func startRouteBtnWasPressed(_ sender: Any) {
+
+    
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -107,9 +101,8 @@ extension MainVC: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         //change this with array count
 //        return addressArr.count // without coreData
-        return dropOffLocations.count
-        
-    }
+                    return dropOffLocations.count
+        }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "deliveryAddressCell", for: indexPath) as? AddressCell else { return UITableViewCell() }

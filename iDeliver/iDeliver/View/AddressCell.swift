@@ -18,8 +18,7 @@ class AddressCell: UITableViewCell {
     @IBOutlet weak var numberLbl: UILabel!
     @IBOutlet weak var startBtn: UIButton!
     @IBOutlet weak var distanceLbl: UILabel!
-    @IBOutlet weak var metricLbl: UILabel!
-    @IBOutlet weak var completionView: UIView!
+
     
     
     //func configureCell(addressObj: DeliveryDestinations) {
