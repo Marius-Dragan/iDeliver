@@ -63,11 +63,31 @@ class MainVC: UIViewController {
             tableView.reloadData()
         }
     }
-    
-    @IBAction func startRouteBtnWasPressed(_ sender: Any) {
-
-    
+    @objc func tappedButton(sender : Any){
+           // let locations = Location.init(title: object.street!, latitude: object.latitude, longitude: object.longitude)
+            //let locations = dropOffLocations[(sender as AnyObject).tag]
+        let locations = dropOffLocations[sender]
+            print(locations)
+            let destinationCoordinate = CLLocationCoordinate2D(latitude: locations.latitude, longitude: locations.longitude)
+            let destinationPlacemark = MKPlacemark(coordinate: destinationCoordinate)
+            let destinationMapItem = MKMapItem(placemark: destinationPlacemark)
+            
+            destinationMapItem.name = "Delivery Destination"
+            destinationMapItem.openInMaps(launchOptions: [MKLaunchOptionsDirectionsModeKey: MKLaunchOptionsDirectionsModeDriving])
     }
+   // @IBAction func startRouteBtnWasPressed(_ sender: Any) {
+//            for object in dropOffLocations {
+//
+//                let locations = Location.init(title: object.street!, latitude: object.latitude, longitude: object.longitude)
+//                print(locations)
+//                let destinationCoordinate = CLLocationCoordinate2D(latitude: locations.latitude, longitude: locations.longitude)
+//                let destinationPlacemark = MKPlacemark(coordinate: destinationCoordinate)
+//                let destinationMapItem = MKMapItem(placemark: destinationPlacemark)
+//
+//                destinationMapItem.name = locations.title
+//                destinationMapItem.openInMaps(launchOptions: [MKLaunchOptionsDirectionsModeKey: MKLaunchOptionsDirectionsModeDriving])
+//            }
+//}
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "addDeliveryAddressVC" {
@@ -111,9 +131,15 @@ extension MainVC: UITableViewDelegate, UITableViewDataSource {
 //        //assign data from array
 //        cell.configureCell(addressObj: addressObj) // without coreData
 //        cell.numberLbl.text = String(indexPath.row + 1) // without coreData
+       
         let dropOffLocation = dropOffLocations[indexPath.row]
+        let tapGesture = UITapGestureRecognizer(target: MainVC.self, action: Selector(("tappedButton")))
+        cell.addGestureRecognizer(tapGesture)
+        cell.startBtn.tag = indexPath.row
+       // cell.startBtn.addTarget(self, action: #selector(self.tappedButton(sender:)), for: .touchUpInside)
         cell.configureCell(dropOffLocation: dropOffLocation)
         cell.numberLbl.text = String(indexPath.row + 1)
+
         return cell
     }
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
@@ -190,4 +216,3 @@ extension MainVC {
         }
     }
 }
-
