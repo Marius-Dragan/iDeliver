@@ -20,7 +20,6 @@ class AddressCell: UITableViewCell {
     @IBOutlet weak var distanceLbl: UILabel!
 
     
-    
     //func configureCell(addressObj: DeliveryDestinations) {
     func configureCell(dropOffLocation: DropOffLocation) {
         

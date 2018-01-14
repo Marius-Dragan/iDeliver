@@ -57,23 +57,38 @@ class MainVC: UIViewController {
             }
         }
     }
+    func welcomeMessage() {
+        let welcomeLbl = UILabel(frame: CGRect(x: 0, y: 0, width: 200, height: 21))
+        welcomeLbl.center = CGPoint(x: 160, y: 285)
+        welcomeLbl.textAlignment = .center
+        welcomeLbl.textColor = UIColor.white
+        welcomeLbl.text = "I'am a test label"
+        self.view.addSubview(welcomeLbl)
+    }
 
     @IBAction func segmentChange(_ sender: Any) {
         fetch { (true) in
             tableView.reloadData()
         }
     }
-    @objc func tappedButton(sender : Any){
-           // let locations = Location.init(title: object.street!, latitude: object.latitude, longitude: object.longitude)
-            //let locations = dropOffLocations[(sender as AnyObject).tag]
-        let locations = dropOffLocations[sender]
-            print(locations)
-            let destinationCoordinate = CLLocationCoordinate2D(latitude: locations.latitude, longitude: locations.longitude)
-            let destinationPlacemark = MKPlacemark(coordinate: destinationCoordinate)
-            let destinationMapItem = MKMapItem(placemark: destinationPlacemark)
-            
-            destinationMapItem.name = "Delivery Destination"
-            destinationMapItem.openInMaps(launchOptions: [MKLaunchOptionsDirectionsModeKey: MKLaunchOptionsDirectionsModeDriving])
+    @objc func tappedButton(sender : UIButton) {
+        if let cell = sender.superview?.superview?.superview as? UITableViewCell {
+            if let indexPath = tableView.indexPath(for: cell) {
+                  sender.setTitle("IN TRANZIT", for: .normal)
+                sender.titleLabel?.adjustsFontSizeToFitWidth = true
+                sender.backgroundColor = #colorLiteral(red: 0.05882352963, green: 0.180392161, blue: 0.2470588237, alpha: 1)
+                
+                let location = dropOffLocations[indexPath.row]
+                print(location)
+                let destinationCoordinate = CLLocationCoordinate2D(latitude: location.latitude, longitude: location.longitude)
+                let destinationPlacemark = MKPlacemark(coordinate: destinationCoordinate)
+                let destinationMapItem = MKMapItem(placemark: destinationPlacemark)
+                
+                destinationMapItem.name = location.street
+                destinationMapItem.openInMaps(launchOptions: [MKLaunchOptionsDirectionsModeKey: MKLaunchOptionsDirectionsModeDriving])
+                
+            }
+        }
     }
    // @IBAction func startRouteBtnWasPressed(_ sender: Any) {
 //            for object in dropOffLocations {
@@ -133,10 +148,14 @@ extension MainVC: UITableViewDelegate, UITableViewDataSource {
 //        cell.numberLbl.text = String(indexPath.row + 1) // without coreData
        
         let dropOffLocation = dropOffLocations[indexPath.row]
-        let tapGesture = UITapGestureRecognizer(target: MainVC.self, action: Selector(("tappedButton")))
-        cell.addGestureRecognizer(tapGesture)
-        cell.startBtn.tag = indexPath.row
-       // cell.startBtn.addTarget(self, action: #selector(self.tappedButton(sender:)), for: .touchUpInside)
+//        let tapGesture = UITapGestureRecognizer(target: MainVC.self, action: Selector(("tappedButton")))
+//        cell.addGestureRecognizer(tapGesture)
+//        cell.startBtn.tag = indexPath.row
+        cell.startBtn.addTarget(self, action: #selector(self.tappedButton(sender:)), for: .touchUpInside)
+        cell.startBtn.titleLabel?.adjustsFontSizeToFitWidth = true
+        cell.startBtn.titleLabel?.minimumScaleFactor = 0.5
+        cell.startBtn.titleLabel?.numberOfLines = 1
+        cell.startBtn.titleLabel?.transform = CGAffineTransform(rotationAngle: CGFloat.pi / 2)
         cell.configureCell(dropOffLocation: dropOffLocation)
         cell.numberLbl.text = String(indexPath.row + 1)
 
