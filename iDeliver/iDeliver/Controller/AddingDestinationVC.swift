@@ -93,6 +93,9 @@ class AddingDestinationVC: UIViewController, Alertable {
         dropOffLocations.distance = distance
         dropOffLocations.latitude = destlat
         dropOffLocations.longitude = destlong
+        dropOffLocations.isInTranzit = false
+        //dropOffLocations.btnStatus = "START ROUTE"
+        dropOffLocations.dateCreated = NSDate() as Date
         
         do {
                try managedContext.save()
@@ -103,7 +106,7 @@ class AddingDestinationVC: UIViewController, Alertable {
             completion(false)
         }
     }
-    
+
     @IBAction func addBtnWasPressed(_ sender: Any) {
         if firstLineAddressTextField.text != "" && cityLineAddressTextField.text != "" && postcodeLineAddressTextField.text != "" {
             self.save(completion: { (complete) in
@@ -195,7 +198,7 @@ extension AddingDestinationVC: CLLocationManagerDelegate {
         let calloutView = views?[0] as! CustomCalloutView
         calloutView.firstAddressPinLbl.text = firstLineAddressTextField.text
         let tableData = MainVC()
-        calloutView.numberOfDeliveriesPinLbl.text = String(tableData.addressArr.count)
+        calloutView.numberOfDeliveriesPinLbl.text = String(tableData.dropOffLocations.count)
         
         print(calloutView)
        // 3

@@ -46,21 +46,21 @@ class DeliveryLocationsVC: UIViewController {
          //get coordinates from object
 //        for object in addressArr { // without coreData
             for object in dropOffLocations {
-//            let location = Location.init(title: object.FirstLineAddress, latitude: object.Lat, longitude: object.Long)  //  without CoreData
+//            let location = Location.init(title: object.firstLineAddress, latitude: object.Lat, longitude: object.Long)  //  without CoreData
                 let location = Location.init(title: object.street!, latitude: object.latitude, longitude: object.longitude)
             locations.append(location)
 //            print(locations.count)
-//            let title = object.FirstLineAddress
-//            let lat = object.Lat
-//            let long = object.Long
+//            let title = object.firstLineAddress
+//            let lat = object.lat
+//            let long = object.long
             
 //            print(lat as Any)
 //            print(long as Any)
         
          // get coordinates from object and index for this
 //        for (i, object) in addressArr.enumerated() {
-//            let lat = object.Lat
-//            let long = object.Long
+//            let lat = object.lat
+//            let long = object.long
 //            print ("Destination at index \(i) has coordinate: (\(String(describing: lat)), \(String(describing: long)))")
 //        }
         }

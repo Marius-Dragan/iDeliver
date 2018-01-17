@@ -10,25 +10,32 @@ import Foundation
 import MapKit
 
 struct DeliveryDestinations {
-    var NameOrBusiness: String
-    var FirstLineAddress: String
-    var SecondLineAddress: String
-    var CityLineAddress: String
-    var PostcodeLineAddress: String
-    var DistanceToDestination: CLLocationDistance
-    var Lat: Double
-    var Long: Double
+    var nameOrBusiness: String
+    var firstLineAddress: String
+    var secondLineAddress: String
+    var cityLineAddress: String
+    var postcodeLineAddress: String
+    var distanceToDistance: CLLocationDistance
+    var lat: Double
+    var long: Double
+    //var btnStatus: String
+    var isInTranzit: Bool
+    var dateCreated: Date
+    
 
     
-    init(NameOrBusiness: String, FirstLineAddress: String, SecondLineAddress: String, CityLineAddress: String, PostCodeLineAddress: String, DistanceToDestination: CLLocationDistance, Lat: Double, Long: Double ) {
-        self.NameOrBusiness = NameOrBusiness
-        self.FirstLineAddress = FirstLineAddress
-        self.SecondLineAddress = SecondLineAddress
-        self.CityLineAddress = CityLineAddress
-        self.PostcodeLineAddress = PostCodeLineAddress
-        self.DistanceToDestination = DistanceToDestination
-        self.Lat = Lat
-        self.Long = Long
+    init(NameOrBusiness: String, FirstLineAddress: String, SecondLineAddress: String, CityLineAddress: String, PostCodeLineAddress: String, DistanceToDestination: CLLocationDistance, Lat: Double, Long: Double, isInTranzit: Bool, DateCreated: Date ) {
+        self.nameOrBusiness = NameOrBusiness
+        self.firstLineAddress = FirstLineAddress
+        self.secondLineAddress = SecondLineAddress
+        self.cityLineAddress = CityLineAddress
+        self.postcodeLineAddress = PostCodeLineAddress
+        self.distanceToDistance = DistanceToDestination
+        self.lat = Lat
+        self.long = Long
+       // self.btnStatus = StartBtnTitle
+        self.isInTranzit = false
+        self.dateCreated = DateCreated
        
     }
     

@@ -30,6 +30,7 @@ class AddressCell: UITableViewCell {
         cityLineAddressLbl.text = dropOffLocation.city
         postcodeLineAddressLbl.text = dropOffLocation.postcode
         distanceLbl.text = String(format: "%.2f ", dropOffLocation.distance)
+        startBtn.titleLabel?.text = "START ROUTE"
         
     }
 }

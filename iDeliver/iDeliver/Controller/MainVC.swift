@@ -20,10 +20,8 @@ class MainVC: UIViewController {
     @IBOutlet weak var segment: UISegmentedControl!
     
     //Create array which will return your address data
-    var originalArr = [DeliveryDestinations]()
-    var addressArr = [DeliveryDestinations]()
     var dropOffLocations = [DropOffLocation]()
-        var locations = [Location]()
+    var locations = [Location]()
     
     let revealingSplashView = RevealingSplashView (iconImage: UIImage(named: "LaunchScreenIcon")!, iconInitialSize: CGSize(width: 100, height: 100), backgroundColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1))
     
@@ -65,26 +63,50 @@ class MainVC: UIViewController {
         welcomeLbl.text = "I'am a test label"
         self.view.addSubview(welcomeLbl)
     }
+    
+    func sortData() {
+        if segment.selectedSegmentIndex == 1 {
+            dropOffLocations.sort(by: {$0.dateCreated! < $1.dateCreated! })
+//            fetchRequest.sortDescriptors = [sortByAdded]
+        } else if segment.selectedSegmentIndex == 2 {
+            dropOffLocations.sort(by: {$0.distance < $1.distance })
+//            fetchRequest.sortDescriptors = [sortByDistance]
+        } else if segment.selectedSegmentIndex == 3 {
+            dropOffLocations.sort(by: {$0.postcode! < $1.postcode! })
+//            fetchRequest.sortDescriptors = [sortByPostcode]
+        }
+        tableView.reloadData()
+    }
 
     @IBAction func segmentChange(_ sender: Any) {
-        fetch { (true) in
-            tableView.reloadData()
-        }
+        sortData()
+//        fetch { (true) in
+//            tableView.reloadData()
+//        }
     }
+    
     @objc func tappedButton(sender : UIButton) {
         if let cell = sender.superview?.superview?.superview as? UITableViewCell {
             if let indexPath = tableView.indexPath(for: cell) {
-                  sender.setTitle("IN TRANZIT", for: .normal)
+                let dropOffLocation = dropOffLocations[indexPath.row]
+                sender.setTitle("IN TRANZIT", for: .normal)
                 sender.titleLabel?.adjustsFontSizeToFitWidth = true
-                sender.backgroundColor = #colorLiteral(red: 0.05882352963, green: 0.180392161, blue: 0.2470588237, alpha: 1)
+                dropOffLocation.isInTranzit = true
+                sender.backgroundColor = #colorLiteral(red: 0.05882352963, green: 0.180392161, blue: 0.2470588237, alpha: 0.75)
+
+                save(completion: { (true) in
+                    let status = dropOffLocation.isInTranzit
+                    print(status)
+                    dropOffLocation.isInTranzit = true
+                    print(dropOffLocation)
+                })
                 
-                let location = dropOffLocations[indexPath.row]
-                print(location)
-                let destinationCoordinate = CLLocationCoordinate2D(latitude: location.latitude, longitude: location.longitude)
+                print(dropOffLocation)
+                let destinationCoordinate = CLLocationCoordinate2D(latitude: dropOffLocation.latitude, longitude: dropOffLocation.longitude)
                 let destinationPlacemark = MKPlacemark(coordinate: destinationCoordinate)
                 let destinationMapItem = MKMapItem(placemark: destinationPlacemark)
                 
-                destinationMapItem.name = location.street
+                destinationMapItem.name = dropOffLocation.street
                 destinationMapItem.openInMaps(launchOptions: [MKLaunchOptionsDirectionsModeKey: MKLaunchOptionsDirectionsModeDriving])
                 
             }
@@ -152,12 +174,24 @@ extension MainVC: UITableViewDelegate, UITableViewDataSource {
 //        cell.addGestureRecognizer(tapGesture)
 //        cell.startBtn.tag = indexPath.row
         cell.startBtn.addTarget(self, action: #selector(self.tappedButton(sender:)), for: .touchUpInside)
+        
+        //to subclass uibutton and all button configuration can go there
         cell.startBtn.titleLabel?.adjustsFontSizeToFitWidth = true
         cell.startBtn.titleLabel?.minimumScaleFactor = 0.5
         cell.startBtn.titleLabel?.numberOfLines = 1
         cell.startBtn.titleLabel?.transform = CGAffineTransform(rotationAngle: CGFloat.pi / 2)
+        
         cell.configureCell(dropOffLocation: dropOffLocation)
         cell.numberLbl.text = String(indexPath.row + 1)
+        let status = dropOffLocation.isInTranzit
+        
+        if status == true {
+            cell.startBtn.setTitle("IN TRANZIT", for: .normal)
+        } else {
+            cell.startBtn.setTitle("START ROUTE", for: .normal)
+        }
+        
+        
 
         return cell
     }
@@ -195,6 +229,20 @@ extension MainVC {
         
     }
     
+    func save(completion: (_ finished: Bool) -> ()) {
+        guard let managedContext = appDelegate?.persistentContainer.viewContext else  { return }
+    
+        do {
+            try managedContext.save()
+            print("Succesfully saved data!")
+            completion(true)
+        } catch {
+            debugPrint("Could not save: \(error.localizedDescription)")
+            completion(false)
+        }
+    }
+    
+    
     func removeDropOffLocation (atIndexPath indexPath: IndexPath) {
         guard let managedContext = appDelegate?.persistentContainer.viewContext else { return }
         
@@ -217,13 +265,13 @@ extension MainVC {
         let sortByDistance = NSSortDescriptor(key: "distance", ascending: true)
         let sortByPostcode = NSSortDescriptor(key: "postcode", ascending: true)
         
-        if segment.selectedSegmentIndex == 1 {
-            fetchRequest.sortDescriptors = [sortByAdded]
-        } else if segment.selectedSegmentIndex == 2 {
-            fetchRequest.sortDescriptors = [sortByDistance]
-        } else if segment.selectedSegmentIndex == 3 {
-            fetchRequest.sortDescriptors = [sortByPostcode]
-        }
+//        if segment.selectedSegmentIndex == 1 {
+//            fetchRequest.sortDescriptors = [sortByAdded]
+//        } else if segment.selectedSegmentIndex == 2 {
+//            fetchRequest.sortDescriptors = [sortByDistance]
+//        } else if segment.selectedSegmentIndex == 3 {
+//            fetchRequest.sortDescriptors = [sortByPostcode]
+//        }
         
         do {
             dropOffLocations = try managedContext.fetch(fetchRequest) 
