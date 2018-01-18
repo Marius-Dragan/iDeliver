@@ -9,13 +9,20 @@
 import UIKit
 
 class StartRouteButton: UIButton {
-
-    override var titleLabel: UILabel?  {
-        get {
-            let label = super.titleLabel
-            label?.font = UIFont(name: "AvenirNext-DemiBold", size: 25)!
-            return label
+    
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        configureButton()
+    }
+    
+    private func configureButton() {
+        self.titleLabel?.adjustsFontSizeToFitWidth = true
+        self.titleLabel?.minimumScaleFactor = 0.5
+        self.titleLabel?.numberOfLines = 1
+        self.titleLabel?.transform = CGAffineTransform(rotationAngle: CGFloat.pi / 2)
+        self.titleLabel?.font = UIFont(name: "AvenirNext-DemiBold", size: 25)!
+        if titleLabel?.text == "IN TRANZIT" { //<-- not too sure if this works
+            self.backgroundColor = #colorLiteral(red: 0.05882352963, green: 0.180392161, blue: 0.2470588237, alpha: 0.75)
         }
     }
-
 }

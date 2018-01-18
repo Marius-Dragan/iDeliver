@@ -150,7 +150,7 @@
                                             <outlet property="nameOrBusinessLbl" destination="uC5-ry-B5Y" id="hQa-Ff-A3Y"/>
                                             <outlet property="numberLbl" destination="2Kh-iJ-ads" id="wK7-Mi-wXV"/>
                                             <outlet property="postcodeLineAddressLbl" destination="sVq-2L-xcj" id="Wvs-vZ-F4W"/>
-                                            <outlet property="startBtn" destination="kXn-Uv-Nez" id="mgk-Ef-N53"/>
+                                            <outlet property="startBtn" destination="kXn-Uv-Nez" id="gOo-y4-bfX"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>

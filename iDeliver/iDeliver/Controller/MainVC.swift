@@ -35,7 +35,7 @@ class MainVC: UIViewController {
         tableView.delegate = self
         tableView.dataSource = self
         tableView.isHidden = false
-        //tableView.reloadData()
+        tableView.reloadData()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -49,6 +49,7 @@ class MainVC: UIViewController {
             if complete {
                 if dropOffLocations.count >= 1 {
                     tableView.isHidden = false
+                         //tableView.reloadData()  //<-- if i reload data here it will cause a crash if i try to delete rows!!!
                 } else {
                     tableView.isHidden = true
                 }
@@ -64,33 +65,33 @@ class MainVC: UIViewController {
         self.view.addSubview(welcomeLbl)
     }
     
-    func sortData() {
-        if segment.selectedSegmentIndex == 1 {
-            dropOffLocations.sort(by: {$0.dateCreated! < $1.dateCreated! })
-//            fetchRequest.sortDescriptors = [sortByAdded]
-        } else if segment.selectedSegmentIndex == 2 {
-            dropOffLocations.sort(by: {$0.distance < $1.distance })
-//            fetchRequest.sortDescriptors = [sortByDistance]
-        } else if segment.selectedSegmentIndex == 3 {
-            dropOffLocations.sort(by: {$0.postcode! < $1.postcode! })
-//            fetchRequest.sortDescriptors = [sortByPostcode]
-        }
-        tableView.reloadData()
-    }
+//    func sortData() {
+//        if segment.selectedSegmentIndex == 1 {
+//            dropOffLocations.sort(by: {$0.dateCreated! < $1.dateCreated! })
+////            fetchRequest.sortDescriptors = [sortByAdded]
+//        } else if segment.selectedSegmentIndex == 2 {
+//            dropOffLocations.sort(by: {$0.distance < $1.distance })
+////            fetchRequest.sortDescriptors = [sortByDistance]
+//        } else if segment.selectedSegmentIndex == 3 {
+//            dropOffLocations.sort(by: {$0.postcode! < $1.postcode! })
+////            fetchRequest.sortDescriptors = [sortByPostcode]
+//        }
+//        tableView.reloadData()
+//    }
 
     @IBAction func segmentChange(_ sender: Any) {
-        sortData()
-//        fetch { (true) in
-//            tableView.reloadData()
-//        }
+      //  sortData()
+        fetch { (true) in
+            tableView.reloadData()
+        }
     }
     
-    @objc func tappedButton(sender : UIButton) {
+    @objc func tappedButton(sender : StartRouteButton) {
         if let cell = sender.superview?.superview?.superview as? UITableViewCell {
             if let indexPath = tableView.indexPath(for: cell) {
                 let dropOffLocation = dropOffLocations[indexPath.row]
                 sender.setTitle("IN TRANZIT", for: .normal)
-                sender.titleLabel?.adjustsFontSizeToFitWidth = true
+                //sender.titleLabel?.adjustsFontSizeToFitWidth = true
                 dropOffLocation.isInTranzit = true
                 sender.backgroundColor = #colorLiteral(red: 0.05882352963, green: 0.180392161, blue: 0.2470588237, alpha: 0.75)
 
@@ -163,36 +164,23 @@ extension MainVC: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "deliveryAddressCell", for: indexPath) as? AddressCell else { return UITableViewCell() }
-//        //get address object from array which you can assign to cell
-//        let addressObj = addressArr[indexPath.row] // without coreData
-//        //assign data from array
-//        cell.configureCell(addressObj: addressObj) // without coreData
-//        cell.numberLbl.text = String(indexPath.row + 1) // without coreData
        
         let dropOffLocation = dropOffLocations[indexPath.row]
-//        let tapGesture = UITapGestureRecognizer(target: MainVC.self, action: Selector(("tappedButton")))
-//        cell.addGestureRecognizer(tapGesture)
-//        cell.startBtn.tag = indexPath.row
-        cell.startBtn.addTarget(self, action: #selector(self.tappedButton(sender:)), for: .touchUpInside)
         
-        //to subclass uibutton and all button configuration can go there
-        cell.startBtn.titleLabel?.adjustsFontSizeToFitWidth = true
-        cell.startBtn.titleLabel?.minimumScaleFactor = 0.5
-        cell.startBtn.titleLabel?.numberOfLines = 1
-        cell.startBtn.titleLabel?.transform = CGAffineTransform(rotationAngle: CGFloat.pi / 2)
+        cell.startBtn.addTarget(self, action: #selector(self.tappedButton(sender:)), for: .touchUpInside)
         
         cell.configureCell(dropOffLocation: dropOffLocation)
         cell.numberLbl.text = String(indexPath.row + 1)
-        let status = dropOffLocation.isInTranzit
+       
+//        let status = dropOffLocation.isInTranzit
+//        cell.startBtn.titleLabel?.text = status ? "IN TRANZIT" : "START ROUTE"
+//
+//        if status == true {
+//            cell.startBtn.setTitle("IN TRANZIT", for: .normal)
+//        } else {
+//            cell.startBtn.setTitle("START ROUTE", for: .normal)
+//        }
         
-        if status == true {
-            cell.startBtn.setTitle("IN TRANZIT", for: .normal)
-        } else {
-            cell.startBtn.setTitle("START ROUTE", for: .normal)
-        }
-        
-        
-
         return cell
     }
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
@@ -205,7 +193,7 @@ extension MainVC: UITableViewDelegate, UITableViewDataSource {
         let deleteAction = UITableViewRowAction(style: .destructive, title: "DELETE") { (rowAction, indexPath) in
             self.removeDropOffLocation(atIndexPath: indexPath)
             self.fetchCoreDataObjects()
-            tableView.deleteRows(at: [indexPath], with: .automatic)
+            tableView.deleteRows(at: [indexPath], with: .automatic) // throws an error here when delete row
         }
         
         let completeAction = UITableViewRowAction(style: .normal, title: "DELIVERED") { (rowAction, indexPath) in
@@ -222,9 +210,9 @@ extension MainVC: UITableViewDelegate, UITableViewDataSource {
 extension MainVC {
     
     func setProgress(atIndexPath indexPath: IndexPath) {
-              guard let managedContext = appDelegate?.persistentContainer.viewContext else { return }
+         guard let managedContext = appDelegate?.persistentContainer.viewContext else  { return }
         
-        let chosenLocation = dropOffLocations[indexPath.row]
+        let dropOffLocation = dropOffLocations[indexPath.row]
         //to create conditional code to trigger the complete delivered view on top of cell
         
     }
@@ -265,13 +253,13 @@ extension MainVC {
         let sortByDistance = NSSortDescriptor(key: "distance", ascending: true)
         let sortByPostcode = NSSortDescriptor(key: "postcode", ascending: true)
         
-//        if segment.selectedSegmentIndex == 1 {
-//            fetchRequest.sortDescriptors = [sortByAdded]
-//        } else if segment.selectedSegmentIndex == 2 {
-//            fetchRequest.sortDescriptors = [sortByDistance]
-//        } else if segment.selectedSegmentIndex == 3 {
-//            fetchRequest.sortDescriptors = [sortByPostcode]
-//        }
+        if segment.selectedSegmentIndex == 1 {
+            fetchRequest.sortDescriptors = [sortByAdded]
+        } else if segment.selectedSegmentIndex == 2 {
+            fetchRequest.sortDescriptors = [sortByDistance]
+        } else if segment.selectedSegmentIndex == 3 {
+            fetchRequest.sortDescriptors = [sortByPostcode]
+        }
         
         do {
             dropOffLocations = try managedContext.fetch(fetchRequest) 

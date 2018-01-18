@@ -16,7 +16,7 @@ class AddressCell: UITableViewCell {
     @IBOutlet weak var postcodeLineAddressLbl: UILabel!
     @IBOutlet weak var countryLineAddressLbl: UILabel!
     @IBOutlet weak var numberLbl: UILabel!
-    @IBOutlet weak var startBtn: UIButton!
+    @IBOutlet weak var startBtn: StartRouteButton!
     @IBOutlet weak var distanceLbl: UILabel!
 
     
@@ -30,8 +30,8 @@ class AddressCell: UITableViewCell {
         cityLineAddressLbl.text = dropOffLocation.city
         postcodeLineAddressLbl.text = dropOffLocation.postcode
         distanceLbl.text = String(format: "%.2f ", dropOffLocation.distance)
-        startBtn.titleLabel?.text = "START ROUTE"
-        
+        let status = dropOffLocation.isInTranzit
+        startBtn.titleLabel?.text = status ? "IN TRANZIT" : "START ROUTE"
     }
 }
 
