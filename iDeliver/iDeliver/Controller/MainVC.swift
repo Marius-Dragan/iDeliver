@@ -40,6 +40,13 @@ class MainVC: UIViewController {
         tableView.isHidden = false
         tableView.reloadData()
     }
+    override func viewDidAppear(_ animated: Bool) {
+        welcomeLbl.fadeTo(alphaValue: 0.0, withDuration: 0.0)
+        startLbl.fadeTo(alphaValue: 0.0, withDuration: 0.0)
+        
+        welcomeLbl.fadeTo(alphaValue: 1.0, withDuration: 2.5)
+        startLbl.fadeTo(alphaValue: 1.0, withDuration: 3.5)
+    }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
@@ -65,14 +72,14 @@ class MainVC: UIViewController {
         if isVisible == true {
             welcomeLbl = UILabel(frame: CGRect(x: self.view.frame.size.width / 2 - self.view.frame.size.width / 2, y: -130, width: view.frame.size.width, height: view.frame.size.height))
             welcomeLbl.textAlignment = .center
-            welcomeLbl.textColor = UIColor.white
+            welcomeLbl.textColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 0.9)
             welcomeLbl.text = "Welcome to iDeliver"
             welcomeLbl.font = UIFont(name: "AvenirNext-DemiBold", size: 25)!
             self.view.addSubview(welcomeLbl)
             
             startLbl = UILabel(frame: CGRect(x: self.view.frame.size.width / 2 - self.view.frame.size.width / 2, y: 0, width: view.frame.size.width, height: view.frame.size.height))
             startLbl.textAlignment = .center
-            startLbl.textColor = UIColor.white
+            startLbl.textColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 0.8)
             startLbl.text = "To start please tap on \"+\" to add a destination"
             startLbl.numberOfLines = 2
             startLbl.font = UIFont(name: "AvenirNext-Regular", size: 22)!
