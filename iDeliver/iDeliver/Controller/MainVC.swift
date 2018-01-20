@@ -23,6 +23,9 @@ class MainVC: UIViewController {
     var dropOffLocations = [DropOffLocation]()
     var locations = [Location]()
     
+    var welcomeLbl = UILabel()
+    var startLbl = UILabel()
+    
     let revealingSplashView = RevealingSplashView (iconImage: UIImage(named: "LaunchScreenIcon")!, iconInitialSize: CGSize(width: 100, height: 100), backgroundColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1))
     
     override func viewDidLoad() {
@@ -48,39 +51,39 @@ class MainVC: UIViewController {
         self.fetch { (complete) in
             if complete {
                 if dropOffLocations.count >= 1 {
+                    welcomeMessage(false)
                     tableView.isHidden = false
                          //tableView.reloadData()  //<-- if i reload data here it will cause a crash if i try to delete rows!!!
                 } else {
                     tableView.isHidden = true
+                    welcomeMessage(true)
                 }
             }
         }
     }
-    func welcomeMessage() {
-        let welcomeLbl = UILabel(frame: CGRect(x: 0, y: 0, width: 200, height: 21))
-        welcomeLbl.center = CGPoint(x: 160, y: 285)
-        welcomeLbl.textAlignment = .center
-        welcomeLbl.textColor = UIColor.white
-        welcomeLbl.text = "I'am a test label"
-        self.view.addSubview(welcomeLbl)
+    func welcomeMessage(_ isVisible: Bool) {
+        if isVisible == true {
+            welcomeLbl = UILabel(frame: CGRect(x: self.view.frame.size.width / 2 - self.view.frame.size.width / 2, y: -130, width: view.frame.size.width, height: view.frame.size.height))
+            welcomeLbl.textAlignment = .center
+            welcomeLbl.textColor = UIColor.white
+            welcomeLbl.text = "Welcome to iDeliver"
+            welcomeLbl.font = UIFont(name: "AvenirNext-DemiBold", size: 25)!
+            self.view.addSubview(welcomeLbl)
+            
+            startLbl = UILabel(frame: CGRect(x: self.view.frame.size.width / 2 - self.view.frame.size.width / 2, y: 0, width: view.frame.size.width, height: view.frame.size.height))
+            startLbl.textAlignment = .center
+            startLbl.textColor = UIColor.white
+            startLbl.text = "To start please tap on \"+\" to add a destination"
+            startLbl.numberOfLines = 2
+            startLbl.font = UIFont(name: "AvenirNext-Regular", size: 22)!
+            self.view.addSubview(startLbl)
+        } else {
+            welcomeLbl.removeFromSuperview()
+            startLbl.removeFromSuperview()
+        }
     }
-    
-//    func sortData() {
-//        if segment.selectedSegmentIndex == 1 {
-//            dropOffLocations.sort(by: {$0.dateCreated! < $1.dateCreated! })
-////            fetchRequest.sortDescriptors = [sortByAdded]
-//        } else if segment.selectedSegmentIndex == 2 {
-//            dropOffLocations.sort(by: {$0.distance < $1.distance })
-////            fetchRequest.sortDescriptors = [sortByDistance]
-//        } else if segment.selectedSegmentIndex == 3 {
-//            dropOffLocations.sort(by: {$0.postcode! < $1.postcode! })
-////            fetchRequest.sortDescriptors = [sortByPostcode]
-//        }
-//        tableView.reloadData()
-//    }
 
     @IBAction func segmentChange(_ sender: Any) {
-      //  sortData()
         fetch { (true) in
             tableView.reloadData()
         }
@@ -113,19 +116,6 @@ class MainVC: UIViewController {
             }
         }
     }
-   // @IBAction func startRouteBtnWasPressed(_ sender: Any) {
-//            for object in dropOffLocations {
-//
-//                let locations = Location.init(title: object.street!, latitude: object.latitude, longitude: object.longitude)
-//                print(locations)
-//                let destinationCoordinate = CLLocationCoordinate2D(latitude: locations.latitude, longitude: locations.longitude)
-//                let destinationPlacemark = MKPlacemark(coordinate: destinationCoordinate)
-//                let destinationMapItem = MKMapItem(placemark: destinationPlacemark)
-//
-//                destinationMapItem.name = locations.title
-//                destinationMapItem.openInMaps(launchOptions: [MKLaunchOptionsDirectionsModeKey: MKLaunchOptionsDirectionsModeDriving])
-//            }
-//}
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "addDeliveryAddressVC" {
@@ -171,15 +161,13 @@ extension MainVC: UITableViewDelegate, UITableViewDataSource {
         
         cell.configureCell(dropOffLocation: dropOffLocation)
         cell.numberLbl.text = String(indexPath.row + 1)
-       
-//        let status = dropOffLocation.isInTranzit
-//        cell.startBtn.titleLabel?.text = status ? "IN TRANZIT" : "START ROUTE"
-//
-//        if status == true {
-//            cell.startBtn.setTitle("IN TRANZIT", for: .normal)
-//        } else {
-//            cell.startBtn.setTitle("START ROUTE", for: .normal)
-//        }
+        let status = dropOffLocation.isInTranzit
+        cell.startBtn.setTitle(status ? "IN TRANZIT" : "START ROUTE", for: .normal)
+        if cell.startBtn.titleLabel?.text == "IN TRANZIT" {
+            cell.startBtn.backgroundColor = #colorLiteral(red: 0.05882352963, green: 0.180392161, blue: 0.2470588237, alpha: 0.75)
+        } else {
+            cell.startBtn.backgroundColor = #colorLiteral(red: 0.1411764771, green: 0.3960784376, blue: 0.5647059083, alpha: 0.25)
+        }
         
         return cell
     }
