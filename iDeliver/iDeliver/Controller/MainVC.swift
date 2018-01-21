@@ -239,6 +239,28 @@ extension MainVC {
         }
     }
     
+    func getLocationCount () -> Int {
+        let managedContext = appDelegate?.persistentContainer.viewContext
+        let fetchRequest = NSFetchRequest<DropOffLocation>(entityName: "DropOffLocation")
+        
+        do {
+            let count = try managedContext?.count(for:fetchRequest)
+            return count!
+        } catch let error as NSError {
+            print("Error: \(error.localizedDescription)")
+            return 0
+        }
+    }
+
+    
+//        func getLocationCount() -> Int {
+//         let managedContext = appDelegate?.persistentContainer.viewContext
+//         let location = managedContext
+//         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "DropOffLocation")
+//         let count = try! location?.count(for: fetchRequest)
+//            return count!
+//    }
+    
     func fetch (completion: (_ complete: Bool) -> ()) {
         guard let managedContext = appDelegate?.persistentContainer.viewContext else { return }
         

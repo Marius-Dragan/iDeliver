@@ -12,6 +12,7 @@ import MapKit
 class AddressAnnotation: NSObject, MKAnnotation {
     dynamic var coordinate: CLLocationCoordinate2D
     var address: String!
+    var dropNumber: String!
     var image: UIImage!
     //var key: String
     
