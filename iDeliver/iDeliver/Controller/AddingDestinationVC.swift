@@ -201,37 +201,37 @@ extension AddingDestinationVC: CLLocationManagerDelegate {
 //    }
  
     
-    
-    func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
-        // 1
-        if (view.annotation is MKUserLocation) {
-            // Don't proceed with custom callout
-            return
-        }
-        // 2
-        let addressAnnotation = view.annotation as? AddressAnnotation
-        let customView = Bundle.main.loadNibNamed("CustomCalloutView", owner: nil, options: nil)![0] as! CustomCalloutView
-        customView.nameOrBusinessLbl.text = addressAnnotation?.nameOrBusiness
-        customView.secondLineAddressLbl.text = addressAnnotation?.cityName
-        customView.postcodeLineAddressLbl.text = addressAnnotation?.postcode
-        customView.numberOfDeliveriesLbl.text = String(Helper.getLocationCount() + 1)
-        print(customView)
-       // 3
-        customView.center = CGPoint(x: view.bounds.size.width / 2, y: -customView.bounds.size.height * 0.5)
-
-        view.addSubview(customView)
-        mapView.setCenter((view.annotation?.coordinate)!, animated: true)
-    }
-    
-    func mapView(_ mapView: MKMapView, didDeselect view: MKAnnotationView) {
-        if view.isKind(of: AnnotationView.self)
-        {
-            for subview in view.subviews
-            {
-                subview.removeFromSuperview()
-            }
-        }
-    }
+//    //tapping on map will display a expanded custom view
+//    func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
+//        // 1
+//        if (view.annotation is MKUserLocation) {
+//            // Don't proceed with custom callout
+//            return
+//        }
+//        // 2
+//        let addressAnnotation = view.annotation as? AddressAnnotation
+//        let customView = Bundle.main.loadNibNamed("CustomCalloutView", owner: nil, options: nil)![0] as! CustomCalloutView
+//        customView.nameOrBusinessLbl.text = addressAnnotation?.nameOrBusiness
+//        customView.secondLineAddressLbl.text = addressAnnotation?.cityName
+//        customView.postcodeLineAddressLbl.text = addressAnnotation?.postcode
+//        customView.numberOfDeliveriesLbl.text = String(Helper.getLocationCount() + 1)
+//        print(customView)
+//       // 3
+//        //customView.center = CGPoint(x: view.bounds.size.width / 2, y: -customView.bounds.size.height * 0.5)
+//        customView.layer.anchorPoint = CGPoint(x: 0, y: 1.0) //--->anchor the pin image to the exact coordinate and not move the pin when zooming
+//        view.addSubview(customView)
+//        //mapView.setCenter((view.annotation?.coordinate)!, animated: true)
+//    }
+//
+//    func mapView(_ mapView: MKMapView, didDeselect view: MKAnnotationView) {
+//        if view.isKind(of: AnnotationView.self)
+//        {
+//            for subview in view.subviews
+//            {
+//                subview.removeFromSuperview()
+//            }
+//        }
+//    }
     
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         let annotationIdentifier = "MyCustomAnnotation"

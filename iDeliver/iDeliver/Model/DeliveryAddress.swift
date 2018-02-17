@@ -18,7 +18,6 @@ struct DeliveryDestinations {
     var distanceToDistance: CLLocationDistance
     var lat: Double
     var long: Double
-    //var btnStatus: String
     var isInTranzit: Bool
     var dateCreated: Date
     
@@ -33,7 +32,6 @@ struct DeliveryDestinations {
         self.distanceToDistance = DistanceToDestination
         self.lat = Lat
         self.long = Long
-       // self.btnStatus = StartBtnTitle
         self.isInTranzit = false
         self.dateCreated = DateCreated
        
