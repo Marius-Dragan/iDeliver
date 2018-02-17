@@ -11,12 +11,14 @@ import MapKit
 
 class AddressAnnotation: NSObject, MKAnnotation {
     dynamic var coordinate: CLLocationCoordinate2D
-    var address: String!
+    var nameOrBusiness: String!
+    var streetName: String!
+    var cityName: String!
+    var postcode: String!
     var dropNumber: String!
     var image: UIImage!
     var toBeTapped: Bool = false
     var selected: Bool = false
-    //var key: String
     
     
     init(coordinate: CLLocationCoordinate2D) {

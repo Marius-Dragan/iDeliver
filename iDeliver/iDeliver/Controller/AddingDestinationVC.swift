@@ -32,7 +32,7 @@ class AddingDestinationVC: UIViewController, Alertable {
     var route: MKRoute!
     var distance: CLLocationDistance = CLLocationDistance()
     var selectedItemPlacemark: MKPlacemark? = nil
-
+    
     var destlat: Double = Double()
     var destlong: Double = Double()
     
@@ -210,21 +210,28 @@ extension AddingDestinationVC: CLLocationManagerDelegate {
         }
         // 2
         let addressAnnotation = view.annotation as? AddressAnnotation
-        let views = Bundle.main.loadNibNamed("CustomCalloutView", owner: nil, options: nil)
-        let calloutView = views?[0] as! CustomCalloutView
-        //calloutView.firstLineAddressLbl.text = firstLineAddressTextField.text
-        //calloutView.postcodeLineAddressLbl.text = postcodeLineAddressTextField.text
-        let tableData = MainVC()
-        calloutView.numberOfDeliveriesLbl.text = String(tableData.dropOffLocations.count)
-        //calloutView.expandedNumberOfDeliveriesPinLbl.text = String(tableData.dropOffLocations.count)
-        print(calloutView)
+        let customView = Bundle.main.loadNibNamed("CustomCalloutView", owner: nil, options: nil)![0] as! CustomCalloutView
+        customView.nameOrBusinessLbl.text = addressAnnotation?.nameOrBusiness
+        customView.secondLineAddressLbl.text = addressAnnotation?.cityName
+        customView.postcodeLineAddressLbl.text = addressAnnotation?.postcode
+        customView.numberOfDeliveriesLbl.text = String(Helper.getLocationCount() + 1)
+        print(customView)
        // 3
-        calloutView.center = CGPoint(x: view.bounds.size.width / 2, y: -calloutView.bounds.size.height * 0.5)
-       
-        view.addSubview(calloutView)
+        customView.center = CGPoint(x: view.bounds.size.width / 2, y: -customView.bounds.size.height * 0.5)
+
+        view.addSubview(customView)
         mapView.setCenter((view.annotation?.coordinate)!, animated: true)
     }
-
+    
+    func mapView(_ mapView: MKMapView, didDeselect view: MKAnnotationView) {
+        if view.isKind(of: AnnotationView.self)
+        {
+            for subview in view.subviews
+            {
+                subview.removeFromSuperview()
+            }
+        }
+    }
     
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         let annotationIdentifier = "MyCustomAnnotation"
@@ -252,23 +259,12 @@ extension AddingDestinationVC: CLLocationManagerDelegate {
         if case let annotationView as CustomAnnotationView = annotationView {
             annotationView.annotation = annotation
             annotationView.image = #imageLiteral(resourceName: "CustomMapPin")
-            annotationView.layer.anchorPoint = CGPoint(x: 0, y: 1.0)
-            if let title = annotation.title,
-                let label = annotationView.numberOfDropsLbl {
-                label.text = title
+            annotationView.layer.anchorPoint = CGPoint(x: 0, y: 1.0) //--->anchor the pin image to the exact coordinate and not move the pin when zooming
+            if let label = annotationView.numberOfDropsLbl {
+                label.text = String(Helper.getLocationCount() + 1)
             }
         }
-        addAnnotationLbl()
         return annotationView
-    }
-
-    func addAnnotationLbl () { //---> throws into infinite loop
-        let annotation = MKPointAnnotation()
-        let tableData = MainVC()
-        annotation.coordinate = CLLocationCoordinate2D(latitude: destlat, longitude: destlong)
-        annotation.title = String(tableData.getLocationCount())
-        print(tableData.getLocationCount())
-        mapView.addAnnotation(annotation)
     }
     
     

@@ -190,6 +190,7 @@ extension MainVC: UITableViewDelegate, UITableViewDataSource {
             self.fetchCoreDataObjects()
 
             tableView.deleteRows(at: [indexPath], with: .automatic)
+            tableView.reloadData()
         }
     
         let completeAction = UITableViewRowAction(style: .normal, title: "DELIVERED") { (rowAction, indexPath) in
@@ -240,18 +241,18 @@ extension MainVC {
         }
     }
     
-    func getLocationCount () -> Int {
-        let managedContext = appDelegate?.persistentContainer.viewContext
-        let fetchRequest = NSFetchRequest<DropOffLocation>(entityName: "DropOffLocation")
-        
-        do {
-            let count = try managedContext?.count(for:fetchRequest)
-            return count!
-        } catch let error as NSError {
-            print("Error: \(error.localizedDescription)")
-            return 0
-        }
-    }
+//    func getLocationCount () -> Int {
+//        let managedContext = appDelegate?.persistentContainer.viewContext
+//        let fetchRequest = NSFetchRequest<DropOffLocation>(entityName: "DropOffLocation")
+//        
+//        do {
+//            let count = try managedContext?.count(for:fetchRequest)
+//            return count!
+//        } catch let error as NSError {
+//            print("Error: \(error.localizedDescription)")
+//            return 0
+//        }
+//    }
 
     
 //        func getLocationCount() -> Int {

@@ -9,7 +9,6 @@
 import UIKit
 
 class CustomCalloutView: UIView {
-    @IBOutlet weak var cancelBtnImg: UIButton!
     @IBOutlet weak var numberOfDeliveriesLbl: UILabel!
     @IBOutlet weak var nameOrBusinessLbl: UILabel!
     @IBOutlet weak var firstLineAddressLbl: UILabel!
