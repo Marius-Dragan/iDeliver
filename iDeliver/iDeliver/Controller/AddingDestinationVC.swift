@@ -158,24 +158,42 @@ extension AddingDestinationVC: CLLocationManagerDelegate {
     }
 
     
+    ////////
+//    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+//        if annotation is MKUserLocation
+//        {
+//            return nil
+//        }
+//        var annotationView = self.mapView.dequeueReusableAnnotationView(withIdentifier: "CustomMapPin")
+//        if annotationView == nil{
+//            annotationView = AnnotationView(annotation: annotation, reuseIdentifier: "CustomMapPin")
+//            annotationView?.canShowCallout = false
+//        }else{
+//            annotationView?.annotation = annotation
+//        }
+//        annotationView?.image = UIImage(named: "CustomMapPin")
+//        return annotationView
+//    }
     
-    // Working annotation.
+     //Working annotation.
     
 //    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
 //        if let annotation = annotation as? AddressAnnotation {
-//            let identifier = "address"
+//           // let identifier = "address"
 //            var view: MKAnnotationView
-//            view = MKAnnotationView(annotation: annotation, reuseIdentifier: "destinationpin")
+//            view = MKAnnotationView(annotation: annotation, reuseIdentifier: "CustomMapPin")
 //            return view
 //        } else if let annotation = annotation as? MKPointAnnotation {
 //            let identifier = "destination"
 //            var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: identifier)
 //            if annotationView == nil {
 //                annotationView = MKAnnotationView(annotation: annotation, reuseIdentifier: identifier)
+//                annotationView?.canShowCallout = false
 //            } else {
 //                annotationView?.annotation = annotation
 //            }
-//            annotationView?.image = UIImage(named: "DestinationAnnotation")
+//            annotationView?.image = UIImage(named: "CustomMapPin")
+//            annotationView?.layer.anchorPoint = CGPoint(x: 0.0, y: 1.0) //--->anchor the pin image to the exact coordinate and not move the pin when zooming
 //            return annotationView
 //        }
 //
@@ -184,40 +202,43 @@ extension AddingDestinationVC: CLLocationManagerDelegate {
  
     
     
-//    func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
-//        // 1
-//        if (view.annotation is MKUserLocation) {
-//            // Don't proceed with custom callout
-//            return
-//        }
-//        // 2
-//        let addressAnnotation = view.annotation as? AddressAnnotation
-//        let views = Bundle.main.loadNibNamed("CustomCalloutView", owner: nil, options: nil)
-//        let calloutView = views?[0] as! CustomCalloutView
-//        calloutView.firstAddressPinLbl.text = firstLineAddressTextField.text
-//        let tableData = MainVC()
-//        calloutView.numberOfDeliveriesPinLbl.text = String(tableData.dropOffLocations.count)
-//
-//        print(calloutView)
-//       // 3
-//        calloutView.center = CGPoint(x: view.bounds.size.width / 2, y: -calloutView.bounds.size.height * 0.5)
-//        view.addSubview(calloutView)
-//        mapView.setCenter((view.annotation?.coordinate)!, animated: true)
-//    }
+    func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
+        // 1
+        if (view.annotation is MKUserLocation) {
+            // Don't proceed with custom callout
+            return
+        }
+        // 2
+        let addressAnnotation = view.annotation as? AddressAnnotation
+        let views = Bundle.main.loadNibNamed("CustomCalloutView", owner: nil, options: nil)
+        let calloutView = views?[0] as! CustomCalloutView
+        //calloutView.firstLineAddressLbl.text = firstLineAddressTextField.text
+        //calloutView.postcodeLineAddressLbl.text = postcodeLineAddressTextField.text
+        let tableData = MainVC()
+        calloutView.numberOfDeliveriesLbl.text = String(tableData.dropOffLocations.count)
+        //calloutView.expandedNumberOfDeliveriesPinLbl.text = String(tableData.dropOffLocations.count)
+        print(calloutView)
+       // 3
+        calloutView.center = CGPoint(x: view.bounds.size.width / 2, y: -calloutView.bounds.size.height * 0.5)
+       
+        view.addSubview(calloutView)
+        mapView.setCenter((view.annotation?.coordinate)!, animated: true)
+    }
 
+    
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         let annotationIdentifier = "MyCustomAnnotation"
         guard !annotation.isKind(of: MKUserLocation.self) else {
             return nil
         }
-        
+
         var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: annotationIdentifier)
         if annotationView == nil {
             annotationView = CustomAnnotationView(annotation: annotation, reuseIdentifier: annotationIdentifier)
             if case let annotationView as CustomAnnotationView = annotationView {
                 annotationView.isEnabled = true
                 annotationView.canShowCallout = false
-                annotationView.numberOfDropsLbl = UILabel(frame: CGRect(x: 4.0, y: 5.0, width: 22.0, height: 18.0))
+                annotationView.numberOfDropsLbl = UILabel(frame: CGRect(x: 60.0, y: 20.0, width: 22.0, height: 18.0))
                 if let label = annotationView.numberOfDropsLbl {
                     label.font = UIFont(name: "AvenirNext-DemiBold", size: 25.0)
                     label.textAlignment = .center
@@ -227,20 +248,21 @@ extension AddingDestinationVC: CLLocationManagerDelegate {
                 }
             }
         }
-        
+
         if case let annotationView as CustomAnnotationView = annotationView {
             annotationView.annotation = annotation
-            annotationView.image = #imageLiteral(resourceName: "destinationpin")
+            annotationView.image = #imageLiteral(resourceName: "CustomMapPin")
+            annotationView.layer.anchorPoint = CGPoint(x: 0, y: 1.0)
             if let title = annotation.title,
                 let label = annotationView.numberOfDropsLbl {
                 label.text = title
             }
         }
-                addAnnotationLbl()
+        addAnnotationLbl()
         return annotationView
     }
 
-    func addAnnotationLbl () {
+    func addAnnotationLbl () { //---> throws into infinite loop
         let annotation = MKPointAnnotation()
         let tableData = MainVC()
         annotation.coordinate = CLLocationCoordinate2D(latitude: destlat, longitude: destlong)

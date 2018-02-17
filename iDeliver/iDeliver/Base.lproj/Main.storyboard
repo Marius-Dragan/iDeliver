@@ -39,7 +39,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="355" height="234"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3Zg-aA-0Dw" customClass="GradientView" customModule="iDeliver" customModuleProvider="target">
+                                                <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3Zg-aA-0Dw" customClass="GradientView" customModule="iDeliver" customModuleProvider="target">
                                                     <rect key="frame" x="-5" y="17" width="365" height="200"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="200" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="1" translatesAutoresizingMaskIntoConstraints="NO" id="2Kh-iJ-ads">

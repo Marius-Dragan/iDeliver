@@ -9,12 +9,10 @@
 import UIKit
 
 class CustomCalloutView: UIView {
-    
-    @IBOutlet var numberOfDeliveriesPinLbl: UILabel!
-    @IBOutlet var button: UIButton!
-    @IBOutlet var firstAddressPinLbl: UILabel!
-    @IBOutlet var secondAddressPinLbl: UILabel!
-    @IBOutlet var cityAddressPinLbl: UILabel!
-    @IBOutlet var postcodeAddressPinLbl: UILabel!
-    @IBOutlet var pickUpPinLbl: UIImageView!
+    @IBOutlet weak var cancelBtnImg: UIButton!
+    @IBOutlet weak var numberOfDeliveriesLbl: UILabel!
+    @IBOutlet weak var nameOrBusinessLbl: UILabel!
+    @IBOutlet weak var firstLineAddressLbl: UILabel!
+    @IBOutlet weak var secondLineAddressLbl: UILabel!
+    @IBOutlet weak var postcodeLineAddressLbl: UILabel!
 }

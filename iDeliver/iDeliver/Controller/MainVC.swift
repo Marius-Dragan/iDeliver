@@ -188,15 +188,16 @@ extension MainVC: UITableViewDelegate, UITableViewDataSource {
         let deleteAction = UITableViewRowAction(style: .destructive, title: "DELETE") { (rowAction, indexPath) in
             self.removeDropOffLocation(atIndexPath: indexPath)
             self.fetchCoreDataObjects()
-            tableView.deleteRows(at: [indexPath], with: .automatic) // throws an error here when delete row
+
+            tableView.deleteRows(at: [indexPath], with: .automatic)
         }
-        
+    
         let completeAction = UITableViewRowAction(style: .normal, title: "DELIVERED") { (rowAction, indexPath) in
             self.setProgress(atIndexPath: indexPath)
             tableView.reloadRows(at: [indexPath], with: .automatic)
         }
         deleteAction.backgroundColor = #colorLiteral(red: 0.8078431487, green: 0.02745098062, blue: 0.3333333433, alpha: 1)
-        completeAction.backgroundColor = #colorLiteral(red: 0.3411764801, green: 0.6235294342, blue: 0.1686274558, alpha: 1)
+        completeAction.backgroundColor = #colorLiteral(red: 0.1559919107, green: 0.515541153, blue: 0.158177729, alpha: 1)
         
         return [deleteAction, completeAction]
     }

@@ -85,7 +85,6 @@
 			children = (
 				290470C61FDD82D500CC8C06 /* AddressCell.swift */,
 				298E791E1FE57E9F00D9BC9B /* GradientView.swift */,
-				298E792A1FE600E600D9BC9B /* AddressAnnotation.swift */,
 				298E792C1FE67D8500D9BC9B /* AnnotationView.swift */,
 				29640D072001D3C900F5B94F /* MaterialView.swift */,
 				2903DB6C200AD341005638F3 /* StartRouteButton.swift */,
@@ -98,6 +97,7 @@
 			isa = PBXGroup;
 			children = (
 				2911C1AA1FE4DC2B0089B5A6 /* DeliveryAddress.swift */,
+				298E792A1FE600E600D9BC9B /* AddressAnnotation.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
