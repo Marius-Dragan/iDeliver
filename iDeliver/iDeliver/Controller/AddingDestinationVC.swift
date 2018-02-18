@@ -157,26 +157,8 @@ extension AddingDestinationVC: CLLocationManagerDelegate {
         return lineRenderer
     }
 
-    
-    ////////
-//    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
-//        if annotation is MKUserLocation
-//        {
-//            return nil
-//        }
-//        var annotationView = self.mapView.dequeueReusableAnnotationView(withIdentifier: "CustomMapPin")
-//        if annotationView == nil{
-//            annotationView = AnnotationView(annotation: annotation, reuseIdentifier: "CustomMapPin")
-//            annotationView?.canShowCallout = false
-//        }else{
-//            annotationView?.annotation = annotation
-//        }
-//        annotationView?.image = UIImage(named: "CustomMapPin")
-//        return annotationView
-//    }
-    
-     //Working annotation.
-    
+    //---> 1st version
+    //Working annotation.
 //    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
 //        if let annotation = annotation as? AddressAnnotation {
 //           // let identifier = "address"
@@ -199,8 +181,6 @@ extension AddingDestinationVC: CLLocationManagerDelegate {
 //
 //        return nil
 //    }
- 
-    
 //    //tapping on map will display a expanded custom view
 //    func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
 //        // 1
@@ -217,22 +197,21 @@ extension AddingDestinationVC: CLLocationManagerDelegate {
 //        customView.numberOfDeliveriesLbl.text = String(Helper.getLocationCount() + 1)
 //        print(customView)
 //       // 3
-//        //customView.center = CGPoint(x: view.bounds.size.width / 2, y: -customView.bounds.size.height * 0.5)
+//        customView.center = CGPoint(x: view.bounds.size.width / 2, y: -customView.bounds.size.height * 0.5)
 //        customView.layer.anchorPoint = CGPoint(x: 0, y: 1.0) //--->anchor the pin image to the exact coordinate and not move the pin when zooming
 //        view.addSubview(customView)
-//        //mapView.setCenter((view.annotation?.coordinate)!, animated: true)
+//        mapView.setCenter((view.annotation?.coordinate)!, animated: true)
 //    }
-//
 //    func mapView(_ mapView: MKMapView, didDeselect view: MKAnnotationView) {
-//        if view.isKind(of: AnnotationView.self)
-//        {
-//            for subview in view.subviews
-//            {
+//        if view.isKind(of: AnnotationView.self) {
+//            for subview in view.subviews {
 //                subview.removeFromSuperview()
 //            }
 //        }
 //    }
+    //---> ending here!!!
     
+    //--->2nd version
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         let annotationIdentifier = "MyCustomAnnotation"
         guard !annotation.isKind(of: MKUserLocation.self) else {
@@ -266,47 +245,6 @@ extension AddingDestinationVC: CLLocationManagerDelegate {
         }
         return annotationView
     }
-    
-    
-    // to check from here the custom map anntation
-//    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
-//        print(mapView.annotations)
-//        print(annotation.coordinate)
-//
-//        if (annotation is MKUserLocation) {
-//            return nil
-//        }
-    
-//        var annotationView = self.mapView.dequeueReusableAnnotationView(withIdentifier: "Pin")
-//
-//        if annotationView == nil {
-//            annotationView = MKAnnotationView(annotation: annotation, reuseIdentifier: "Pin")
-//            annotationView?.canShowCallout = false
-//            //custom label
-//            let label = UILabel(frame: CGRect(x: 22, y: 14, width: 30, height: 30))
-//            label.textColor = .white
-//            label.font = UIFont.boldSystemFont(ofSize: 15)
-//            label.text =  "100" // set text here
-//            label.minimumScaleFactor = 10
-//
-//            annotationView?.addSubview(label)
-//
-//        }else{
-//            annotationView?.annotation = annotation
-//        }
-//        //mapViewCounter = mapViewCounter + 1
-//        annotationView?.image = UIImage(named: "dropPin")
-//        annotationView?.tag = 55
-    
-        //        print(mapView.annotations.count)
-        //
-        //        for ant in mapView.annotations{
-        //            print(ant.title)
-        //        }
-        //        //print(annotationView?)
-//        return annotationView
-//    }
-    // ending here custom map annotation
     
     func mapView(_ mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
         centerMapBtn.fadeTo(alphaValue: 1.0, withDuration: 0.2)

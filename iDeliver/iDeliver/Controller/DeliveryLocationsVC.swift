@@ -39,9 +39,10 @@ class DeliveryLocationsVC: UIViewController {
         
         navigationItem.title = "Delivery Location"
         // Do any additional setup after loading the view.
-
+            var index = 0
             for object in dropOffLocations {
-                let location = Location.init(title: object.street!, latitude: object.latitude, longitude: object.longitude)
+                let location = Location.init(index: index, title: object.street!, latitude: object.latitude, longitude: object.longitude)
+                index += 1
             locations.append(location)
         }
         
@@ -53,8 +54,11 @@ class DeliveryLocationsVC: UIViewController {
 //        }
         let annotations = locations.map { location -> MKAnnotation in
             let annotation = MKPointAnnotation()
-            annotation.title = location.title
+            annotation.title = String(location.index + 1)
             annotation.coordinate = CLLocationCoordinate2D(latitude: location.latitude, longitude: location.longitude)
+            var locationCoordinate = CLLocationCoordinate2D(latitude: location.latitude, longitude: location.longitude)
+            let routeLine = MKPolyline(coordinates: &locationCoordinate, count: Helper.getLocationCount())
+            mapView.add(routeLine)
             return annotation
         }
         mapView.addAnnotations(annotations)
@@ -113,12 +117,8 @@ extension DeliveryLocationsVC: MKMapViewDelegate {
             annotationView.annotation = annotation
             annotationView.image = #imageLiteral(resourceName: "CustomMapPin")
             annotationView.layer.anchorPoint = CGPoint(x: 0, y: 1.0) //--->anchor the pin image to the exact coordinate and not move the pin when zooming
-            
-                     for (index, element) in locations.enumerated() {
-                        if let label = annotationView.numberOfDropsLbl {
-                        print("Location \(index + 1): \(element)")
-                            label.text = String(index)
-                }
+                if let label = annotationView.numberOfDropsLbl {
+                        label.text = annotation.title!
             }
         }
         return annotationView
@@ -130,32 +130,13 @@ extension DeliveryLocationsVC: MKMapViewDelegate {
     }
     
     //creating the line between 2 points working need to move this to different VC
-    func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
-        let lineRenderer = MKPolylineRenderer(overlay: self.route.polyline)
-        lineRenderer.strokeColor = #colorLiteral(red: 0.2588235438, green: 0.7568627596, blue: 0.9686274529, alpha: 1)
-        lineRenderer.lineWidth = 3
-
-        return lineRenderer
-    }
-    func searchMapKitForResultsWithPolyline(forMapItem mapItem: MKMapItem) {
-        let request = MKDirectionsRequest()
-        request.source = MKMapItem.forCurrentLocation()
-        request.destination = mapItem
-        request.transportType = MKDirectionsTransportType.automobile
-        
-        let directions = MKDirections(request: request)
-        
-        directions.calculate { (response, error) in
-            guard let response = response else {
-                print(error.debugDescription)
-                return
-            }
-            self.route = response.routes[0]
-            self.mapView.add(self.route.polyline)
-            self.distance = self.route.distance * 0.00062137
-            //print(self.distance)
-        }
-    }
+//    func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
+//        let lineRenderer = MKPolylineRenderer(overlay: self.route.polyline)
+//        lineRenderer.strokeColor = #colorLiteral(red: 0.2588235438, green: 0.7568627596, blue: 0.9686274529, alpha: 1)
+//        lineRenderer.lineWidth = 3
+//
+//        return lineRenderer
+//    }
 }
 
 extension DeliveryLocationsVC: CLLocationManagerDelegate {

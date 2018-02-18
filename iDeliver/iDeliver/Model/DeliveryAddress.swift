@@ -40,11 +40,13 @@ struct DeliveryDestinations {
 }
 
 struct Location {
+    let index: Int
     let title: String
     let latitude: Double
     let longitude: Double
     
-    init(title: String, latitude: Double, longitude: Double) {
+    init(index: Int, title: String, latitude: Double, longitude: Double) {
+        self.index = index
         self.title = title
         self.latitude = latitude
         self.longitude = longitude
