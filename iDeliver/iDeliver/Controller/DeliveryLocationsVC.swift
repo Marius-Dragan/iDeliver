@@ -37,40 +37,20 @@ class DeliveryLocationsVC: UIViewController {
         locationManager.delegate = self
         centerMapOnUserLocation()
         
-        //print(addressArr)
-       
-        
         navigationItem.title = "Delivery Location"
         // Do any additional setup after loading the view.
-        
-         //get coordinates from object
-//        for object in addressArr { // without coreData
+
             for object in dropOffLocations {
-//            let location = Location.init(title: object.firstLineAddress, latitude: object.Lat, longitude: object.Long)  //  without CoreData
                 let location = Location.init(title: object.street!, latitude: object.latitude, longitude: object.longitude)
             locations.append(location)
-//            print(locations.count)
-//            let title = object.firstLineAddress
-//            let lat = object.lat
-//            let long = object.long
-            
-//            print(lat as Any)
-//            print(long as Any)
+        }
         
-         // get coordinates from object and index for this
-//        for (i, object) in addressArr.enumerated() {
-//            let lat = object.lat
-//            let long = object.long
-//            print ("Destination at index \(i) has coordinate: (\(String(describing: lat)), \(String(describing: long)))")
+//        for location in locations {
+//            let annotation = MKPointAnnotation()
+//            annotation.title = location.title
+//            annotation.coordinate = CLLocationCoordinate2D(latitude: location.latitude, longitude: location.longitude)
+//            mapView.addAnnotation(annotation)
 //        }
-        }
-//         print(locations)
-        for location in locations {
-            let annotation = MKPointAnnotation()
-            annotation.title = location.title
-            annotation.coordinate = CLLocationCoordinate2D(latitude: location.latitude, longitude: location.longitude)
-            mapView.addAnnotation(annotation)
-        }
         let annotations = locations.map { location -> MKAnnotation in
             let annotation = MKPointAnnotation()
             annotation.title = location.title
@@ -94,16 +74,56 @@ class DeliveryLocationsVC: UIViewController {
             locationManager.requestAlwaysAuthorization()
         }
     }
-    
-
-
 }
+
+
+
 extension DeliveryLocationsVC: MKMapViewDelegate {
     func centerMapOnUserLocation() {
         guard (locationManager.location?.coordinate) != nil else { return }
         let coordinateRegion = MKCoordinateRegionMakeWithDistance(mapView.userLocation.coordinate, regionRadius * 2.0, regionRadius * 2.0)
         mapView.setRegion(coordinateRegion, animated: true)
     }
+    
+    
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+        let annotationIdentifier = "MyCustomAnnotation"
+        guard !annotation.isKind(of: MKUserLocation.self) else {
+            return nil
+        }
+        
+        var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: annotationIdentifier)
+        if annotationView == nil {
+            annotationView = CustomAnnotationView(annotation: annotation, reuseIdentifier: annotationIdentifier)
+            if case let annotationView as CustomAnnotationView = annotationView {
+                annotationView.isEnabled = true
+                annotationView.canShowCallout = false
+                annotationView.numberOfDropsLbl = UILabel(frame: CGRect(x: 60.0, y: 20.0, width: 22.0, height: 18.0))
+                if let label = annotationView.numberOfDropsLbl {
+                    label.font = UIFont(name: "AvenirNext-DemiBold", size: 25.0)
+                    label.textAlignment = .center
+                    label.textColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
+                    label.adjustsFontSizeToFitWidth = true
+                    annotationView.addSubview(label)
+                }
+            }
+        }
+
+        if case let annotationView as CustomAnnotationView = annotationView {
+            annotationView.annotation = annotation
+            annotationView.image = #imageLiteral(resourceName: "CustomMapPin")
+            annotationView.layer.anchorPoint = CGPoint(x: 0, y: 1.0) //--->anchor the pin image to the exact coordinate and not move the pin when zooming
+            
+                     for (index, element) in locations.enumerated() {
+                        if let label = annotationView.numberOfDropsLbl {
+                        print("Location \(index + 1): \(element)")
+                            label.text = String(index)
+                }
+            }
+        }
+        return annotationView
+    }
+    
     
     func mapView(_ mapView: MKMapView, regionWillChangeAnimated animated: Bool) {
         centerMapBtn.fadeTo(alphaValue: 1.0, withDuration: 0.2)
