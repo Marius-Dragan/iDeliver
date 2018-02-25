@@ -281,6 +281,9 @@
                                         <state key="normal" image="add_photo_btn" backgroundImage="star_icon">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         </state>
+                                        <connections>
+                                            <segue destination="jiN-ev-0hI" kind="show" id="0qz-Pe-PRo"/>
+                                        </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ntR-u8-iAN">
                                         <rect key="frame" x="62.5" y="0.0" width="32.5" height="53"/>
@@ -374,6 +377,41 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jll-cq-TbY" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1582" y="158"/>
+        </scene>
+        <!--Scanner Controller-->
+        <scene sceneID="CBK-bb-jf8">
+            <objects>
+                <viewController id="jiN-ev-0hI" customClass="QRScannerController" customModule="iDeliver" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="fKE-LH-dd6">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" alpha="0.60000002384185791" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No QR code is detected" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Nfk-JE-U1e">
+                                <rect key="frame" x="0.0" y="627" width="375" height="40"/>
+                                <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="40" id="WXU-PP-dLw"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="Nfk-JE-U1e" firstAttribute="trailing" secondItem="jmk-Oe-ZTy" secondAttribute="trailing" id="O90-tS-XdT"/>
+                            <constraint firstItem="Nfk-JE-U1e" firstAttribute="leading" secondItem="jmk-Oe-ZTy" secondAttribute="leading" id="cfC-pD-0hK"/>
+                            <constraint firstItem="Nfk-JE-U1e" firstAttribute="bottom" secondItem="jmk-Oe-ZTy" secondAttribute="bottom" id="huv-6b-R2q"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="jmk-Oe-ZTy"/>
+                    </view>
+                    <connections>
+                        <outlet property="messageLabel" destination="Nfk-JE-U1e" id="ht2-Nc-h9S"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="aJ6-BY-KDc" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2393" y="156"/>
         </scene>
         <!--Item-->
         <scene sceneID="PvI-0P-vyz">
